@@ -1,11 +1,11 @@
 <script setup>
+import Button from "./components/Button.vue";
 </script>
 
 <template>
-  <div class="bg-red-800">
-    This is a div
-  </div>
-  Hello World
+  <Button text="I am a button"/>
+  <br/>
+  <Button type="link" text="I am a link"/>
 </template>
 
 <style scoped>
