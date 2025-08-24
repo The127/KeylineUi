@@ -4,14 +4,14 @@ const props = defineProps({
   label: {
     type: String,
     required: true,
-  },
+  }
 })
 
 </script>
 
 <template>
   <label>{{ label }}</label>
-  <slot/>
+  <input></input>
 </template>
 
 <style scoped>
