@@ -1,9 +1,21 @@
 <script setup>
-import Button from "./components/Button.vue";
+import {computed} from "vue";
+import {useRoute} from "vue-router";
+import MainLayout from "./layouts/MainLayout.vue";
+import LoginLayout from "./layouts/LoginLayout.vue";
+
+const route = useRoute()
+
+const layout = computed(() => {
+  if (route.meta.layout === 'login-layout') return LoginLayout
+  return MainLayout
+})
 </script>
 
 <template>
-  <router-view />
+  <component :is="layout">
+    <router-view />
+  </component>
 </template>
 
 <style scoped>
