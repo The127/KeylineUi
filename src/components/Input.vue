@@ -1,5 +1,9 @@
 <script setup>
 
+import {useUniqueId} from "../composables/uniqueId.js";
+
+const inputId = useUniqueId('input')
+
 const props = defineProps({
   label: {
     type: String,
@@ -10,8 +14,8 @@ const props = defineProps({
 </script>
 
 <template>
-  <label>{{ label }}</label>
-  <input></input>
+  <label :for="inputId">{{ label }}</label>
+  <input :id="inputId"></input>
 </template>
 
 <style scoped>

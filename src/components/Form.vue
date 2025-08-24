@@ -4,6 +4,7 @@ import Heading from "./Heading.vue";
 import Button from "./Button.vue";
 import {useI18n} from "vue-i18n";
 import {computed} from "vue";
+import {useUniqueId} from "../composables/uniqueId.js";
 
 const { t } = useI18n({
   messages: {
@@ -12,6 +13,8 @@ const { t } = useI18n({
   },
   inheritLocale: true,
 })
+
+const headingId = useUniqueId('heading')
 
 const props = defineProps({
   title: {
@@ -28,9 +31,9 @@ const submitTextValue = computed(() => props.submitText ?? t('submit'))
 </script>
 
 <template>
-  <form class="flex flex-col flex-wrap gap-3">
+  <form class="flex flex-col flex-wrap gap-3" :aria-labelledby="headingId">
     <slot name="header">
-      <Heading id="form-title" level="h3">{{ title }}</Heading>
+      <Heading :id="headingId" level="h3">{{ title }}</Heading>
     </slot>
     <slot/>
     <slot name="footer">
