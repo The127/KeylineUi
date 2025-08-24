@@ -29,9 +29,13 @@ const submitTextValue = computed(() => props.submitText ?? t('submit'))
 
 <template>
   <form class="flex flex-col flex-wrap">
-    <Heading id="form-title" level="h3">{{ title }}</Heading>
+    <slot name="header">
+      <Heading id="form-title" level="h3">{{ title }}</Heading>
+    </slot>
     <slot/>
-    <Button type="submit" :text="submitTextValue"/>
+    <slot name="footer">
+      <Button type="submit" :text="submitTextValue"/>
+    </slot>
   </form>
 </template>
 
