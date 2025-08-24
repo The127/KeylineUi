@@ -2,6 +2,15 @@
 
 import Heading from "./Heading.vue";
 import Button from "./Button.vue";
+import {useI18n} from "vue-i18n";
+
+const { t } = useI18n({
+  messages: {
+    en: { submit: 'submit' },
+    de: { submit: 'absenden' },
+  },
+  inheritLocale: true,
+})
 
 const props = defineProps({
   title: {
@@ -14,9 +23,9 @@ const props = defineProps({
 
 <template>
   <form>
-    <Heading>{{ title }}</Heading>
+    <Heading id="form-title" level="h3">{{ title }}</Heading>
     <slot/>
-    <Button text="TODO: submit"/>
+    <Button type="submit" :text="t('submit')"/>
   </form>
 </template>
 
