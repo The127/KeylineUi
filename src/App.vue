@@ -3,9 +3,7 @@ import Button from "./components/Button.vue";
 </script>
 
 <template>
-  <Button text="I am a button"/>
-  <br/>
-  <Button type="link" text="I am a link"/>
+  <router-view />
 </template>
 
 <style scoped>
