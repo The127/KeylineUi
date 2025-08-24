@@ -4,6 +4,7 @@ import Button from "../components/Button.vue";
 import Heading from "../components/Heading.vue";
 import {useI18n} from "vue-i18n";
 import Form from "../components/Form.vue";
+import FormGroup from "../components/FormGroup.vue";
 
 const { t } = useI18n({
   messages: {
@@ -17,7 +18,9 @@ const { t } = useI18n({
 <template>
   <div class="flex flex-col flex-wrap">
     <Form level="h3" :title="t('title')">
-
+      <FormGroup title="Test">
+        jkj
+      </FormGroup>
     </Form>
   </div>
 </template>
