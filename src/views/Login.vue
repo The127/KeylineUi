@@ -10,8 +10,8 @@ import Input from "../components/Input.vue";
 
 const { t } = useI18n({
   messages: {
-    en: { title: 'Login', submit: 'Sign In', email: 'email' },
-    de: { title: 'Anmelden', submit: 'Einloggen', email: 'E-Mail' },
+    en: { title: 'Login', submit: 'Sign In', email: 'email', password: 'password' },
+    de: { title: 'Anmelden', submit: 'Einloggen', email: 'E-Mail', password: 'Passwort' },
   },
   inheritLocale: true,
 })
@@ -24,6 +24,7 @@ const { t } = useI18n({
         :submit-text="t('submit')"
     >
       <Input :label="t('email')"/>
+      <Input :label="t('password')"/>
     </Form>
   </div>
 </template>
