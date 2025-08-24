@@ -4,10 +4,11 @@ import Button from "../components/Button.vue";
 </script>
 
 <template>
-  Login
-  <Button text="I am a button"/>
-  <br/>
-  <Button type="link" text="I am a link"/>
+  <div class="flex flex-col flex-wrap">
+    Login
+    <Button text="I am a button"/>
+    <Button type="link" text="I am a link"/>
+  </div>
 </template>
 
 <style scoped>
