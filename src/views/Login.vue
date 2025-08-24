@@ -1,11 +1,12 @@
 <script setup lang="ts">
 
 import Button from "../components/Button.vue";
+import Heading from "../components/Heading.vue";
 </script>
 
 <template>
   <div class="flex flex-col flex-wrap">
-    Login
+    <Heading>Login</Heading>
     <Button text="I am a button"/>
     <Button type="link" text="I am a link"/>
   </div>
