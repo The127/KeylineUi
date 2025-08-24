@@ -10,8 +10,8 @@ import Input from "../components/Input.vue";
 
 const { t } = useI18n({
   messages: {
-    en: { title: 'Login', submit: 'Sign In' },
-    de: { title: 'Anmelden', submit: 'Einloggen' },
+    en: { title: 'Login', submit: 'Sign In', email: 'email' },
+    de: { title: 'Anmelden', submit: 'Einloggen', email: 'E-Mail' },
   },
   inheritLocale: true,
 })
@@ -19,10 +19,11 @@ const { t } = useI18n({
 
 <template>
   <div class="flex flex-col flex-wrap">
-    <Form level="h3" :title="t('title')">
-      <FormGroup title="Test">
-        <Input label="asd"/>
-      </FormGroup>
+    <Form
+        :title="t('title')"
+        :submit-text="t('submit')"
+    >
+      <Input :label="t('email')"/>
     </Form>
   </div>
 </template>
