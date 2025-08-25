@@ -24,11 +24,25 @@ const props = defineProps({
   submitText: {
     type: String,
   },
+  vuelidate: {
+    type: Object,
+  },
 })
 
-defineEmits(['submit'])
+const emit = defineEmits(['submit'])
 
 const submitTextValue = computed(() => props.submitText ?? t('submit'))
+
+const onSubmit = async () => {
+  if (!!props.vuelidate) {
+    props.vuelidate.$touch()
+    if (props.vuelidate.$invalid) {
+      return
+    }
+  }
+
+  emit('submit')
+}
 
 </script>
 
@@ -37,7 +51,7 @@ const submitTextValue = computed(() => props.submitText ?? t('submit'))
       class="flex flex-col flex-wrap gap-3"
       :aria-labelledby="headingId"
       :title="title"
-      @submit.prevent="$emit('submit')"
+      @submit.prevent="onSubmit"
   >
     <slot name="header">
       <Heading :id="headingId" level="h3">{{ title }}</Heading>

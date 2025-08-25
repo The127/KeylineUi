@@ -43,8 +43,6 @@ const formRules = {
 const v$ = useVuelidate(formRules, formModel)
 
 const verifyPassword = async () => {
-  v$.value.$touch()
-  if (v$.value.$invalid) return
   alert('verify password')
 }
 
@@ -57,6 +55,7 @@ const verifyPassword = async () => {
         :title="t('submit')"
         :submit-text="t('submit')"
         @submit="verifyPassword"
+        :vuelidate="v$"
     >
       <template #header>
         <Heading class="text-center">
