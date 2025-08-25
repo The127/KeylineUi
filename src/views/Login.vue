@@ -27,6 +27,10 @@ const { isPending, isError, isFetching, data, error } = useQuery({
   queryFn: () => fetcher(route.query.token),
 })
 
+const verifyPassword = () => {
+  alert('verify password')
+}
+
 </script>
 
 <template>
@@ -35,6 +39,7 @@ const { isPending, isError, isFetching, data, error } = useQuery({
         v-if="!isPending && !isError && data"
         :title="t('submit')"
         :submit-text="t('submit')"
+        @submit="verifyPassword"
     >
       <template #header>
         <Heading class="text-center">

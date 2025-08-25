@@ -26,12 +26,19 @@ const props = defineProps({
   }
 })
 
+defineEmits(['submit'])
+
 const submitTextValue = computed(() => props.submitText ?? t('submit'))
 
 </script>
 
 <template>
-  <form class="flex flex-col flex-wrap gap-3" :aria-labelledby="headingId" :title="title">
+  <form
+      class="flex flex-col flex-wrap gap-3"
+      :aria-labelledby="headingId"
+      :title="title"
+      @submit.prevent="$emit('submit')"
+  >
     <slot name="header">
       <Heading :id="headingId" level="h3">{{ title }}</Heading>
     </slot>
