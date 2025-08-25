@@ -14,6 +14,14 @@ const routes = [
             layout: "login-layout",
         },
     },
+    {
+        path: '/:virtualServer/signup',
+        name: 'signup',
+        component:  () => import('../views/SignUp.vue'),
+        meta: {
+            layout: "login-layout",
+        },
+    },
 ]
 
 const router = createRouter({
