@@ -80,42 +80,40 @@ const onFormSubmit = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col flex-wrap">
-    <Form
-        v-if="!isPending && !isError && data"
-        :title="t('submit')"
-        :submit-text="t('submit')"
-        @submit="onFormSubmit"
-        :vuelidate="v$"
-    >
-      <template #header>
-        <Heading class="text-center">
-          {{ t('title', { appName: data.virtualServerDisplayName }) }}
-        </Heading>
-        <Heading level="h2" class="text-center">
-          {{ data.applicationDisplayName }}
-        </Heading>
-      </template>
-      <Input
-          v-model="v$.username.$model"
-          :vuelidate="v$.username"
-          :label="t('username')"
-      />
-      <Input
-          type="password"
-          v-model="v$.password.$model"
-          :vuelidate="v$.password"
-          :label="t('password')"
-      />
-      <template #footer>
-        <Button class="mt-5" variant="special" type="submit" :text="t('submit')"/>
-        <div v-if="data.signUpUrl" class="flex flex-row flex-wrap items-center justify-center gap-1">
-          <span>{{ t('dontHaveAnAccount') }}</span>
-          <a :href="data.signUpUrl">{{ t('register') }}</a>
-        </div>
-      </template>
-    </Form>
-  </div>
+  <Form
+      v-if="!isPending && !isError && data"
+      :title="t('submit')"
+      :submit-text="t('submit')"
+      @submit="onFormSubmit"
+      :vuelidate="v$"
+  >
+    <template #header>
+      <Heading class="text-center">
+        {{ t('title', { appName: data.virtualServerDisplayName }) }}
+      </Heading>
+      <Heading level="h2" class="text-center">
+        {{ data.applicationDisplayName }}
+      </Heading>
+    </template>
+    <Input
+        v-model="v$.username.$model"
+        :vuelidate="v$.username"
+        :label="t('username')"
+    />
+    <Input
+        type="password"
+        v-model="v$.password.$model"
+        :vuelidate="v$.password"
+        :label="t('password')"
+    />
+    <template #footer>
+      <Button class="mt-5" variant="special" type="submit" :text="t('submit')"/>
+      <div v-if="data.signUpUrl" class="flex flex-row flex-wrap items-center justify-center gap-1">
+        <span>{{ t('dontHaveAnAccount') }}</span>
+        <a :href="data.signUpUrl">{{ t('register') }}</a>
+      </div>
+    </template>
+  </Form>
 </template>
 
 <style scoped>
