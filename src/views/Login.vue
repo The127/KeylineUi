@@ -43,6 +43,7 @@ const formRules = {
 const v$ = useVuelidate(formRules, formModel)
 
 const verifyPassword = async () => {
+  v$.value.$touch()
   if (v$.value.$invalid) return
   alert('verify password')
 }
