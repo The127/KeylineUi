@@ -74,7 +74,10 @@ const verifyPassword = async () => {
     >
       <template #header>
         <Heading class="text-center">
-          {{ t('title', { appName: data.applicationDisplayName }) }}
+          {{ t('title', { appName: data.virtualServerDisplayName }) }}
+        </Heading>
+        <Heading level="h2" class="text-center">
+          {{ data.applicationDisplayName }}
         </Heading>
       </template>
       <Input
