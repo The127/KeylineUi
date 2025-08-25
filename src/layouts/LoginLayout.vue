@@ -3,8 +3,8 @@
 </script>
 
 <template>
-  <div class="sm:grid sm:w-screen sm:h-screen">
-    <div class="grid content-center m-auto border-2 border-red-500 px-4 py-2 sm:rounded-2xl">
+  <div class="w-screen h-screen bg-green-200 sm:grid sm:place-items-center">
+    <div class="bg-slate-50 px-13 py-8 sm:rounded-2xl">
       <slot/>
     </div>
   </div>
