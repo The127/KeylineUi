@@ -31,7 +31,7 @@ const submitTextValue = computed(() => props.submitText ?? t('submit'))
 </script>
 
 <template>
-  <form class="flex flex-col flex-wrap gap-3" :aria-labelledby="headingId">
+  <form class="flex flex-col flex-wrap gap-3" :aria-labelledby="headingId" :title="title">
     <slot name="header">
       <Heading :id="headingId" level="h3">{{ title }}</Heading>
     </slot>

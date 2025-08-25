@@ -5,11 +5,12 @@ import Form from "../components/Form.vue";
 import Input from "../components/Input.vue";
 import {useRoute} from "vue-router";
 import {useQuery} from "@tanstack/vue-query";
+import Heading from "../components/Heading.vue";
 
 const { t } = useI18n({
   messages: {
-    en: { title: 'Login', submit: 'Sign In', email: 'email', password: 'password' },
-    de: { title: 'Anmelden', submit: 'Einloggen', email: 'E-Mail', password: 'Passwort' },
+    en: { title: 'Sign in to {appName}', submit: 'Sign In', email: 'email', password: 'password' },
+    de: { title: 'In {appName} anmelden', submit: 'Einloggen', email: 'E-Mail', password: 'Passwort' },
   },
   inheritLocale: true,
 })
@@ -38,9 +39,15 @@ const { isPending, isError, isFetching, data, error } = useQuery({
       <div v-if="isFetching" class="update">Background Updating...</div>
     </div>
     <Form
-        :title="t('title')"
+        v-if="!isPending && !isError && data"
+        :title="t('submit')"
         :submit-text="t('submit')"
     >
+      <template #header>
+        <Heading class="text-center">
+          {{ t('title', { appName: data.applicationDisplayName }) }}
+        </Heading>
+      </template>
       <Input :label="t('email')"/>
       <Input :label="t('password')"/>
     </Form>
