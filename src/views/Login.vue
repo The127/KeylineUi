@@ -95,7 +95,7 @@ const onFormSubmit = async () => {
         {{ data.applicationDisplayName }}
       </Heading>
     </template>
-    <Input
+   <Input
         v-model="v$.username.$model"
         :vuelidate="v$.username"
         :label="t('username')"
