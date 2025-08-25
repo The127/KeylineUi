@@ -92,9 +92,9 @@ const verifyPassword = async () => {
       />
       <template #footer>
         <Button variant="special" type="submit" :text="t('submit')"/>
-        <div class="flex flex-row flex-wrap items-center justify-center gap-1">
+        <div v-if="data.signUpUrl" class="flex flex-row flex-wrap items-center justify-center gap-1">
           <span>{{ t('dontHaveAnAccount') }}</span>
-          <a v-if="data.signUpUrl" :href="data.signUpUrl">{{ t('register') }}</a>
+          <a :href="data.signUpUrl">{{ t('register') }}</a>
         </div>
       </template>
     </Form>
