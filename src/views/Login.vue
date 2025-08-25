@@ -1,12 +1,9 @@
 <script setup lang="ts">
 
-import Button from "../components/Button.vue";
-import Heading from "../components/Heading.vue";
 import {useI18n} from "vue-i18n";
 import Form from "../components/Form.vue";
-import FormGroup from "../components/FormGroup.vue";
-import FormItem from "../components/FormItem.vue";
 import Input from "../components/Input.vue";
+import {useRoute} from "vue-router";
 
 const { t } = useI18n({
   messages: {
@@ -15,10 +12,14 @@ const { t } = useI18n({
   },
   inheritLocale: true,
 })
+
+const route = useRoute()
+
 </script>
 
 <template>
   <div class="flex flex-col flex-wrap">
+    <p>{{ route.query.token }}</p>
     <Form
         :title="t('title')"
         :submit-text="t('submit')"
