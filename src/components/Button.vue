@@ -24,6 +24,7 @@ const isLink = computed(() => props.type === 'link')
 
 <template>
   <button
+      class="bg-emerald-700 px-5 py-3 rounded-md text-slate-100 cursor-pointer tracking-wider uppercase"
       v-if="!isLink"
       :type="type"
       :aria-label="text"
@@ -39,7 +40,4 @@ const isLink = computed(() => props.type === 'link')
 </template>
 
 <style scoped>
-button {
-  background: red;
-}
 </style>
