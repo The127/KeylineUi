@@ -23,7 +23,7 @@ const props = defineProps({
   },
   submitText: {
     type: String,
-  }
+  },
 })
 
 defineEmits(['submit'])

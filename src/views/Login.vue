@@ -6,6 +6,9 @@ import Input from "../components/Input.vue";
 import {useRoute} from "vue-router";
 import {useQuery} from "@tanstack/vue-query";
 import Heading from "../components/Heading.vue";
+import {reactive} from "vue";
+import {email, required} from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
 
 const { t } = useI18n({
   messages: {
@@ -27,7 +30,20 @@ const { isPending, isError, isFetching, data, error } = useQuery({
   queryFn: () => fetcher(route.query.token),
 })
 
-const verifyPassword = () => {
+const formModel = reactive({
+  email: '',
+  password: '',
+})
+
+const formRules = {
+  email: { required, },
+  password: { required, },
+}
+
+const v$ = useVuelidate(formRules, formModel)
+
+const verifyPassword = async () => {
+
   alert('verify password')
 }
 
@@ -46,7 +62,11 @@ const verifyPassword = () => {
           {{ t('title', { appName: data.applicationDisplayName }) }}
         </Heading>
       </template>
-      <Input :label="t('email')"/>
+      <Input
+          v-model="v$.email.$model"
+          :vuelidate="v$.email"
+          :label="t('email')"
+      />
       <Input :label="t('password')"/>
     </Form>
   </div>

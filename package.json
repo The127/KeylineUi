@@ -11,6 +11,8 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",
     "@tanstack/vue-query": "^5.85.5",
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
     "axios": "^1.11.0",
     "tailwindcss": "^4.1.12",
     "vue": "^3.5.18",
