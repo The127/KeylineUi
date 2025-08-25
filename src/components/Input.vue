@@ -14,6 +14,11 @@ const props = defineProps({
   vuelidate: {
     type: Object,
   },
+  type: {
+    type: String,
+    default: 'text',
+    validator: (value) => ['text', 'password'].includes(value),
+  },
 })
 
 </script>
@@ -27,6 +32,7 @@ const props = defineProps({
       {{ label }}
     </label>
     <input
+        :type="type"
         class="border border-slate-900 p-2 rounded-md"
         :label="label"
         v-model="model"
