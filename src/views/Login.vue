@@ -9,11 +9,26 @@ import Heading from "../components/Heading.vue";
 import {reactive} from "vue";
 import {email, required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
+import Button from "../components/Button.vue";
 
 const { t } = useI18n({
   messages: {
-    en: { title: 'Sign in to {appName}', submit: 'Sign In', username: 'username', password: 'password' },
-    de: { title: 'In {appName} anmelden', submit: 'Einloggen', username: 'Benutzername', password: 'Passwort' },
+    en: {
+      title: 'Sign in to {appName}',
+      submit: 'Sign In',
+      username: 'username',
+      password: 'password',
+      dontHaveAnAccount: 'Don\'t have an account?',
+      register: 'Sign Up',
+    },
+    de: {
+      title: 'In {appName} anmelden',
+      submit: 'Einloggen',
+      username: 'Benutzername',
+      password: 'Passwort',
+      dontHaveAnAccount: 'Noch kein Konto?',
+      register: 'Registrieren',
+    },
   },
   inheritLocale: true,
 })
@@ -72,6 +87,13 @@ const verifyPassword = async () => {
           :vuelidate="v$.password"
           :label="t('password')"
       />
+      <template #footer>
+        <Button type="submit" :text="t('submit')"/>
+        <div class="flex flex-row flex-wrap items-center justify-center gap-1">
+          <span>{{ t('dontHaveAnAccount') }}</span>
+          <a href="google.com">{{ t('register') }}</a>
+        </div>
+      </template>
     </Form>
   </div>
 </template>
