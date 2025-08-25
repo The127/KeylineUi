@@ -12,8 +12,8 @@ import useVuelidate from "@vuelidate/core";
 
 const { t } = useI18n({
   messages: {
-    en: { title: 'Sign in to {appName}', submit: 'Sign In', email: 'email', password: 'password' },
-    de: { title: 'In {appName} anmelden', submit: 'Einloggen', email: 'E-Mail', password: 'Passwort' },
+    en: { title: 'Sign in to {appName}', submit: 'Sign In', username: 'username', password: 'password' },
+    de: { title: 'In {appName} anmelden', submit: 'Einloggen', username: 'Benutzername', password: 'Passwort' },
   },
   inheritLocale: true,
 })
@@ -31,12 +31,12 @@ const { isPending, isError, isFetching, data, error } = useQuery({
 })
 
 const formModel = reactive({
-  email: '',
+  username: '',
   password: '',
 })
 
 const formRules = {
-  email: { required, },
+  username: { required, },
   password: { required, },
 }
 
@@ -63,9 +63,9 @@ const verifyPassword = async () => {
         </Heading>
       </template>
       <Input
-          v-model="v$.email.$model"
-          :vuelidate="v$.email"
-          :label="t('email')"
+          v-model="v$.username.$model"
+          :vuelidate="v$.username"
+          :label="t('username')"
       />
       <Input :label="t('password')"/>
     </Form>
