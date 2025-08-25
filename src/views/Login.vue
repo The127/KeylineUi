@@ -31,13 +31,6 @@ const { isPending, isError, isFetching, data, error } = useQuery({
 
 <template>
   <div class="flex flex-col flex-wrap">
-    <p>{{ route.query.token }}</p>
-    <div v-if="isPending" class="update">Loading...</div>
-    <div v-else-if="isError">An error has occurred: {{ error }}</div>
-    <div v-else-if="data">
-      <p>{{ data }}</p>
-      <div v-if="isFetching" class="update">Background Updating...</div>
-    </div>
     <Form
         v-if="!isPending && !isError && data"
         :title="t('submit')"
