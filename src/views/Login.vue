@@ -16,8 +16,8 @@ const { t } = useI18n({
     en: {
       title: 'Sign in to {appName}',
       submit: 'Sign In',
-      username: 'username',
-      password: 'password',
+      username: 'Username',
+      password: 'Password',
       dontHaveAnAccount: 'Don\'t have an account?',
       register: 'Sign Up',
     },
