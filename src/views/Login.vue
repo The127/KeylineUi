@@ -91,7 +91,7 @@ const verifyPassword = async () => {
           :label="t('password')"
       />
       <template #footer>
-        <Button type="submit" :text="t('submit')"/>
+        <Button variant="special" type="submit" :text="t('submit')"/>
         <div class="flex flex-row flex-wrap items-center justify-center gap-1">
           <span>{{ t('dontHaveAnAccount') }}</span>
           <a href="google.com">{{ t('register') }}</a>

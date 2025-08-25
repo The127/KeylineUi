@@ -8,6 +8,11 @@ const props = defineProps({
     default: 'button',
     validator: (value) => ['button', 'submit', 'link'].includes(value),
   },
+  variant: {
+    type: String,
+    default: 'primary',
+    validator: (value) => ['primary', 'secondary', 'special'].includes(value),
+  },
   text: {
     type: String,
     required: true,
@@ -20,11 +25,26 @@ const props = defineProps({
 
 const isLink = computed(() => props.type === 'link')
 
+const variantClass = computed(() => {
+  switch (props.variant) {
+    case 'primary':
+      return 'border-3 border-emerald-700 hover:border-emerald-600 hover:bg-emerald-600 ' +
+          'hover:text-slate-100'
+    case 'secondary':
+      return 'bg-slate-700'
+    case 'special':
+      return 'bg-gradient-to-r from-emerald-500 to-teal-500 ' +
+          'hover:from-emerald-400 hover:to-teal-400 ' +
+          'text-slate-100 tracking-wider uppercase'
+  }
+})
+
 </script>
 
 <template>
   <button
-      class="bg-emerald-700 px-5 py-3 rounded-md text-slate-100 cursor-pointer tracking-wider uppercase"
+      :class="[variantClass]"
+      class="px-5 py-3 rounded-md cursor-pointer "
       v-if="!isLink"
       :type="type"
       :aria-label="text"
