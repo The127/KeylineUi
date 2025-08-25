@@ -94,7 +94,7 @@ const verifyPassword = async () => {
         <Button variant="special" type="submit" :text="t('submit')"/>
         <div class="flex flex-row flex-wrap items-center justify-center gap-1">
           <span>{{ t('dontHaveAnAccount') }}</span>
-          <a href="google.com">{{ t('register') }}</a>
+          <a v-if="data.signUpUrl" :href="data.signUpUrl">{{ t('register') }}</a>
         </div>
       </template>
     </Form>
