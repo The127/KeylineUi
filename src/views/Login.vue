@@ -4,7 +4,7 @@ import {useI18n} from "vue-i18n";
 import Form from "../components/Form.vue";
 import Input from "../components/Input.vue";
 import {useRoute} from "vue-router";
-import {useQuery} from "@tanstack/vue-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/vue-query";
 import Heading from "../components/Heading.vue";
 import {reactive} from "vue";
 import {email, required} from "@vuelidate/validators";
@@ -34,15 +34,28 @@ const { t } = useI18n({
 })
 
 const route = useRoute()
-
-const fetcher = async (token) =>
-    await fetch(`http://127.0.0.1:8081/logins/${token}`).then(
-        (response) => response.json(),
-    )
+const queryClient = useQueryClient()
 
 const { isPending, isError, isFetching, data, error } = useQuery({
   queryKey: ['login', route.query.token],
-  queryFn: () => fetcher(route.query.token),
+  queryFn: async () => await fetch(`http://127.0.0.1:8081/logins/${route.query.token}`).then(
+      (response) => response.json(),
+  ),
+})
+
+const verifyPassword = useMutation({
+  mutationFn: async (data) => await fetch(`http://127.0.0.1:8081/logins/${route.query.token}/verify-password`,{
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(
+      (response) => response.json(),
+  ),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['login', route.query.token]})
+  },
 })
 
 const formModel = reactive({
@@ -57,8 +70,11 @@ const formRules = {
 
 const v$ = useVuelidate(formRules, formModel)
 
-const verifyPassword = async () => {
-  alert('verify password')
+const onFormSubmit = async () => {
+  verifyPassword.mutate({
+    username: formModel.username,
+    password: formModel.password,
+  })
 }
 
 </script>
@@ -69,7 +85,7 @@ const verifyPassword = async () => {
         v-if="!isPending && !isError && data"
         :title="t('submit')"
         :submit-text="t('submit')"
-        @submit="verifyPassword"
+        @submit="onFormSubmit"
         :vuelidate="v$"
     >
       <template #header>
