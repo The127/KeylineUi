@@ -78,12 +78,7 @@ const verifyPassword = useMutation({
     headers: {
       'Content-Type': 'application/json',
     },
-  }).then(
-      (response) => {
-        console.log('response', response)
-        return response.json()
-      }
-  ).catch(
+  }).catch(
       (e) => {
         console.log('error', e)
       }
