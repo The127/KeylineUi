@@ -22,6 +22,7 @@ const { t } = useI18n({
       dontHaveAnAccount: 'Don\'t have an account?',
       register: 'Sign Up',
       or: 'or',
+      signInWithPasskey: 'Sign in with passkey',
     },
     de: {
       title: 'In {appName} anmelden',
@@ -31,6 +32,7 @@ const { t } = useI18n({
       dontHaveAnAccount: 'Noch kein Konto?',
       register: 'Registrieren',
       or: 'oder',
+      signInWithPasskey: 'Mit Passkey einloggen',
     },
   },
   inheritLocale: true,
@@ -118,7 +120,7 @@ const onFormSubmit = async () => {
         <span>{{ t('dontHaveAnAccount') }}</span>
         <a :href="data.signUpUrl">{{ t('register') }}</a>
       </div>
-      <Button variant="link" text="asd"></Button>
+      <Button variant="link" :text="t('signInWithPasskey')"></Button>
     </template>
   </Form>
 </template>
