@@ -11,7 +11,7 @@ const props = defineProps({
   variant: {
     type: String,
     default: 'primary',
-    validator: (value) => ['primary', 'secondary', 'link', 'special'].includes(value),
+    validator: (value) => ['primary', 'secondary', 'danger', 'link', 'special'].includes(value),
   },
   text: {
     type: String,
@@ -26,12 +26,18 @@ const props = defineProps({
 const variantClass = computed(() => {
   switch (props.variant) {
     case 'primary':
-      return 'border-3 border-emerald-700 hover:border-emerald-600 hover:bg-emerald-600 ' +
-          'hover:text-slate-100 ' +
+      return 'bg-emerald-500 hover:bg-emerald-600 ' +
+          'text-slate-100 hover:text-slate-100 ' +
           'px-5 py-3 rounded-md'
 
     case 'secondary':
-      return 'bg-slate-700 ' +
+      return 'border-3 border-slate-700 ' +
+          'hover:text-slate-100 hover:bg-slate-700 ' +
+          'px-5 py-3 rounded-md'
+
+    case 'danger':
+      return 'border-3 border-red-700 ' +
+          'hover:text-slate-100 hover:bg-red-700 ' +
           'px-5 py-3 rounded-md'
 
     case 'link':
@@ -51,7 +57,7 @@ const variantClass = computed(() => {
 <template>
   <button
       :class="[variantClass]"
-      class="cursor-pointer transition-colors duration-200 ease-in-out"
+      class="cursor-pointer transition-colors duration-200 ease-in-out border-box"
       :type="type"
       :aria-label="text"
       v-text="text"

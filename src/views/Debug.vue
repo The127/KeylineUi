@@ -9,7 +9,13 @@ const startLoginFlow = () => {
 </script>
 
 <template>
-  <Button text="Start Login Flow" @click="startLoginFlow"/>
+  <div class="flex flex-col gap-3 w-64 p-3">
+    <Button variant="primary" text="Start Login Flow" @click="startLoginFlow"/>
+    <Button variant="secondary" text="Start Login Flow" @click="startLoginFlow"/>
+    <Button variant="danger" text="Start Login Flow" @click="startLoginFlow"/>
+    <Button variant="link" text="Start Login Flow" @click="startLoginFlow"/>
+    <Button variant="special" text="Start Login Flow" @click="startLoginFlow"/>
+  </div>
 </template>
 
 <style scoped>
