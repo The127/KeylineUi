@@ -132,7 +132,7 @@ const onFormSubmit = async () => {
         minlength="8"
     />
     <template #footer>
-      <Button variant="special" type="submit" :text="t('submit')"/>
+      <Button variant="special" size="lg" type="submit" :text="t('submit')"/>
     </template>
   </Form>
 </template>
