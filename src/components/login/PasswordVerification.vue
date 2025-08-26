@@ -125,7 +125,7 @@ const verifyPassword = useMutation({
       </template>
     </Input>
     <template #footer>
-      <Button variant="special" type="submit" :text="t('submit')"/>
+      <Button variant="special" size="lg" type="submit" :text="t('submit')"/>
       <HorizontalDivider :text="t('or')"/>
       <div v-if="data.signUpUrl" class="flex flex-row flex-wrap items-center justify-center gap-1">
         <span>{{ t('dontHaveAnAccount') }}</span>

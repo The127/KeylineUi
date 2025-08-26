@@ -92,6 +92,7 @@ const onResendVerificationMail = async () => {
     <template #footer>
       <Button
           variant="special"
+          size="lg"
           type="submit"
           :text="t('submit')"
       />
