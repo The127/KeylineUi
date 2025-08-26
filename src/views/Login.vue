@@ -23,6 +23,7 @@ const { t } = useI18n({
       register: 'Sign Up',
       or: 'or',
       signInWithPasskey: 'Sign in with passkey',
+      forgotPassword: 'forgot password?',
     },
     de: {
       title: 'In {appName} anmelden',
@@ -33,6 +34,7 @@ const { t } = useI18n({
       register: 'Registrieren',
       or: 'oder',
       signInWithPasskey: 'Mit Passkey einloggen',
+      forgotPassword: 'Passwort vergessen?',
     },
   },
   inheritLocale: true,
@@ -112,7 +114,13 @@ const onFormSubmit = async () => {
         :vuelidate="v$.password"
         :label="t('password')"
         required
-    />
+    >
+      <template #action>
+        <a href="todo">
+          {{ t('forgotPassword') }}
+        </a>
+      </template>
+    </Input>
     <template #footer>
       <Button variant="special" type="submit" :text="t('submit')"/>
       <HorizontalDivider :text="t('or')"/>
