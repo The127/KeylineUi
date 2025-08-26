@@ -110,6 +110,7 @@ const verifyPassword = useMutation({
         :vuelidate="v$.username"
         :label="t('username')"
         required
+        tabindex="1"
     />
     <Input
         type="password"
@@ -117,15 +118,22 @@ const verifyPassword = useMutation({
         :vuelidate="v$.password"
         :label="t('password')"
         required
+        tabindex="2"
     >
       <template #action>
-        <a href="todo">
+        <a href="todo" tabindex="4">
           {{ t('forgotPassword') }}
         </a>
       </template>
     </Input>
     <template #footer>
-      <Button variant="special" size="lg" type="submit" :text="t('submit')"/>
+      <Button
+          variant="special"
+          size="lg"
+          type="submit"
+          :text="t('submit')"
+          tabindex="3"
+      />
       <HorizontalDivider :text="t('or')"/>
       <div v-if="data.signUpUrl" class="flex flex-row flex-wrap items-center justify-center gap-1">
         <span>{{ t('dontHaveAnAccount') }}</span>

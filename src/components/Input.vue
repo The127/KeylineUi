@@ -3,6 +3,10 @@
 import {useUniqueId} from "../composables/uniqueId.js";
 import {computed} from "vue";
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 const inputId = useUniqueId('input')
 
 const model = defineModel()
