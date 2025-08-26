@@ -20,6 +20,7 @@ const { t } = useI18n({
       password: 'Password',
       dontHaveAnAccount: 'Don\'t have an account?',
       register: 'Sign Up',
+      passwordRequirements: 'Password must be at least 8 characters long.'
     },
     de: {
       title: 'In {appName} anmelden',
@@ -29,6 +30,7 @@ const { t } = useI18n({
       password: 'Passwort',
       dontHaveAnAccount: 'Noch kein Konto?',
       register: 'Registrieren',
+      passwordRequirements: 'Passwort muss mindestens 8 Zeichen lang sein.'
     },
   },
   inheritLocale: true,
@@ -71,6 +73,7 @@ const onFormSubmit = () => {
         :vuelidate="v$.username"
         :label="t('username')"
         required
+        maxlength="255"
     />
     <Input
         type="password"
@@ -78,6 +81,8 @@ const onFormSubmit = () => {
         :vuelidate="v$.password"
         :label="t('password')"
         required
+        :helper-text="t('passwordRequirements')"
+        minlength="8"
     />
     <Input
         type="email"

@@ -28,6 +28,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  helperText: {
+    type: String,
+    default: null,
+  },
 })
 
 const placeholderValue = computed(() => props.placeholder ?? props.label)
@@ -50,9 +54,13 @@ const placeholderValue = computed(() => props.placeholder ?? props.label)
         v-model="model"
         :id="inputId"
         :placeholder="placeholderValue"
+        v-bind="$attrs"
     />
-    <span class="text-red-700 text-sm" v-if="vuelidate && vuelidate.$error">
+    <span class="text-red-700 text-xs" v-if="vuelidate && vuelidate.$error">
       {{ vuelidate.$errors[0].$message }}
+    </span>
+    <span class="text-slate-500 text-xs" v-if="helperText">
+      {{ helperText }}
     </span>
   </div>
 </template>
