@@ -41,7 +41,7 @@ const variantClass = computed(() => {
     case 'special':
       return 'bg-gradient-to-r from-emerald-500 to-teal-500 ' +
           'hover:from-emerald-400 hover:to-teal-400 ' +
-          'text-slate-100 tracking-wider uppercase ' +
+          'text-slate-100 hover:text-slate-50 tracking-wider uppercase ' +
           'px-5 py-3 rounded-md'
   }
 })
@@ -51,7 +51,7 @@ const variantClass = computed(() => {
 <template>
   <button
       :class="[variantClass]"
-      class="cursor-pointer"
+      class="cursor-pointer transition-colors duration-200 ease-in-out"
       :type="type"
       :aria-label="text"
       v-text="text"
