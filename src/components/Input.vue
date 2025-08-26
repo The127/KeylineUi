@@ -40,13 +40,16 @@ const placeholderValue = computed(() => props.placeholder ?? props.label)
 
 <template>
   <div class="flex flex-col gap-1 group">
-    <label
-        :for="inputId"
-        class="text-slate-700 group-focus-within:text-slate-900 font-bold text-sm"
-    >
-      {{ label }}
-      <sup v-if="required">*</sup>
-    </label>
+    <div class="flex flex-row justify-between text-sm">
+      <label
+          :for="inputId"
+          class="text-slate-700 group-focus-within:text-slate-900 font-bold"
+      >
+        {{ label }}
+        <sup v-if="required">*</sup>
+      </label>
+      <slot name="action"/>
+    </div>
     <input
         :type="type"
         class="border border-slate-900 p-2 rounded-md"
