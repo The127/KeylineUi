@@ -8,7 +8,18 @@ import {reactive} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import Input from "../components/Input.vue";
+import {useRoute} from "vue-router";
+import {useQuery, useQueryClient} from "@tanstack/vue-query";
 
+const route = useRoute()
+const queryClient = useQueryClient()
+
+const { isPending, isError, isFetching, data, error } = useQuery({
+  queryKey: ['virtualServersPublicInfo', route.params.virtualServer],
+  queryFn: async () => await fetch(`http://127.0.0.1:8081/api/virtual-servers/${route.params.virtualServer}/public-info`).then(
+      (response) => response.json(),
+  )
+})
 
 const { t } = useI18n({
   messages: {
@@ -58,6 +69,7 @@ const onFormSubmit = () => {
 
 <template>
   <Form
+      v-if="!isPending && !isError && data"
       :title="t('submit')"
       :submit-text="t('submit')"
       @submit="onFormSubmit"
@@ -65,7 +77,7 @@ const onFormSubmit = () => {
   >
     <template #header>
       <Heading class="text-center">
-        {{ t('title', { appName: "TODO" }) }}
+        {{ t('title', { appName: data.displayName }) }}
       </Heading>
     </template>
     <Input
