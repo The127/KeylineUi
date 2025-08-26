@@ -70,18 +70,21 @@ const onFormSubmit = () => {
         v-model="v$.username.$model"
         :vuelidate="v$.username"
         :label="t('username')"
+        required
     />
     <Input
         type="password"
         v-model="v$.password.$model"
         :vuelidate="v$.password"
         :label="t('password')"
+        required
     />
     <Input
         type="email"
         v-model="v$.email.$model"
         :vuelidate="v$.email"
         :label="t('email')"
+        required
     />
     <template #footer>
       <Button class="mt-5" variant="special" type="submit" :text="t('submit')"/>

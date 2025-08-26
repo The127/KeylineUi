@@ -19,6 +19,10 @@ const props = defineProps({
     default: 'text',
     validator: (value) => ['text', 'password', 'email'].includes(value),
   },
+  required: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 </script>
@@ -30,6 +34,7 @@ const props = defineProps({
         class="text-slate-700 group-focus-within:text-slate-900 font-bold text-sm"
     >
       {{ label }}
+      <sup v-if="required">*</sup>
     </label>
     <input
         :type="type"
