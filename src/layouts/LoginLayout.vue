@@ -1,5 +1,5 @@
 <script setup>
-
+import { Github } from 'lucide-vue-next';
 </script>
 
 <template>
@@ -9,8 +9,14 @@
         <slot/>
       </div>
     </div>
-    <footer class="bg-slate-100">
-      Footer
+    <footer class="bg-slate-100 px-8 py-5 flex flex-row flex-wrap justify-end">
+      <span class="flex flex-row flex-wrap items-center gap-1">
+        <Github/>
+        Powered by
+        <a href="https://github.com/the127/keyline">
+          Keyline
+        </a>
+      </span>
     </footer>
   </div>
 </template>
