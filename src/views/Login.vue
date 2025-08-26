@@ -109,7 +109,7 @@ const onFormSubmit = async () => {
         placeholder=""
     />
     <template #footer>
-      <Button class="mt-5" variant="special" type="submit" :text="t('submit')"/>
+      <Button variant="special" type="submit" :text="t('submit')"/>
       <div v-if="data.signUpUrl" class="flex flex-row flex-wrap items-center justify-center gap-1">
         <span>{{ t('dontHaveAnAccount') }}</span>
         <a :href="data.signUpUrl">{{ t('register') }}</a>

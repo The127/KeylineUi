@@ -48,7 +48,7 @@ const onSubmit = async () => {
 
 <template>
   <form
-      class="flex flex-col flex-wrap gap-3"
+      class="flex flex-col flex-wrap gap-5"
       :aria-labelledby="headingId"
       @submit.prevent="onSubmit"
   >

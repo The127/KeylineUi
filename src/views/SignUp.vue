@@ -87,7 +87,7 @@ const onFormSubmit = () => {
         required
     />
     <template #footer>
-      <Button class="mt-5" variant="special" type="submit" :text="t('submit')"/>
+      <Button variant="special" type="submit" :text="t('submit')"/>
     </template>
   </Form>
 </template>
