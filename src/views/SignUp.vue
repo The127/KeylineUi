@@ -18,7 +18,9 @@ const { isPending, isError, isFetching, data, error } = useQuery({
   queryKey: ['virtualServersPublicInfo', route.params.virtualServer],
   queryFn: async () => await fetch(`http://127.0.0.1:8081/api/virtual-servers/${route.params.virtualServer}/public-info`).then(
       (response) => response.json(),
-  )
+  ).catch((e) => {
+    console.log('error', e)
+  })
 })
 
 const register = useMutation({
@@ -28,9 +30,7 @@ const register = useMutation({
     headers: {
       'Content-Type': 'application/json',
     },
-  }).then(
-      (response) => response.json(),
-  )
+  })
 })
 
 const { t } = useI18n({
