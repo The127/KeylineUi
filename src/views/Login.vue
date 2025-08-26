@@ -10,6 +10,7 @@ import {reactive} from "vue";
 import {email, required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import Button from "../components/Button.vue";
+import HorizontalDivider from "../components/HorizontalDivider.vue";
 
 const { t } = useI18n({
   messages: {
@@ -20,6 +21,7 @@ const { t } = useI18n({
       password: 'Password',
       dontHaveAnAccount: 'Don\'t have an account?',
       register: 'Sign Up',
+      or: 'or',
     },
     de: {
       title: 'In {appName} anmelden',
@@ -28,6 +30,7 @@ const { t } = useI18n({
       password: 'Passwort',
       dontHaveAnAccount: 'Noch kein Konto?',
       register: 'Registrieren',
+      or: 'oder',
     },
   },
   inheritLocale: true,
@@ -110,11 +113,11 @@ const onFormSubmit = async () => {
     />
     <template #footer>
       <Button variant="special" type="submit" :text="t('submit')"/>
+      <HorizontalDivider :text="t('or')"/>
       <div v-if="data.signUpUrl" class="flex flex-row flex-wrap items-center justify-center gap-1">
         <span>{{ t('dontHaveAnAccount') }}</span>
         <a :href="data.signUpUrl">{{ t('register') }}</a>
       </div>
-      <span>or</span>
       <Button variant="link" text="asd"></Button>
     </template>
   </Form>
