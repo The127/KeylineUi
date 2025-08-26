@@ -114,6 +114,8 @@ const onFormSubmit = async () => {
         <span>{{ t('dontHaveAnAccount') }}</span>
         <a :href="data.signUpUrl">{{ t('register') }}</a>
       </div>
+      <span>or</span>
+      <Button variant="link" text="asd"></Button>
     </template>
   </Form>
 </template>

@@ -11,7 +11,7 @@ const props = defineProps({
   variant: {
     type: String,
     default: 'primary',
-    validator: (value) => ['primary', 'secondary', 'special'].includes(value),
+    validator: (value) => ['primary', 'secondary', 'link', 'special'].includes(value),
   },
   text: {
     type: String,
@@ -23,8 +23,6 @@ const props = defineProps({
   },
 })
 
-const isLink = computed(() => props.type === 'link')
-
 const variantClass = computed(() => {
   switch (props.variant) {
     case 'primary':
@@ -32,6 +30,8 @@ const variantClass = computed(() => {
           'hover:text-slate-100'
     case 'secondary':
       return 'bg-slate-700'
+    case 'link':
+      return 'text-emerald-700 underline hover:text-emerald-600 hover:no-underline'
     case 'special':
       return 'bg-gradient-to-r from-emerald-500 to-teal-500 ' +
           'hover:from-emerald-400 hover:to-teal-400 ' +
@@ -45,16 +45,10 @@ const variantClass = computed(() => {
   <button
       :class="[variantClass]"
       class="px-5 py-3 rounded-md cursor-pointer "
-      v-if="!isLink"
       :type="type"
       :aria-label="text"
       v-text="text"
       :disabled="disabled"
-      v-bind="$attrs"
-  />
-  <a
-      v-else
-      v-text="text"
       v-bind="$attrs"
   />
 </template>
