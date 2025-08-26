@@ -1,6 +1,7 @@
 <script setup>
 
 import {useUniqueId} from "../composables/uniqueId.js";
+import {computed} from "vue";
 
 const inputId = useUniqueId('input')
 
@@ -23,7 +24,13 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  placeholder: {
+    type: String,
+    default: null,
+  },
 })
+
+const placeholderValue = computed(() => props.placeholder ?? props.label)
 
 </script>
 
@@ -42,6 +49,7 @@ const props = defineProps({
         :label="label"
         v-model="model"
         :id="inputId"
+        :placeholder="placeholderValue"
     />
     <span class="text-red-700 text-sm" v-if="vuelidate && vuelidate.$error">
       {{ vuelidate.$errors[0].$message }}

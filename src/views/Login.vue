@@ -99,12 +99,14 @@ const onFormSubmit = async () => {
         v-model="v$.username.$model"
         :vuelidate="v$.username"
         :label="t('username')"
+        placeholder=""
     />
     <Input
         type="password"
         v-model="v$.password.$model"
         :vuelidate="v$.password"
         :label="t('password')"
+        placeholder=""
     />
     <template #footer>
       <Button class="mt-5" variant="special" type="submit" :text="t('submit')"/>
