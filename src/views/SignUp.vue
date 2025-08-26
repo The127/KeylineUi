@@ -23,7 +23,7 @@ const { t } = useI18n({
       passwordRequirements: 'Password must be at least 8 characters long.'
     },
     de: {
-      title: 'In {appName} anmelden',
+      title: 'In {appName} registrieren',
       submit: 'Konto erstellen',
       username: 'Benutzername',
       email: 'E-Mail Adresse',
