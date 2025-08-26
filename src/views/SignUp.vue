@@ -116,6 +116,13 @@ const onFormSubmit = async () => {
         maxlength="255"
     />
     <Input
+        type="email"
+        v-model="v$.email.$model"
+        :vuelidate="v$.email"
+        :label="t('email')"
+        required
+    />
+    <Input
         type="password"
         v-model="v$.password.$model"
         :vuelidate="v$.password"
@@ -123,13 +130,6 @@ const onFormSubmit = async () => {
         required
         :helper-text="t('passwordRequirements')"
         minlength="8"
-    />
-    <Input
-        type="email"
-        v-model="v$.email.$model"
-        :vuelidate="v$.email"
-        :label="t('email')"
-        required
     />
     <template #footer>
       <Button variant="special" type="submit" :text="t('submit')"/>
