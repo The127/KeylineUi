@@ -27,15 +27,22 @@ const variantClass = computed(() => {
   switch (props.variant) {
     case 'primary':
       return 'border-3 border-emerald-700 hover:border-emerald-600 hover:bg-emerald-600 ' +
-          'hover:text-slate-100'
+          'hover:text-slate-100 ' +
+          'px-5 py-3 rounded-md'
+
     case 'secondary':
-      return 'bg-slate-700'
+      return 'bg-slate-700 ' +
+          'px-5 py-3 rounded-md'
+
     case 'link':
-      return 'text-emerald-700 underline hover:text-emerald-600 hover:no-underline'
+      return 'text-emerald-500 hover:text-emerald-600 ' +
+          'underline hover:no-underline'
+
     case 'special':
       return 'bg-gradient-to-r from-emerald-500 to-teal-500 ' +
           'hover:from-emerald-400 hover:to-teal-400 ' +
-          'text-slate-100 tracking-wider uppercase'
+          'text-slate-100 tracking-wider uppercase ' +
+          'px-5 py-3 rounded-md'
   }
 })
 
@@ -44,7 +51,7 @@ const variantClass = computed(() => {
 <template>
   <button
       :class="[variantClass]"
-      class="px-5 py-3 rounded-md cursor-pointer "
+      class="cursor-pointer"
       :type="type"
       :aria-label="text"
       v-text="text"
