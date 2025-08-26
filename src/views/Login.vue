@@ -58,7 +58,14 @@ const verifyPassword = useMutation({
       'Content-Type': 'application/json',
     },
   }).then(
-      (response) => response.json(),
+      (response) => {
+        console.log('response', response)
+        return response.json()
+      }
+  ).catch(
+      (e) => {
+        console.log('error', e)
+      }
   ),
   onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: ['login', route.query.token]})
