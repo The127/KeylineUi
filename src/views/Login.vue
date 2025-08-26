@@ -78,7 +78,7 @@ const formRules = {
 const v$ = useVuelidate(formRules, formModel)
 
 const onFormSubmit = async () => {
-  await verifyPassword.mutate({
+  await verifyPassword.mutateAsync({
     username: formModel.username,
     password: formModel.password,
   })

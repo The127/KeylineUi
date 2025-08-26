@@ -4,12 +4,12 @@ import Form from "../components/Form.vue";
 import {useI18n} from "vue-i18n";
 import Heading from "../components/Heading.vue";
 import Button from "../components/Button.vue";
-import {reactive} from "vue";
+import {markRaw, reactive} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import Input from "../components/Input.vue";
 import {useRoute} from "vue-router";
-import {useQuery, useQueryClient} from "@tanstack/vue-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/vue-query";
 
 const route = useRoute()
 const queryClient = useQueryClient()
@@ -21,12 +21,25 @@ const { isPending, isError, isFetching, data, error } = useQuery({
   )
 })
 
+const register = useMutation({
+  mutationFn: async (data) => await fetch(`http://127.0.0.1:8081/api/virtual-servers/${route.params.virtualServer}/users/register`,{
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(
+      (response) => response.json(),
+  )
+})
+
 const { t } = useI18n({
   messages: {
     en: {
       title: 'Sign up to {appName}',
       submit: 'Create account',
       username: 'Username',
+      displayName: 'Display Name',
       email: 'Email',
       password: 'Password',
       dontHaveAnAccount: 'Don\'t have an account?',
@@ -37,6 +50,7 @@ const { t } = useI18n({
       title: 'In {appName} registrieren',
       submit: 'Konto erstellen',
       username: 'Benutzername',
+      displayName: 'Anzeigename',
       email: 'E-Mail Adresse',
       password: 'Passwort',
       dontHaveAnAccount: 'Noch kein Konto?',
@@ -49,20 +63,27 @@ const { t } = useI18n({
 
 const formModel = reactive({
   username: '',
+  displayName: '',
   email: '',
   password: '',
 })
 
 const formRules = {
   username: { required, },
+  displayName: { required, },
   email: { required, },
   password: { required, },
 }
 
 const v$ = useVuelidate(formRules, formModel)
 
-const onFormSubmit = () => {
-  alert("registering")
+const onFormSubmit = async () => {
+  await register.mutateAsync({
+    username: formModel.username,
+    displayName: formModel.displayName,
+    email: formModel.email,
+    password: formModel.password,
+  })
 }
 
 </script>
@@ -84,6 +105,13 @@ const onFormSubmit = () => {
         v-model="v$.username.$model"
         :vuelidate="v$.username"
         :label="t('username')"
+        required
+        maxlength="255"
+    />
+    <Input
+        v-model="v$.displayName.$model"
+        :vuelidate="v$.displayName"
+        :label="t('displayName')"
         required
         maxlength="255"
     />
