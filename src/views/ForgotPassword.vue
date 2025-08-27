@@ -13,16 +13,14 @@ import HorizontalDivider from "../components/HorizontalDivider.vue";
 const { t } = useI18n({
   messages: {
     en: {
-      title: 'Reset password',
-      descriptionText: 'Enter your username and email address to start the password reset process.',
-      username: 'Username',
+      title: 'Forgot password',
+      descriptionText: 'Enter your email address to start the password reset process.',
       email: 'Email',
       submit: 'Reset password',
     },
     de: {
-      title: 'Passwort zurücksetzen',
-      descriptionText: 'Geben Sie Ihren Benutzernamen und Ihre E-Mail Addresse ein, um den Prozess zum Zurücksetzen Ihres Passworts zu start.',
-      username: 'Benutzername',
+      title: 'Passwort vergessen',
+      descriptionText: 'Geben Sie Ihre E-Mail Addresse ein, um den Prozess zum Zurücksetzen Ihres Passworts zu start.',
       email: 'E-Mail',
       submit: 'Passwort zurücksetzen',
     },
@@ -31,12 +29,10 @@ const { t } = useI18n({
 })
 
 const formModel = reactive({
-  username: '',
   email: '',
 })
 
 const formRules = {
-  username: { required, },
   email: { required, },
 }
 
@@ -64,13 +60,7 @@ const onFormSubmit = async () => {
       </p>
     </template>
     <Input
-        v-model="v$.username.$model"
-        :vuelidate="v$.username"
-        :label="t('username')"
-        required
-        autofocus
-    />
-    <Input
+        type="email"
         v-model="v$.email.$model"
         :vuelidate="v$.email"
         :label="t('email')"
