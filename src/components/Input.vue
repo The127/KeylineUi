@@ -57,6 +57,7 @@ const placeholderValue = computed(() => props.placeholder ?? props.label)
     <input
         :type="type"
         class="border border-slate-900 p-2 rounded-md bg-slate-50"
+        :class="{'has-error': vuelidate.$error,}"
         :label="label"
         v-model="model"
         :id="inputId"

@@ -14,3 +14,7 @@ a {
 :focus-visible {
     @apply ring-3 ring-emerald-600/50 outline-none border-emerald-600;
 }
+
+.has-error {
+    @apply border-red-700 ring-red-700/50;
+}
