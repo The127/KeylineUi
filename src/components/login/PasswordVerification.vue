@@ -6,7 +6,7 @@ import Form from "../Form.vue";
 import Heading from "../Heading.vue";
 import HorizontalDivider from "../HorizontalDivider.vue";
 import {useI18n} from "vue-i18n";
-import {reactive} from "vue";
+import {reactive, ref} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import {useMutation, useQueryClient} from "@tanstack/vue-query";
@@ -23,6 +23,8 @@ const { t } = useI18n({
       or: 'or',
       signInWithPasskey: 'Sign in with passkey',
       forgotPassword: 'forgot password?',
+      anErrorHappened: 'An error happened',
+      usernameOrPasswordWrong: 'Username or password is wrong',
     },
     de: {
       title: 'In {appName} anmelden',
@@ -34,6 +36,8 @@ const { t } = useI18n({
       or: 'oder',
       signInWithPasskey: 'Mit Passkey anmelden',
       forgotPassword: 'Passwort vergessen?',
+      anErrorHappened: 'Ein Fehler ist aufgetreten',
+      userNameOrPasswordWrong: 'Benutzername oder Passwort ist falsch',
     },
   },
   inheritLocale: true,
@@ -64,25 +68,42 @@ const formRules = {
 
 const v$ = useVuelidate(formRules, formModel)
 
+const loginError = ref(null)
+
 const onFormSubmit = async () => {
-  await verifyPassword.mutateAsync({
-    username: formModel.username,
-    password: formModel.password,
-  })
+  try{
+    await verifyPassword.mutateAsync({
+      username: formModel.username,
+      password: formModel.password,
+    })
+  }catch(e){
+    if (e instanceof AuthError) {
+      loginError.value = t('usernameOrPasswordWrong')
+    }else{
+      loginError.value = t('anErrorHappened')
+      console.error(e)
+    }
+  }
 }
 
+class AuthError extends Error {}
+
 const verifyPassword = useMutation({
-  mutationFn: async (data) => await fetch(`http://127.0.0.1:8081/logins/${props.token}/verify-password`,{
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).catch(
-      (e) => {
-        console.log('error', e)
-      }
-  ),
+  mutationFn: async (data) => {
+    const response = await fetch(`http://127.0.0.1:8081/logins/${props.token}/verify-password`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status === 401) {
+      throw new AuthError()
+    }
+
+    return response;
+  },
   onSuccess: () => {
     emit('next')
   },
@@ -104,6 +125,9 @@ const verifyPassword = useMutation({
       <Heading level="h2" class="text-center">
         {{ data.applicationDisplayName }}
       </Heading>
+      <p class="text-center text-red-700" v-if="loginError">
+        {{ loginError }}
+      </p>
     </template>
     <Input
         v-model="v$.username.$model"
