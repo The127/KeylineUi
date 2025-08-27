@@ -1,6 +1,6 @@
 <script setup>
 
-import {reactive} from "vue";
+import {reactive, ref} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import Form from "../Form.vue";
@@ -8,6 +8,7 @@ import {useI18n} from "vue-i18n";
 import Heading from "../Heading.vue";
 import Input from "../Input.vue";
 import Button from "../Button.vue";
+import {useMutation} from "@tanstack/vue-query";
 
 const { t } = useI18n({
   messages: {
@@ -16,6 +17,7 @@ const { t } = useI18n({
       subTitle: 'Reset temporary password',
       submit: 'Reset password',
       explanationText: 'Your password is marked as temporary. Please enter a new password below.',
+      anErrorHappened: 'An error happened',
       newPassword: 'New password',
     },
     de: {
@@ -23,6 +25,7 @@ const { t } = useI18n({
       subTitle: 'Temporäres Password zurücksetzen',
       submit: 'Passwort zurücksetzen',
       explanationText: 'Ihr Passwort ist als temporär markiert. Bitte geben Sie unten ein neues Passwort ein.',
+      anErrorHappened: 'Ein Fehler ist aufgetreten',
       newPassword: 'Neues Passwort',
     },
   },
@@ -52,9 +55,39 @@ const formRules = {
 
 const v$ = useVuelidate(formRules, formModel)
 
+const loginError = ref(null)
+
 const onFormSubmit = async () => {
-  alert("todo")
+  try{
+    await resetTemporaryPassword.mutateAsync({
+      newPassword: formModel.newPassword,
+    })
+  }catch(e){
+    loginError.value = t('anErrorHappened')
+    console.error(e)
+  }
 }
+
+const resetTemporaryPassword = useMutation({
+  mutationFn: async (data) => {
+    const response = await fetch(`http://127.0.0.1:8081/logins/${props.token}/reset-temporary-password`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status >= 400) {
+      throw new Error(response.statusText)
+    }
+
+    return response;
+  },
+  onSuccess: () => {
+    emit('next')
+  },
+})
 
 </script>
 
@@ -75,12 +108,16 @@ const onFormSubmit = async () => {
       <p class="text-center">
         {{ t('explanationText') }}
       </p>
+      <p class="text-center text-red-700" v-if="loginError">
+        {{ loginError }}
+      </p>
     </template>
     <Input
         v-model="v$.newPassword.$model"
         :vuelidate="v$.newPassword"
         :label="t('newPassword')"
         required
+        type="password"
     />
     <template #footer>
       <Button
