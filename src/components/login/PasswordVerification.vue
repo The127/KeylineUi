@@ -74,7 +74,7 @@ const onFormSubmit = async () => {
   try{
     await verifyPassword.mutateAsync({
       username: formModel.username,
-      //password: formModel.password,
+      password: formModel.password,
     })
   }catch(e){
     if (e instanceof AuthError) {
@@ -101,7 +101,7 @@ const verifyPassword = useMutation({
     if (response.status === 401) {
       throw new AuthError()
     }
-    if (response.status !== 200) {
+    if (response.status >= 400) {
       throw new Error(response.statusText)
     }
 
