@@ -32,7 +32,7 @@ const { t } = useI18n({
       dontHaveAnAccount: 'Noch kein Konto?',
       register: 'Registrieren',
       or: 'oder',
-      signInWithPasskey: 'Mit Passkey einloggen',
+      signInWithPasskey: 'Mit Passkey anmelden',
       forgotPassword: 'Passwort vergessen?',
     },
   },
