@@ -5,6 +5,7 @@ import {useQuery, useQueryClient} from "@tanstack/vue-query";
 import PasswordVerification from "../components/login/PasswordVerification.vue";
 import EmailVerification from "../components/login/EmailVerification.vue";
 import Spinner from "../components/Spinner.vue";
+import TemporaryPasswordReset from "../components/login/TemporaryPasswordReset.vue";
 
 const route = useRoute()
 const queryClient = useQueryClient()
@@ -56,6 +57,12 @@ const onNext = () => {
   <div v-else>
     <PasswordVerification
         v-if="data.step === 'passwordVerification'"
+        :token="route.query.token"
+        :data="data"
+        @next="onNext"
+    />
+    <TemporaryPasswordReset
+        v-if="data.step === 'temporaryPassword'"
         :token="route.query.token"
         :data="data"
         @next="onNext"
