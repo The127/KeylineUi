@@ -15,6 +15,7 @@ const { t } = useI18n({
   messages: {
     en: {
       title: 'Sign in to {appName}',
+      subtitle: 'via {tenantName}',
       submit: 'Sign In',
       username: 'Username',
       password: 'Password',
@@ -28,6 +29,7 @@ const { t } = useI18n({
     },
     de: {
       title: 'In {appName} anmelden',
+      subtitle: 'via {tenantName}',
       submit: 'Einloggen',
       username: 'Benutzername',
       password: 'Passwort',
@@ -123,10 +125,10 @@ const verifyPassword = useMutation({
   >
     <template #header>
       <Heading class="text-center">
-        {{ t('title', { appName: data.virtualServerDisplayName }) }}
+        {{ t('title', { appName: data.applicationDisplayName }) }}
       </Heading>
       <Heading level="h2" class="text-center">
-        {{ data.applicationDisplayName }}
+        {{ t('subtitle', { tenantName: data.virtualServerDisplayName}) }}
       </Heading>
       <p class="text-center text-red-700" v-if="loginError">
         {{ loginError }}
