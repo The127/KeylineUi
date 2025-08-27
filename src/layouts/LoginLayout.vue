@@ -1,5 +1,5 @@
 <script setup>
-import { Github } from 'lucide-vue-next';
+import KeylineIcon from "../components/icons/KeylineIcon.vue";
 </script>
 
 <template>
@@ -11,7 +11,7 @@ import { Github } from 'lucide-vue-next';
     </div>
     <footer class="bg-slate-100 px-8 py-5 flex flex-row flex-wrap justify-end">
       <span class="flex flex-row flex-wrap items-center gap-1">
-        <Github/>
+        <KeylineIcon class="w-6 h-6"/>
         Powered by
         <a href="https://github.com/the127/keyline">
           Keyline
