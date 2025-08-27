@@ -13,7 +13,7 @@ const { isPending, isError, data, error } = useQuery({
   queryKey: ['login', route.query.token],
   queryFn: async () => await fetch(`http://127.0.0.1:8081/logins/${route.query.token}`).then(
       async (response) => {
-        var json = await response.json();
+        const json = await response.json();
         if (json.step === 'finish') {
           finishLogin()
         }
