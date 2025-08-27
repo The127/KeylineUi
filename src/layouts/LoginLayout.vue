@@ -10,9 +10,9 @@ import KeylineIcon from "../components/icons/KeylineIcon.vue";
       </div>
     </div>
     <footer class="bg-slate-100 px-8 py-5 flex flex-row flex-wrap justify-end">
-      <span class="flex flex-row flex-wrap items-center gap-1">
+      <span class="flex flex-row flex-wrap items-center gap-1 justify-baseline">
         <KeylineIcon class="w-6 h-6"/>
-        Powered by
+        <span class="text-slate-500">Powered by</span>
         <a href="https://github.com/the127/keyline">
           Keyline
         </a>
