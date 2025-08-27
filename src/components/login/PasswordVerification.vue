@@ -39,7 +39,7 @@ const { t } = useI18n({
       signInWithPasskey: 'Mit Passkey anmelden',
       forgotPassword: 'Passwort vergessen?',
       anErrorHappened: 'Ein Fehler ist aufgetreten',
-      userNameOrPasswordWrong: 'Benutzername oder Passwort ist falsch',
+      usernameOrPasswordWrong: 'Benutzername oder Passwort ist falsch',
     },
   },
   inheritLocale: true,
