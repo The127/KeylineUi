@@ -30,6 +30,14 @@ const routes = [
             layout: "login-layout",
         },
     },
+    {
+        path: "/:virtualServer/forgot-password",
+        name: 'forgot-password',
+        component: () => import('../views/ForgotPassword.vue'),
+        meta: {
+            layout: "login-layout",
+        },
+    },
 ]
 
 const router = createRouter({

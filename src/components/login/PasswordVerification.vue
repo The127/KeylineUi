@@ -151,9 +151,9 @@ const verifyPassword = useMutation({
         tabindex="2"
     >
       <template #action>
-        <a href="todo" tabindex="4">
+        <RouterLink :to="{name: 'forgot-password', params: {virtualServer: data.virtualServerName,},}" tabindex="4">
           {{ t('forgotPassword') }}
-        </a>
+        </RouterLink>
       </template>
     </Input>
     <template #footer>
