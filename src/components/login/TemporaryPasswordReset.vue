@@ -118,6 +118,7 @@ const resetTemporaryPassword = useMutation({
         :label="t('newPassword')"
         required
         type="password"
+        autofocus
     />
     <template #footer>
       <Button

@@ -6,6 +6,7 @@ import {useI18n} from "vue-i18n";
 import Button from "../Button.vue";
 import {ref} from "vue";
 import {useMutation} from "@tanstack/vue-query";
+import Input from "../Input.vue";
 
 
 const { t } = useI18n({
@@ -145,6 +146,7 @@ const resendVerificationMail = useMutation({
           size="lg"
           type="submit"
           :text="t('submit')"
+          autofocus
       />
       <Button
           variant="link"

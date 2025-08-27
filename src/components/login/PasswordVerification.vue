@@ -140,6 +140,7 @@ const verifyPassword = useMutation({
         :label="t('username')"
         required
         tabindex="1"
+        autofocus
     />
     <Input
         type="password"

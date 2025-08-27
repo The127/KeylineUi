@@ -107,6 +107,7 @@ const onFormSubmit = async () => {
         :label="t('username')"
         required
         maxlength="255"
+        autofocus
     />
     <Input
         v-model="v$.displayName.$model"
