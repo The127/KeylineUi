@@ -4,6 +4,7 @@ import {useRoute} from "vue-router";
 import {useQuery, useQueryClient} from "@tanstack/vue-query";
 import PasswordVerification from "../components/login/PasswordVerification.vue";
 import EmailVerification from "../components/login/EmailVerification.vue";
+import Spinner from "../components/Spinner.vue";
 
 const route = useRoute()
 const queryClient = useQueryClient()
@@ -65,6 +66,9 @@ const onNext = () => {
         :data="data"
         @next="onNext"
     />
+    <div v-else-if="data.step === 'finish'" class="flex flex-row justify-center items-center">
+      <Spinner/>
+    </div>
     <div v-else>
       Unknown step: {{ data.step }}
     </div>
