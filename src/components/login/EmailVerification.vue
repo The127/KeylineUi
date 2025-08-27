@@ -74,7 +74,7 @@ const onResendVerificationMail = async () => {
   >
     <template #header>
       <Heading class="text-center">
-        {{ t('title', { appName: data.virtualServerDisplayName }) }}
+        {{ t('title', { appName: data.applicationDisplayName }) }}
       </Heading>
       <Heading level="h2" class="text-center">
         {{ t('subTitle') }}
