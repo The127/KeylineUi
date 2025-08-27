@@ -4,10 +4,7 @@ import Form from "../Form.vue";
 import Heading from "../Heading.vue";
 import {useI18n} from "vue-i18n";
 import Button from "../Button.vue";
-import Input from "../Input.vue";
-import {reactive, ref} from "vue";
-import {required} from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
+import {ref} from "vue";
 import {useMutation} from "@tanstack/vue-query";
 
 
@@ -16,20 +13,22 @@ const { t } = useI18n({
     en: {
       title: 'Sign in to {appName}',
       subTitle: 'Verify email address',
-      explanationText: 'We sent you an email with a verification code. Please enter the code below.',
+      explanationText: 'We sent you an email with a verification code. Please click the link in the email and press the button below.',
       verificationCode: 'Verification code',
-      submit: 'Verify email',
+      submit: 'email verified',
       anErrorHappened: 'An error happened',
       resendVerificationEmail: 'Resend verification email',
+      emailStillNotVerified: 'Email still not verified, try resending the verification email',
     },
     de: {
       title: 'In {appName} anmelden',
       subtitle: 'E-Mail Adresse verifizieren',
-      explanationText: 'Wir haben Ihnen eine E-Mail mit einem Verifizierungscode gesendet. Bitte geben Sie den Code unten ein.',
+      explanationText: 'Wir haben Ihnen eine E-Mail mit einem Verifizierungscode gesendet. Bitte klicken Sie auf den Link in der E-Mail und anschließend auf den Button auf dieser Seite.',
       verificationCode: 'Verifizierungscode',
-      submit: 'E-Mail verifizieren',
+      submit: 'E-Mail verifiziert',
       anErrorHappened: 'Ein Fehler ist aufgetreten',
       resendVerificationEmail: 'E-Mail erneut senden',
+      emailStillNotVerified: 'E-Mail noch nicht verifiziert, versuchen Sie es erneut',
     },
   },
   inheritLocale: true,
@@ -48,26 +47,18 @@ const props = defineProps({
 
 const emit = defineEmits(['next'])
 
-const formModel = reactive({
-  verificationToken: '',
-})
-
-const formRules = {
-  verificationToken: { required, },
-}
-
-const v$ = useVuelidate(formRules, formModel)
-
 const apiError = ref(null)
 
 const onFormSubmit = async () => {
   try{
-    await verifyEmail.mutateAsync({
-      verificationCode: formModel.verificationToken,
-    })
+    await verifyEmail.mutateAsync()
   }catch (e) {
-    apiError.value = t('anErrorHappened')
-    console.error(e)
+    if (e instanceof AuthError) {
+      apiError.value = t('emailStillNotVerified')
+    }else{
+      apiError.value = t('anErrorHappened')
+      console.error(e)
+    }
   }
 }
 
@@ -80,6 +71,10 @@ const verifyEmail = useMutation({
         'Content-Type': 'application/json',
       },
     });
+
+    if (response.status === 401) {
+      throw new AuthError()
+    }
 
     if (response.status >= 400) {
       throw new Error(response.statusText)
@@ -100,6 +95,8 @@ const onResendVerificationMail = async () => {
     console.error(e)
   }
 }
+
+class AuthError extends Error {}
 
 const resendVerificationMail = useMutation({
   mutationFn: async (data) => {
@@ -138,16 +135,10 @@ const resendVerificationMail = useMutation({
       <p class="text-center">
         {{ t('explanationText') }}
       </p>
-      <p class="text-center text-red-700" v-if="loginError">
-        {{ loginError }}
+      <p class="text-center text-red-700" v-if="apiError">
+        {{ apiError }}
       </p>
     </template>
-    <Input
-        v-model="v$.verificationToken.$model"
-        :vuelidate="v$.verificationToken"
-        :label="t('verificationCode')"
-        required
-    />
     <template #footer>
       <Button
           variant="special"
