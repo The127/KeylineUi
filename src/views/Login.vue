@@ -47,8 +47,8 @@ const onNext = () => {
 </script>
 
 <template>
-  <div v-if="isPending">
-    Pending
+  <div v-if="isPending" class="flex flex-row justify-center items-center">
+      <Spinner/>
   </div>
   <div v-else-if="isError">
     Error {{ error }}
