@@ -62,7 +62,7 @@ const onNext = () => {
         @next="onNext"
     />
     <TemporaryPasswordReset
-        v-if="data.step === 'temporaryPassword'"
+        v-else-if="data.step === 'temporaryPassword'"
         :token="route.query.token"
         :data="data"
         @next="onNext"
@@ -73,7 +73,10 @@ const onNext = () => {
         :data="data"
         @next="onNext"
     />
-    <div v-else-if="data.step === 'finish'" class="flex flex-row justify-center items-center">
+    <div
+        v-else-if="data.step === 'finish'"
+        class="flex flex-row justify-center items-center"
+    >
       <Spinner/>
     </div>
     <div v-else>
