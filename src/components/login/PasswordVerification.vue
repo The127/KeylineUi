@@ -165,9 +165,9 @@ const verifyPassword = useMutation({
           tabindex="3"
       />
       <HorizontalDivider :text="t('or')"/>
-      <div v-if="data.signUpUrl" class="flex flex-row flex-wrap items-center justify-center gap-1">
+      <div v-if="data.signupEnabled" class="flex flex-row flex-wrap items-center justify-center gap-1">
         <span>{{ t('dontHaveAnAccount') }}</span>
-        <a :href="data.signUpUrl">{{ t('register') }}</a>
+        <RouterLink :to="{name: 'signup', params: {virtualServer: data.virtualServerName},}">{{ t('register') }}</RouterLink>
       </div>
       <Button variant="link" :text="t('signInWithPasskey')"></Button>
     </template>
