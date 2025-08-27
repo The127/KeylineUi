@@ -11,9 +11,35 @@ const queryClient = useQueryClient()
 const { isPending, isError, data, error } = useQuery({
   queryKey: ['login', route.query.token],
   queryFn: async () => await fetch(`http://127.0.0.1:8081/logins/${route.query.token}`).then(
-      (response) => response.json(),
+      async (response) => {
+        var json = await response.json();
+        console.log(json)
+        if (json.step === 'finish') {
+          finalSubmit()
+        }
+        return json
+      }
   ),
 })
+
+const finalSubmit = () => {
+  const form = document.createElement('form');
+
+  form.method = 'POST';
+  //TODO: get from urls
+  form.action = `http://127.0.0.1:8081/logins/${route.query.token}/finish-login`;
+  form.style = 'display: none';
+
+  const tokenInput = document.createElement('input');
+  tokenInput.type = 'hidden';
+  tokenInput.name = 'token';
+  tokenInput.value = route.query.token;
+  form.appendChild(tokenInput);
+
+  document.body.appendChild(form);
+
+  form.submit();
+}
 
 const onNext = () => {
   queryClient.invalidateQueries({ queryKey: ['login', route.query.token]})
