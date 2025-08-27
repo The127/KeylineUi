@@ -5,9 +5,10 @@ import Heading from "../Heading.vue";
 import {useI18n} from "vue-i18n";
 import Button from "../Button.vue";
 import Input from "../Input.vue";
-import {reactive} from "vue";
+import {reactive, ref} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
+import {useMutation} from "@tanstack/vue-query";
 
 
 const { t } = useI18n({
@@ -18,6 +19,7 @@ const { t } = useI18n({
       explanationText: 'We sent you an email with a verification code. Please enter the code below.',
       verificationCode: 'Verification code',
       submit: 'Verify email',
+      anErrorHappened: 'An error happened',
       resendVerificationEmail: 'Resend verification email',
     },
     de: {
@@ -26,6 +28,7 @@ const { t } = useI18n({
       explanationText: 'Wir haben Ihnen eine E-Mail mit einem Verifizierungscode gesendet. Bitte geben Sie den Code unten ein.',
       verificationCode: 'Verifizierungscode',
       submit: 'E-Mail verifizieren',
+      anErrorHappened: 'Ein Fehler ist aufgetreten',
       resendVerificationEmail: 'E-Mail erneut senden',
     },
   },
@@ -59,9 +62,34 @@ const onFormSubmit = async () => {
   alert('todo')
 }
 
+const apiError = ref(null)
+
 const onResendVerificationMail = async () => {
-  alert('todo')
+  try{
+    await resendVerificationMail.mutateAsync()
+  }catch (e) {
+    apiError.value = t('anErrorHappened')
+    console.error(e)
+  }
 }
+
+const resendVerificationMail = useMutation({
+  mutationFn: async (data) => {
+    const response = await fetch(`http://127.0.0.1:8081/logins/${props.token}/resend-email-verification`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status >= 400) {
+      throw new Error(response.statusText)
+    }
+
+    return response;
+  }
+})
 
 </script>
 
@@ -81,6 +109,9 @@ const onResendVerificationMail = async () => {
       </Heading>
       <p class="text-center">
         {{ t('explanationText') }}
+      </p>
+      <p class="text-center text-red-700" v-if="loginError">
+        {{ loginError }}
       </p>
     </template>
     <Input
