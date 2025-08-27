@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 
 import {useRoute} from "vue-router";
 import {useQuery, useQueryClient} from "@tanstack/vue-query";
@@ -13,20 +13,18 @@ const { isPending, isError, data, error } = useQuery({
   queryFn: async () => await fetch(`http://127.0.0.1:8081/logins/${route.query.token}`).then(
       async (response) => {
         var json = await response.json();
-        console.log(json)
         if (json.step === 'finish') {
-          finalSubmit()
+          finishLogin()
         }
         return json
       }
   ),
 })
 
-const finalSubmit = () => {
+const finishLogin = () => {
   const form = document.createElement('form');
 
   form.method = 'POST';
-  //TODO: get from urls
   form.action = `http://127.0.0.1:8081/logins/${route.query.token}/finish-login`;
   form.style = 'display: none';
 
