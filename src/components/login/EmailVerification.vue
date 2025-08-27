@@ -58,11 +58,39 @@ const formRules = {
 
 const v$ = useVuelidate(formRules, formModel)
 
+const apiError = ref(null)
+
 const onFormSubmit = async () => {
-  alert('todo')
+  try{
+    await verifyEmail.mutateAsync({
+      verificationCode: formModel.verificationToken,
+    })
+  }catch (e) {
+    apiError.value = t('anErrorHappened')
+    console.error(e)
+  }
 }
 
-const apiError = ref(null)
+const verifyEmail = useMutation({
+  mutationFn: async (data) => {
+    const response = await fetch(`http://127.0.0.1:8081/logins/${props.token}/verify-email`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status >= 400) {
+      throw new Error(response.statusText)
+    }
+
+    return response;
+  },
+  onSuccess: () => {
+    emit('next')
+  },
+})
 
 const onResendVerificationMail = async () => {
   try{
