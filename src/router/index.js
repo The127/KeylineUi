@@ -22,6 +22,14 @@ const routes = [
             layout: "login-layout",
         },
     },
+    {
+        path: '/:virtualServer/email-verified',
+        name: 'email-verified',
+        component:  () => import('../views/EmailVerified.vue'),
+        meta: {
+            layout: "login-layout",
+        },
+    },
 ]
 
 const router = createRouter({
