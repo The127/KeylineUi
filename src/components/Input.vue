@@ -56,7 +56,7 @@ const placeholderValue = computed(() => props.placeholder ?? props.label)
     </div>
     <input
         :type="type"
-        class="border border-slate-900 p-2 rounded-md"
+        class="border border-slate-900 p-2 rounded-md bg-slate-50"
         :label="label"
         v-model="model"
         :id="inputId"
