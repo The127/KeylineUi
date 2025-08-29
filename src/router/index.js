@@ -7,6 +7,11 @@ const routes = [
         component:  () => import('../views/Debug.vue'),
     },
     {
+        path: '/debugRedirectTarget',
+        name: 'debugRedirectTarget',
+        component:  () => import('../views/DebugRedirectTarget.vue'),
+    },
+    {
         path: '/login',
         name: 'login',
         component:  () => import('../views/Login.vue'),
