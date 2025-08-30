@@ -79,6 +79,7 @@ const mgr = new UserManager({
     redirect_uri: "http://localhost:5173/mgmt/keyline/auth",
     response_type: "code",
     scope: "oidc profile email",
+    automaticSilentRenew: true,
 })
 
 async function handleLoginCallback() {

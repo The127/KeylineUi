@@ -16,7 +16,11 @@ const { t } = useI18n({
     },
     de: {
       anErrorHappened: 'Ein Fehler ist aufgetreten',
-      loginTimeout: 'Der Login-Versuch hat die maximale Zeitdauer überschritten. Bitte starten sie den Login erneut, indem Sie zur vorigen Anwendung zurück navigieren.'
+      loginTimeout: 'Der Login-Versuch hat die maximale Zeitdauer überschritten. Bitte starten Sie den Login erneut, indem Sie zur vorigen Anwendung zurück navigieren.'
+    },
+    da: {
+      anErrorHappened: 'Der skete en fejl',
+      loginTimeout: 'Loginforsøget tog for lang tid. Gå tilbage til den oprindelige hjemmeside og prøv igen.',
     },
   },
   inheritLocale: true,

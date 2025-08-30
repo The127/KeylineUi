@@ -41,6 +41,18 @@ const { t } = useI18n({
       anErrorHappened: 'Ein Fehler ist aufgetreten',
       usernameOrPasswordWrong: 'Benutzername oder Passwort ist falsch',
     },
+    da: {
+      title: 'Login til {appName}',
+      subtitle: 'via {tenantName}',
+      submit: 'Log ind',
+      username: 'Brugernavn',
+      password: 'Adgangskode',
+      dontHaveAnAccount: 'Har du ikke en konto?',
+      register: 'Registrer',
+      or: 'eller',
+      signInWithPasskey: 'Log ind med passkey',
+      forgotPassword: 'Glemt adgangskode?',
+    },
   },
   inheritLocale: true,
 })

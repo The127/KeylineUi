@@ -31,6 +31,16 @@ const { t } = useI18n({
       resendVerificationEmail: 'E-Mail erneut senden',
       emailStillNotVerified: 'E-Mail noch nicht verifiziert, versuchen Sie es erneut',
     },
+    da: {
+      title: 'Login til {appName}',
+      subTitle: 'Verificer e-mailadresse',
+      explanationText: 'Vi har sendt dig en e-mail med en verifikationskode. Venligst klik på linket i e-mailen og tryk på knappen nedenfor.',
+      verificationCode: 'Verifikationskode',
+      submit: 'E-mail verificeret',
+      anErrorHappened: 'Der skete en fejl',
+      resendVerificationEmail: 'Gensend verificeringsmail',
+      emailStillNotVerified: 'E-mail er endu ikke verificeret, prøv at gensende verificeringsmailen',
+    },
   },
   inheritLocale: true,
 })

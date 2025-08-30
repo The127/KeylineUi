@@ -20,9 +20,15 @@ const { t } = useI18n({
     },
     de: {
       title: 'Passwort vergessen',
-      descriptionText: 'Geben Sie Ihre E-Mail Addresse ein, um den Prozess zum Zurücksetzen Ihres Passworts zu start.',
+      descriptionText: 'Geben Sie Ihre E-Mail Addresse ein, um den Prozess zum Zurücksetzen Ihres Passworts zu starten.',
       email: 'E-Mail',
       submit: 'Passwort zurücksetzen',
+    },
+    da: {
+      title: 'Glemt adgangskode',
+      descriptionText: 'Indtast din e-mailadresse for at nulstille din adgangskode.',
+      email: 'E-mail',
+      submit: 'Nulstil adgangskode',
     },
   },
   inheritLocale: true,

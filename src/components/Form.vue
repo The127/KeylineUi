@@ -10,6 +10,7 @@ const { t } = useI18n({
   messages: {
     en: { submit: 'submit' },
     de: { submit: 'absenden' },
+    da: { submit: 'indsend' },
   },
   inheritLocale: true,
 })

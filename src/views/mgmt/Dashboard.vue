@@ -13,6 +13,9 @@ const { t } = useI18n({
     de: {
       title: 'Dashboard',
     },
+    da : {
+      title: 'Dashboard',
+    },
   },
   inheritLocale: true,
 })

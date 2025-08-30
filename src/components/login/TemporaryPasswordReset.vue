@@ -28,6 +28,14 @@ const { t } = useI18n({
       anErrorHappened: 'Ein Fehler ist aufgetreten',
       newPassword: 'Neues Passwort',
     },
+    da: {
+      title: 'Login til {appName}',
+      subTitle: 'Nulstil midlertidig adgangskode',
+      submit: 'Nulstil adgangskode',
+      explanationText: 'Din adgangskode er markeret som midlertidig. Venligst indtast en ny adgangskode nedenfor.',
+      anErrorHappened: 'Der skete en fejl',
+      newPassword: 'Ny adgangskode',
+    },
   },
   inheritLocale: true,
 })
