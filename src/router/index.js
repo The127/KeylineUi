@@ -44,7 +44,7 @@ const routes = [
         },
     },
     {
-        path: "/mgmt",
+        path: "/mgmt/:vsName",
         name: 'mgmt',
         component: () => import('../views/mgmt/Management.vue'),
         children: [
