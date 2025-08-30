@@ -83,7 +83,6 @@ const mgr = new UserManager({
 
 async function handleLoginCallback() {
     const user = await mgr.signinRedirectCallback()
-    console.log("redirect callback", user)
     return user.state.destination;
 }
 
@@ -93,26 +92,20 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-    console.log("checking auth")
     if (to.meta.requiresAuth) {
-        console.log("requires auth")
         if (await mgr.getUser() === null) {
-            console.log("redirecting to login")
-            const request = await mgr.createSigninRequest(
+            await mgr.signinRedirect(
                 {
                     state: {
                         destination: to.fullPath,
                     }
                 }
             )
-            window.location.assign("http://" + request.url) // <-- bypasses router
             next(false)
         }else {
-            console.log("user is logged in")
             next()
         }
     }else{
-        console.log("no auth")
         next()
     }
 })
