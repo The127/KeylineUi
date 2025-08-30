@@ -3,6 +3,7 @@
 import PageHeader from "../../components/PageHeader.vue";
 import {useI18n} from "vue-i18n";
 import Button from "../../components/Button.vue";
+import PageLayout from "../../components/PageLayout.vue";
 
 const { t } = useI18n({
   messages: {
@@ -19,26 +20,34 @@ const { t } = useI18n({
 </script>
 
 <template>
-  <PageHeader
-      :title="t('title')"
-      subtitle="You can do things on this page"
-  >
-    <Button text="Do things"/>
-  </PageHeader>
-
-  actual page content
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod,
-  </p>
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod,
-  </p>
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod,
-  </p>
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod,
-  </p>
+  <PageLayout>
+    <template #header>
+      <PageHeader
+          :title="t('title')"
+          subtitle="You can do things on this page"
+      >
+        <Button text="Do things"/>
+      </PageHeader>
+    </template>
+    <div>
+      actual page content
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod,
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod,
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod,
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod,
+      </p>
+    </div>
+    <template #footer>
+      Footer content
+    </template>
+  </PageLayout>
 </template>
 
 <style scoped>

@@ -10,6 +10,9 @@ import Avatar from "../../components/Avatar.vue";
       <KeylineIcon class="w-12 h-12"/> Keyline
     </div>
     <div>
+      Search
+    </div>
+    <div>
       <Avatar username="Dark Arotte"/>
     </div>
   </div>
