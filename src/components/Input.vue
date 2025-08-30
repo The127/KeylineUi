@@ -39,6 +39,7 @@ const props = defineProps({
 })
 
 const placeholderValue = computed(() => props.placeholder ?? props.label)
+const hasError = computed(() => !!props.vuelidate && props.vuelidate.$error)
 
 </script>
 
@@ -57,14 +58,14 @@ const placeholderValue = computed(() => props.placeholder ?? props.label)
     <input
         :type="type"
         class="border border-slate-900 p-2 rounded-md bg-slate-50"
-        :class="{'has-error': vuelidate.$error,}"
+        :class="{'has-error': hasError,}"
         :label="label"
         v-model="model"
         :id="inputId"
         :placeholder="placeholderValue"
         v-bind="$attrs"
     />
-    <span class="text-red-700 text-xs" v-if="vuelidate && vuelidate.$error">
+    <span class="text-red-700 text-xs" v-if="hasError">
       {{ vuelidate.$errors[0].$message }}
     </span>
     <span class="text-slate-500 text-xs" v-if="helperText">

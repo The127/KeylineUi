@@ -2,6 +2,7 @@
 
 import KeylineIcon from "../../components/icons/KeylineIcon.vue";
 import Avatar from "../../components/Avatar.vue";
+import Input from "../../components/Input.vue";
 </script>
 
 <template>
@@ -10,7 +11,7 @@ import Avatar from "../../components/Avatar.vue";
       <KeylineIcon class="w-12 h-12"/>
     </RouterLink>
     <div>
-      Search
+      <Input label="Search"/>
     </div>
     <div>
       <Avatar username="Dark Arotte"/>
