@@ -47,6 +47,9 @@ const routes = [
         path: "/mgmt/:vsName",
         name: 'mgmt',
         component: () => import('../views/mgmt/Management.vue'),
+        meta: {
+            layout: "main-layout",
+        },
         children: [
             {
                 path: '',

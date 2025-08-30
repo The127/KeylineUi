@@ -8,6 +8,7 @@ const route = useRoute()
 
 const layout = computed(() => {
   if (route.meta.layout === 'login-layout') return LoginLayout
+  else if (route.meta.layout === 'main-layout') return MainLayout
   return MainLayout
 })
 </script>
