@@ -43,6 +43,18 @@ const routes = [
             layout: "login-layout",
         },
     },
+    {
+        path: "/mgmt",
+        name: 'mgmt',
+        component: () => import('../views/mgmt/Management.vue'),
+        children: [
+            {
+                path: '',
+                name: 'mgmt-dashboard',
+                component: () => import('../views/mgmt/Dashboard.vue'),
+            }
+        ]
+    },
 ]
 
 const router = createRouter({
