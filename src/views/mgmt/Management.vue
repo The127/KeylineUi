@@ -1,6 +1,7 @@
 <script setup>
 
 import KeylineIcon from "../../components/icons/KeylineIcon.vue";
+import Avatar from "../../components/Avatar.vue";
 </script>
 
 <template>
@@ -9,7 +10,7 @@ import KeylineIcon from "../../components/icons/KeylineIcon.vue";
       <KeylineIcon class="w-12 h-12"/> Keyline
     </div>
     <div>
-      User
+      <Avatar username="Dark Arotte"/>
     </div>
   </div>
   <router-view />
