@@ -19,7 +19,7 @@ const shorthand = computed(() => {
 </script>
 
 <template>
-  <div class="rounded-full overflow-hidden w-12 h-12 bg-slate-200 flex items-center justify-center text-sm font-semibold">
+  <div class="rounded-full overflow-hidden w-12 h-12 bg-slate-300 flex items-center justify-center text-sm font-semibold">
     <img
         v-if="src"
         :src="src"

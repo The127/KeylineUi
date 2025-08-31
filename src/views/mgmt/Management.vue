@@ -18,9 +18,9 @@ const userName = computedAsync(async () => {
 </script>
 
 <template>
-  <div class="flex flex-row gap-3 justify-between bg-slate-100 p-5">
+  <div class="flex flex-row gap-3 justify-between bg-gradient-to-r from-slate-50 via-slate-200 to-slate-200 p-5 shadow-xl">
     <RouterLink :to="{name: 'mgmt-dashboard'}" class="flex flex-row gap-2 items-center">
-      <KeylineIcon class="w-12 h-12"/>
+      <KeylineIcon class="w-12 h-12 "/>
     </RouterLink>
     <div>
       <Input placeholder="Search anything..."/>
