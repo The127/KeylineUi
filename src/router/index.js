@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import {UserManager} from "oidc-client";
+import {useUserManager} from "../composables/userManager.js";
 
 const routes = [
     {
@@ -72,15 +72,7 @@ const routes = [
     },
 ]
 
-const mgr = new UserManager({
-    authority: "http://127.0.0.1:8081/oidc/keyline",
-    metadataUrl: "http://127.0.0.1:8081/oidc/keyline/.well-known/openid-configuration",
-    client_id: "admin-ui",
-    redirect_uri: "http://localhost:5173/mgmt/keyline/auth",
-    response_type: "code",
-    scope: "oidc profile email",
-    automaticSilentRenew: true,
-})
+const mgr = useUserManager()
 
 async function handleLoginCallback() {
     const user = await mgr.signinRedirectCallback()
