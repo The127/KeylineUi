@@ -83,7 +83,7 @@ const router = createRouter({
     routes,
 })
 
-router.beforeEach(async (to, from, next) => {
+const authGuard = async (to, from, next) => {
     if (!to.meta.requiresAuth) {
         next()
         return
@@ -101,6 +101,8 @@ router.beforeEach(async (to, from, next) => {
         }
     })
     next(false)
-})
+}
+
+router.beforeEach(authGuard)
 
 export default router
