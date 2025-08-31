@@ -1,5 +1,4 @@
 import {UserManager} from "oidc-client";
-import {useRouter} from "vue-router";
 
 let mgr = null;
 
