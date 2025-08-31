@@ -72,9 +72,8 @@ const routes = [
     },
 ]
 
-const mgr = useUserManager()
-
 async function handleLoginCallback() {
+    const mgr = useUserManager('keyline')
     const user = await mgr.signinRedirectCallback()
     return user.state.destination;
 }
@@ -86,6 +85,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
     if (to.meta.requiresAuth) {
+        const mgr = useUserManager('keyline')
         if (await mgr.getUser() === null) {
             await mgr.signinRedirect(
                 {
