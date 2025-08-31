@@ -11,12 +11,12 @@ const props = defineProps({
 })
 
 const defaultClasses = {
-  h1: 'text-3xl font-bold mb-4',
-  h2: 'text-2xl font-semibold mb-3',
-  h3: 'text-xl font-medium mb-2',
-  h4: 'text-lg font-medium mb-1',
-  h5: 'text-base font-medium mb-1',
-  h6: 'text-sm font-medium mb-1',
+  h1: 'text-3xl font-bold',
+  h2: 'text-2xl font-semibold',
+  h3: 'text-xl font-medium',
+  h4: 'text-lg font-medium',
+  h5: 'text-base font-medium',
+  h6: 'text-sm font-medium',
 }
 
 const headingClass = computed(() => defaultClasses[props.level])
