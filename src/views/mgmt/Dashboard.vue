@@ -4,6 +4,8 @@ import PageHeader from "../../components/PageHeader.vue";
 import {useI18n} from "vue-i18n";
 import Button from "../../components/Button.vue";
 import PageLayout from "../../components/PageLayout.vue";
+import {useRoute} from "vue-router";
+import {useUserManager} from "../../composables/userManager.js";
 
 const { t } = useI18n({
   messages: {
@@ -20,6 +22,13 @@ const { t } = useI18n({
   inheritLocale: true,
 })
 
+const route = useRoute()
+const mgr = useUserManager(route.params.vsName)
+
+const onLogout = async () => {
+    await mgr.signoutRedirect()
+}
+
 </script>
 
 <template>
@@ -29,7 +38,7 @@ const { t } = useI18n({
           :title="t('title')"
           subtitle="You can do things on this page"
       >
-        <Button text="Do things"/>
+        <Button text="Logout" @click="onLogout"/>
       </PageHeader>
     </template>
     <div>
