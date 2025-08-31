@@ -56,8 +56,8 @@ const routes = [
             {
                 path: 'auth',
                 name: 'mgmt-auth',
-                beforeEnter: async _ => {
-                    return await handleLoginCallback()
+                beforeEnter: async route => {
+                    return await handleLoginCallback(route)
                 },
                 meta: {
                     requiresAuth: false,
@@ -72,8 +72,8 @@ const routes = [
     },
 ]
 
-async function handleLoginCallback() {
-    const mgr = useUserManager('keyline')
+async function handleLoginCallback(route) {
+    const mgr = useUserManager(route.params.vsName)
     const user = await mgr.signinRedirectCallback()
     return user.state.destination;
 }
@@ -85,7 +85,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
     if (to.meta.requiresAuth) {
-        const mgr = useUserManager('keyline')
+        const mgr = useUserManager(to.params.vsName)
         if (await mgr.getUser() === null) {
             await mgr.signinRedirect(
                 {
