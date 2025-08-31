@@ -44,7 +44,9 @@ const onLogout = async () => {
       </PageHeader>
     </template>
     <div>
-      actual page content
+      <RouterLink :to="{name: 'mgmt-profile'}" class="flex flex-row gap-2 items-center">
+        To Profile
+      </RouterLink>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod,
       </p>

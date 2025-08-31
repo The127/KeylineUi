@@ -10,6 +10,9 @@ import PageLayout from "../../components/PageLayout.vue";
       <PageHeader title="Profile"/>
     </template>
     Dummy content
+    <template #footer>
+      Footer content
+    </template>
   </PageLayout>
 </template>
 
