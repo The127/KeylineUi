@@ -67,7 +67,12 @@ const routes = [
                 path: '',
                 name: 'mgmt-dashboard',
                 component: () => import('../views/mgmt/Dashboard.vue'),
-            }
+            },
+            {
+                path: 'profile',
+                name: 'mgmt-profile',
+                component: () => import('../views/mgmt/Profile.vue'),
+            },
         ]
     },
 ]
