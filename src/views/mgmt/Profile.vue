@@ -2,7 +2,7 @@
 
 import PageHeader from "../../components/PageHeader.vue";
 import PageLayout from "../../components/PageLayout.vue";
-import {useQuery} from "@tanstack/vue-query";
+import {useMutation, useQuery} from "@tanstack/vue-query";
 import {useRoute} from "vue-router";
 import {useUserManager} from "../../composables/userManager.js";
 import Form from "../../components/Form.vue";
@@ -39,8 +39,23 @@ watch(data, (newData) => {
   }
 })
 
+const updateProfile = useMutation({
+  mutationFn: async (data) => {
+    const user = await userManager.getUser()
+    await fetch(`http://127.0.0.1:8081/api/virtual-servers/${route.params.vsName}/users/${user.profile.sub}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  }
+})
+
 const onFormSubmit = async () => {
-  alert("form submit")
+  await updateProfile.mutateAsync({
+    displayName: formModel.displayName,
+  })
 }
 
 </script>
