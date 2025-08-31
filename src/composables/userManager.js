@@ -14,10 +14,10 @@ export function useUserManager(virtualServer = null) {
 
     if (mgr === null) {
         mgr = new UserManager({
-            authority: `${oidcBaseUrl}/oidc/keyline`,
-            metadataUrl: `${oidcBaseUrl}/oidc/keyline/.well-known/openid-configuration`,
+            authority: `${oidcBaseUrl}/oidc/${virtualServer}`,
+            metadataUrl: `${oidcBaseUrl}/oidc/${virtualServer}/.well-known/openid-configuration`,
             client_id: "admin-ui",
-            redirect_uri: `${adminUiBaseUrl}/mgmt/keyline/auth`,
+            redirect_uri: `${adminUiBaseUrl}/mgmt/${virtualServer}/auth`,
             response_type: "code",
             scope: "oidc profile email",
             automaticSilentRenew: true,
