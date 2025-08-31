@@ -17,10 +17,17 @@ const props = defineProps({
 <template>
   <div class="flex flex-col gap-3">
     <div class="flex flex-row justify-between items-baseline gap-5 flex-wrap">
-      <Heading>{{ title }}</Heading>
+      <div>
+        <Heading>{{ title }}</Heading>
+        <p
+            v-if="subtitle"
+            class="text-sm text-slate-600"
+        >
+          {{ subtitle }}
+        </p>
+      </div>
       <slot/>
     </div>
-    <p v-if="subtitle">{{ subtitle }}</p>
   </div>
 </template>
 
