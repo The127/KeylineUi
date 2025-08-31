@@ -70,6 +70,7 @@ const { t } = useI18n({
       title: 'Registrer til {appName}',
       submit: 'Opret konto',
       username: 'Brugernavn',
+      displayName: 'Visingsnavn',
       email: 'E-mailadresse',
       password: 'Adgangskode',
       dontHaveAnAccount: 'Har du ikke en konto?',
