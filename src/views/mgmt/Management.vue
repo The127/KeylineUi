@@ -3,6 +3,18 @@
 import KeylineIcon from "../../components/icons/KeylineIcon.vue";
 import Avatar from "../../components/Avatar.vue";
 import Input from "../../components/Input.vue";
+import {useUserManager} from "../../composables/userManager.js";
+import {useRoute} from "vue-router";
+import {computedAsync} from "@vueuse/core";
+
+const route = useRoute()
+const mgr = useUserManager(route.params.vsName)
+
+const userName = computedAsync(async () => {
+  const user = await mgr.getUser()
+  return user?.profile?.name ?? user?.profile?.preferred_username ?? ""
+}, "")
+
 </script>
 
 <template>
@@ -14,7 +26,7 @@ import Input from "../../components/Input.vue";
       <Input label="Search"/>
     </div>
     <div>
-      <Avatar username="Dark Arotte"/>
+      <Avatar :username="userName"/>
     </div>
   </div>
   <router-view />
