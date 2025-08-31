@@ -5,7 +5,7 @@ import {useI18n} from "vue-i18n";
 import Button from "../../components/Button.vue";
 import PageLayout from "../../components/PageLayout.vue";
 import {useRoute} from "vue-router";
-import {useUserManager} from "../../composables/userManager.js";
+import {adminUiBaseUrl, useUserManager} from "../../composables/userManager.js";
 
 const { t } = useI18n({
   messages: {
@@ -26,7 +26,9 @@ const route = useRoute()
 const mgr = useUserManager(route.params.vsName)
 
 const onLogout = async () => {
-    await mgr.signoutRedirect()
+    await mgr.signoutRedirect({
+      post_logout_redirect_uri: `${adminUiBaseUrl}/mgmt/${route.params.vsName}/logout`
+    })
 }
 
 </script>

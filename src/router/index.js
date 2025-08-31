@@ -61,7 +61,17 @@ const routes = [
                 },
                 meta: {
                     requiresAuth: false,
-                }
+                },
+            },
+            {
+                path: 'logout',
+                name: 'mgmt-logout',
+                beforeEnter: async route => {
+                    return await handleLogoutCallback(route)
+                },
+                meta: {
+                    requiresAuth: false,
+                },
             },
             {
                 path: '',
@@ -81,6 +91,13 @@ async function handleLoginCallback(route) {
     const mgr = useUserManager(route.params.vsName)
     const user = await mgr.signinRedirectCallback()
     return user.state.destination;
+}
+
+async function handleLogoutCallback(route) {
+    const mgr = useUserManager(route.params.vsName)
+    await mgr.signoutRedirectCallback()
+    await mgr.removeUser()
+    return `/mgmt/${route.params.vsName}`
 }
 
 const router = createRouter({
