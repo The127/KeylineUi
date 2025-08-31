@@ -18,24 +18,26 @@ const userName = computedAsync(async () => {
 </script>
 
 <template>
-  <div class="flex flex-col h-screen overflow-hidden">
-    <div class="flex flex-row gap-3 justify-between bg-gradient-to-r from-slate-50 via-slate-200 to-slate-200 p-5 shadow-xl">
-      <RouterLink :to="{name: 'mgmt-dashboard'}" class="flex flex-row gap-2 items-center">
-        <KeylineIcon class="w-12 h-12 "/>
-      </RouterLink>
-      <div>
-        <Input placeholder="Search anything..."/>
-      </div>
-      <div>
-        <Avatar :username="userName"/>
-      </div>
+  <div class="flex flex-row">
+    <div class="w-64 bg-slate-200 p-5">
+      side menu
     </div>
+    <div>
+      <div class="flex flex-col h-screen overflow-hidden">
+        <div class="flex flex-row gap-3 justify-between bg-gradient-to-r from-slate-50 via-slate-200 to-slate-200 p-5 shadow-xl">
+          <RouterLink :to="{name: 'mgmt-dashboard'}" class="flex flex-row gap-2 items-center">
+            <KeylineIcon class="w-12 h-12 "/>
+          </RouterLink>
+          <div>
+            <Input placeholder="Search anything..."/>
+          </div>
+          <div>
+            <Avatar :username="userName"/>
+          </div>
+        </div>
 
-    <div class="flex flex-row flex-1">
-      <div class="w-64 bg-slate-200 p-5 h-full">
-        side menu
+        <router-view />
       </div>
-      <router-view />
     </div>
   </div>
 </template>
