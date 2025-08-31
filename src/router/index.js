@@ -84,23 +84,23 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-    if (to.meta.requiresAuth) {
-        const mgr = useUserManager(to.params.vsName)
-        if (await mgr.getUser() === null) {
-            await mgr.signinRedirect(
-                {
-                    state: {
-                        destination: to.fullPath,
-                    }
-                }
-            )
-            next(false)
-        }else {
-            next()
-        }
-    }else{
+    if (!to.meta.requiresAuth) {
         next()
+        return
     }
+
+    const mgr = useUserManager(to.params.vsName)
+    if (await mgr.getUser() !== null) {
+        next()
+        return
+    }
+
+    await mgr.signinRedirect({
+        state: {
+            destination: to.fullPath,
+        }
+    })
+    next(false)
 })
 
 export default router
