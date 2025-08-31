@@ -18,17 +18,18 @@ const userName = computedAsync(async () => {
 </script>
 
 <template>
-  <div class="flex flex-row gap-3 justify-between">
+  <div class="flex flex-row gap-3 justify-between bg-slate-100 p-5">
     <RouterLink :to="{name: 'mgmt-dashboard'}" class="flex flex-row gap-2 items-center">
       <KeylineIcon class="w-12 h-12"/>
     </RouterLink>
     <div>
-      <Input label="Search"/>
+      <Input placeholder="Search anything..."/>
     </div>
     <div>
       <Avatar :username="userName"/>
     </div>
   </div>
+
   <router-view />
 </template>
 
