@@ -6,6 +6,7 @@ import Input from "../../components/Input.vue";
 import {useUserManager} from "../../composables/userManager.js";
 import {useRoute} from "vue-router";
 import {computedAsync} from "@vueuse/core";
+import DropDownMenu from "../../components/DropDownMenu.vue";
 
 const route = useRoute()
 const mgr = useUserManager(route.params.vsName)
@@ -32,7 +33,14 @@ const userName = computedAsync(async () => {
             <Input placeholder="Search anything..."/>
           </div>
           <div>
-            <Avatar :username="userName"/>
+            <DropDownMenu>
+              <template #activator-content="{ attrs }">
+                <Avatar
+                    class="hover:bg-slate-400 cursor-pointer"
+                    :username="userName"
+                    v-bind="attrs"/>
+              </template>
+            </DropDownMenu>
           </div>
         </div>
 
