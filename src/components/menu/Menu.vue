@@ -1,6 +1,6 @@
 <script setup>
 
-import {computed, nextTick, onMounted, ref, useId, watch} from "vue";
+import {computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch} from "vue";
 import Button from "../Button.vue";
 import {computePosition, flip, offset, shift} from "@floating-ui/dom";
 
@@ -50,26 +50,34 @@ const activatorAttrs = computed(() => ({
 
 watch(isOpen, async open => {
   if (open) {
-    console.log("open")
     await nextTick();
-    console.log(activatorEl.value, menuEl.value)
     if (activatorEl.value && menuEl.value) {
-      console.log("compute")
       computePosition(activatorEl.value, menuEl.value, {
         placement: props.placement,
         middleware: [offset(4), flip(), shift()],
       }).then(({ x, y }) => {
-        console.log(x, y)
         Object.assign(menuEl.value.style, {
           left: `${x}px`,
           top: `${y}px`,
         });
       });
     }
-  }else{
-    console.log("close")
   }
 });
+
+function handleClickOutside(event) {
+  if (
+      menuEl.value &&
+      activatorEl.value &&
+      !menuEl.value.contains(event.target) &&
+      !activatorEl.value.contains(event.target)
+  ) {
+    isOpen.value = false;
+  }
+}
+
+onMounted(() => window.addEventListener("click", handleClickOutside));
+onBeforeUnmount(() => window.removeEventListener("click", handleClickOutside));
 
 </script>
 
