@@ -91,7 +91,7 @@ watch(isOpen, async open => {
         v-if="isOpen"
         :id="'menu-' + id"
         role="menu"
-        class="absolute bg-slate-100 p-5 list-none shadow-2xl"
+        class="absolute bg-slate-100 list-none shadow-2xl rounded-md z-50 py-3"
     >
       <slot/>
     </ul>

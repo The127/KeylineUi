@@ -46,6 +46,9 @@ const userName = computedAsync(async () => {
               <MenuItem>Profile</MenuItem>
               <MenuDivider/>
               <MenuItem>Logout</MenuItem>
+              <MenuItem>Logout</MenuItem>
+              <MenuItem>Logout</MenuItem>
+              <MenuItem>Logout</MenuItem>
             </Menu>
           </div>
         </div>
