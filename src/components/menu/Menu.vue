@@ -3,8 +3,10 @@
 import {computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch} from "vue";
 import Button from "../Button.vue";
 import {computePosition, flip, offset, shift} from "@floating-ui/dom";
+import {useRoute} from "vue-router";
 
 const id = useId()
+const route = useRoute()
 
 const props = defineProps({
   placement: {
@@ -64,6 +66,13 @@ watch(isOpen, async open => {
     }
   }
 });
+
+watch(
+    () => route.fullPath,
+    () => {
+      isOpen.value = false
+    }
+)
 
 function handleClickOutside(event) {
   if (
