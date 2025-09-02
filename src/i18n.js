@@ -6,6 +6,36 @@ const messages = {
     da: { ok: 'OK', cancel: 'Annuller' },
 }
 
+const datetimeFormats = {
+    'en': {
+        short: {
+            year: 'numeric', month: 'short', day: 'numeric'
+        },
+        long: {
+            year: 'numeric', month: 'short', day: 'numeric',
+            weekday: 'short', hour: 'numeric', minute: 'numeric'
+        }
+    },
+    'de': {
+        short: {
+            year: 'numeric', month: 'short', day: 'numeric'
+        },
+        long: {
+            year: 'numeric', month: 'short', day: 'numeric',
+            weekday: 'short', hour: 'numeric', minute: 'numeric'
+        }
+    },
+    'da': {
+        short: {
+            year: 'numeric', month: 'short', day: 'numeric'
+        },
+        long: {
+            year: 'numeric', month: 'short', day: 'numeric',
+            weekday: 'short', hour: 'numeric', minute: 'numeric'
+        }
+    },
+}
+
 const SUPPORTED_LOCALES = ['en', 'de', 'da']
 
 function detectLocale() {
@@ -25,5 +55,6 @@ export const i18n = createI18n({
     legacy: false,
     locale: detectLocale(),
     fallbackLocale: 'en',
+    datetimeFormats: datetimeFormats,
     messages,
 })
