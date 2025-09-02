@@ -21,15 +21,32 @@ const closeMenu = () => {
 }
 
 const items = ref([])
+const focusIndex = ref(0)
 
 const registerItem = (item) => {
   items.value.push(item)
+  return items.value.length - 1
+}
+
+const navigateDown = () => {
+  openAndFocus(focusIndex.value + 1)
+}
+
+const navigateUp = () => {
+  openAndFocus(focusIndex.value - 1)
+}
+
+const informFocus = (index) => {
+  focusIndex.value = index
 }
 
 provide('menuManager', {
   id,
   closeMenu,
   registerItem,
+  navigateDown,
+  navigateUp,
+  informFocus,
 })
 
 const isOpen = ref(false)
@@ -40,8 +57,20 @@ const toggleMenu = () => {
   isOpen.value = !isOpen.value
 }
 
-const openAndFocus = (index) => {
-  alert('openAndFocus')
+const openAndFocus = async (index) => {
+  isOpen.value = true
+
+  await nextTick()
+
+  if (index < 0) {
+    index = items.value.length - 1
+  } else if (index >= items.value.length) {
+    index = 0
+  }
+
+  console.log(index)
+  focusIndex.value = index
+  items.value[index].focus()
 }
 
 const activatorAttrs = computed(() => ({
@@ -54,10 +83,14 @@ const activatorAttrs = computed(() => ({
   onKeydown: (e) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      openAndFocus(0);
+      if (items.value.length > 0) {
+        openAndFocus(0);
+      }
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      openAndFocus(-1);
+      if (items.value.length > 0) {
+        openAndFocus(-1);
+      }
     } else if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       toggleMenu();
