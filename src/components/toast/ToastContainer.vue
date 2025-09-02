@@ -72,6 +72,7 @@ const plain = (text, options) => {
     text,
     type: 'plain',
     timeout: props.timeout,
+    ...options,
   })
 }
 
