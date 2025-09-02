@@ -136,7 +136,11 @@ function handleClickOutside(event) {
   }
 }
 
-onMounted(() => window.addEventListener("click", handleClickOutside));
+onMounted(() => {
+  window.addEventListener("click", handleClickOutside);
+  window.addEventListener("focusin", handleClickOutside);
+  window.addEventListener("focusout", handleClickOutside);
+});
 onBeforeUnmount(() => window.removeEventListener("click", handleClickOutside));
 
 </script>
