@@ -17,6 +17,10 @@ const props = defineProps({
 const toasts = ref([])
 
 const show = (info) => {
+  if (toasts.value.length >= props.maximum) {
+    toasts.value.shift()
+  }
+
   toasts.value.push(info)
 }
 
@@ -68,11 +72,15 @@ provide(TOAST_SYMBOL, {
 
 <template>
   <slot/>
-  <template v-for="toast in toasts">
-    <span class="text-red-500">
-      {{ toast.text }}
-    </span>
-  </template>
+  <div class="fixed top-0 right-0 z-50">
+    <div
+      v-for="toast in toasts"
+    >
+      <span>
+        {{ toast.text }}
+      </span>
+    </div>
+  </div>
 </template>
 
 <style scoped>
