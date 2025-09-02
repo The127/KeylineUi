@@ -115,6 +115,9 @@ watch(isOpen, async open => {
         });
       });
     }
+  }else{
+    items.value = []
+    focusIndex.value = 0
   }
 });
 
