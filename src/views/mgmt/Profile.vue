@@ -63,8 +63,14 @@ const onFormSubmit = async () => {
 <template>
   <PageLayout>
     <template #header>
-      <PageHeader title="Profile"/>
+      <PageHeader
+          title="Profile"
+          subtitle="You can do things on this page"
+      />
     </template>
+    <div class="border-2 border-slate-500 p-2">
+      Id, created date, updated date
+    </div>
     <Form title="Profile" v-if="!isPending && !isError && data"
           @submit="onFormSubmit"
           :vuelidate="v$"
@@ -75,6 +81,9 @@ const onFormSubmit = async () => {
              required
       />
     </Form>
+    <div class="border-2 border-slate-500 p-2">
+      Change email address
+    </div>
     <template #footer>
       Footer content
     </template>
