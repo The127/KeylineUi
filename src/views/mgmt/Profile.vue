@@ -68,8 +68,19 @@ const onFormSubmit = async () => {
           subtitle="You can do things on this page"
       />
     </template>
-    <div class="border-2 border-slate-500 p-2">
-      Id, created date, updated date
+    <div
+        v-if="!isPending && !isError && data"
+        class="border-2 border-slate-500 p-2 flex flex-row justify-between items-center"
+    >
+      <span>
+        ID: {{ data.id }}
+      </span>
+      <span>
+        Created: {{ data.createdAt }}
+      </span>
+      <span>
+        Updated: {{ data.updatedAt }}
+      </span>
     </div>
     <Form title="Profile" v-if="!isPending && !isError && data"
           @submit="onFormSubmit"
