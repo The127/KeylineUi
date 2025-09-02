@@ -3,7 +3,7 @@
 import KeylineIcon from "../../components/icons/KeylineIcon.vue";
 import Avatar from "../../components/Avatar.vue";
 import Input from "../../components/Input.vue";
-import {useUserManager} from "../../composables/userManager.js";
+import {adminUiBaseUrl, useUserManager} from "../../composables/userManager.js";
 import {useRoute} from "vue-router";
 import {computedAsync} from "@vueuse/core";
 import Menu from "../../components/menu/Menu.vue";
@@ -17,6 +17,12 @@ const userName = computedAsync(async () => {
   const user = await mgr.getUser()
   return user?.profile?.name ?? user?.profile?.preferred_username ?? ""
 }, "")
+
+const onLogout = async () => {
+  await mgr.signoutRedirect({
+    post_logout_redirect_uri: `${adminUiBaseUrl}/mgmt/${route.params.vsName}/logout`
+  })
+}
 
 </script>
 
@@ -40,15 +46,13 @@ const userName = computedAsync(async () => {
                 <Avatar
                     class="hover:bg-slate-400 cursor-pointer"
                     :username="userName"
-                    v-bind="attrs"/>
+                    v-bind="attrs"
+                />
               </template>
 
-              <MenuItem>Profile</MenuItem>
+              <MenuItem text="Profile" :to="{name: 'mgmt-profile'}"/>
               <MenuDivider/>
-              <MenuItem>Logout</MenuItem>
-              <MenuItem>Logout</MenuItem>
-              <MenuItem>Logout</MenuItem>
-              <MenuItem>Logout</MenuItem>
+              <MenuItem text="Logout" @click="onLogout"/>
             </Menu>
           </div>
         </div>
