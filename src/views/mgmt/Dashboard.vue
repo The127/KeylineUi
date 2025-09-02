@@ -25,12 +25,6 @@ const { t } = useI18n({
 const route = useRoute()
 const mgr = useUserManager(route.params.vsName)
 
-const onLogout = async () => {
-    await mgr.signoutRedirect({
-      post_logout_redirect_uri: `${adminUiBaseUrl}/mgmt/${route.params.vsName}/logout`
-    })
-}
-
 </script>
 
 <template>
@@ -40,7 +34,6 @@ const onLogout = async () => {
           :title="t('title')"
           subtitle="You can do things on this page"
       >
-        <Button text="Logout" @click="onLogout"/>
       </PageHeader>
     </template>
     <div>
