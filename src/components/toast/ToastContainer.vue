@@ -4,6 +4,8 @@ import {computed, provide, ref, watch} from "vue";
 import {TOAST_SYMBOL} from "../../composables/toast.js";
 import {cva} from "class-variance-authority";
 import variants from "./toastVariants.js";
+import { X } from "lucide-vue-next"
+
 
 const props = defineProps({
   maximum: {
@@ -18,6 +20,10 @@ const props = defineProps({
 
 const toasts = ref([])
 const isHovered = ref(false)
+
+const remove = (id) => {
+  toasts.value = toasts.value.filter(t => t.id !== id)
+}
 
 const show = (options) => {
   if (toasts.value.length >= props.maximum) {
@@ -132,9 +138,15 @@ const toastClass = cva([
           filter: isHovered || idx === 0 ? 'none' : 'brightness(0.9)',
         }"
     >
-      <span class="text-sm">
-        {{ toast.text }}
-      </span>
+      <div class="text-sm flex flex-row justify-between items-center gap-2">
+        <span class="overflow-hidden whitespace-nowrap overflow-ellipsis">
+          {{ toast.text }}
+        </span>
+
+        <div class="cursor-pointer w-4 h-4 hover:text-slate-500">
+          <X class="w-4 h-4" @click="remove(toast.id)"/>
+        </div>
+      </div>
 
       <progress
           class="absolute bottom-0 left-0 w-full h-1"
@@ -151,7 +163,6 @@ const toastClass = cva([
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -10px;
-  height: 100px;
+  height: 50px;
 }
 </style>
