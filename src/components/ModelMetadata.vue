@@ -2,7 +2,7 @@
 
 import {useI18n} from "vue-i18n";
 
-const { t } = useI18n({
+const { d, t } = useI18n({
   messages: {
     en: {
       identifier: 'Identifier',
@@ -34,11 +34,11 @@ const props = defineProps({
     </div>
     <div class="flex flex-col">
       <span class="font-semibold">{{ t('created') }}</span>
-      <span>{{ model.createdAt }}</span>
+      <span>{{ d(new Date(model.createdAt), 'long',)  }}</span>
     </div>
     <div class="flex flex-col">
       <span class="font-semibold">{{ t('updated') }}</span>
-      <span>{{ model.updatedAt }}</span>
+      <span>{{ d(new Date(model.updatedAt), 'long',)  }}</span>
     </div>
   </div>
 </template>
