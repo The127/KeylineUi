@@ -66,7 +66,7 @@ const onFormSubmit = async () => {
     <template #header>
       <PageHeader
           title="Profile"
-          subtitle="You can do things on this page"
+          subtitle="Manage your profile and settings"
       />
     </template>
     <ModelMetadata
