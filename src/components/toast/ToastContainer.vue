@@ -2,6 +2,8 @@
 
 import {provide, ref} from "vue";
 import {TOAST_SYMBOL} from "../../composables/toast.js";
+import {cva} from "class-variance-authority";
+import variants from "./toastVariants.js";
 
 const props = defineProps({
   maximum: {
@@ -68,6 +70,15 @@ provide(TOAST_SYMBOL, {
   warning,
 })
 
+const toastClass = cva([
+  "rounded-md",
+  "p-2",
+  "m-2",
+  "shadow-md",
+], {
+  variants: variants,
+})
+
 </script>
 
 <template>
@@ -75,6 +86,7 @@ provide(TOAST_SYMBOL, {
   <div class="fixed top-0 right-0 z-50">
     <div
       v-for="toast in toasts"
+      :class="toastClass({intent: toast.type})"
     >
       <span>
         {{ toast.text }}
