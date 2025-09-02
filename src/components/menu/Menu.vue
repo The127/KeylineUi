@@ -80,7 +80,9 @@ const activatorAttrs = computed(() => ({
   onKeydown: (e) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      if (!isOpen.value) {
+      if (isOpen.value) {
+        openAndFocus(0)
+      }else{
         toggleMenu();
       }
     } else if (e.key === "ArrowUp") {
