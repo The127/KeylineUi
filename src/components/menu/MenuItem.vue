@@ -28,6 +28,8 @@ const onClick = () => {
 
 <template>
   <li
+      role="menuitem"
+      tabindex="0"
       class="flex flex-row gap-2 px-5 my-1 cursor-pointer"
       @click="onClick"
   >
