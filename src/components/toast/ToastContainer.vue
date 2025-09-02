@@ -1,14 +1,16 @@
 <script setup>
 
-import {provide} from "vue";
+import {provide, ref} from "vue";
 import {TOAST_SYMBOL} from "../../composables/toast.js";
+
+const toasts = ref([])
 
 const props = defineProps({
 
 })
 
-const show = () => {
-  alert('show')
+const show = (info) => {
+  toasts.value.push(info)
 }
 
 provide(TOAST_SYMBOL, {
@@ -19,6 +21,11 @@ provide(TOAST_SYMBOL, {
 
 <template>
   <slot/>
+  <template v-for="toast in toasts">
+    <span class="text-red-500">
+      {{ toast.text }}
+    </span>
+  </template>
 </template>
 
 <style scoped>

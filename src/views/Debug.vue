@@ -1,13 +1,14 @@
 <script setup>
 
 import Button from "../components/Button.vue";
-import {inject} from "vue";
 import {useToast} from "../composables/toast.js";
 
 const toast = useToast()
 
 const demoButton = () => {
-  toast.show('Login Flow started')
+  toast.show({
+    text: "Hello World",
+  })
 }
 
 </script>
