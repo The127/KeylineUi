@@ -31,7 +31,7 @@ const onClick = () => {
       class="flex flex-row gap-2 px-5 my-1 cursor-pointer"
       @click="onClick"
   >
-    <span>
+    <span class="hover:text-slate-500">
       {{ text }}
     </span>
   </li>
