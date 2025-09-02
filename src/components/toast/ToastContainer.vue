@@ -62,12 +62,21 @@ const warning = (text, options) => {
   })
 }
 
+const plain = (text, options) => {
+  show({
+    text,
+    type: 'plain',
+    timeout: props.timeout,
+  })
+}
+
 provide(TOAST_SYMBOL, {
   show,
   success,
   error,
   info,
   warning,
+  plain,
 })
 
 const toastClass = cva([

@@ -12,7 +12,7 @@ const variants = {
         warning: [
             "bg-yellow-200",
         ],
-        default: [
+        plain: [
             "bg-slate-200",
         ],
     }
