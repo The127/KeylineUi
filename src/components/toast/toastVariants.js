@@ -3,9 +3,18 @@ const variants = {
         success: [
             "bg-emerald-500",
         ],
-        error: [],
-        info: [],
-        warning: [],
+        error: [
+            "bg-red-200",
+        ],
+        info: [
+            "bg-blue-200",
+        ],
+        warning: [
+            "bg-yellow-200",
+        ],
+        default: [
+            "bg-slate-200",
+        ],
     }
 }
 
