@@ -10,6 +10,7 @@ import Input from "../../components/Input.vue";
 import {reactive, watch} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
+import ModelMetadata from "../../components/ModelMetadata.vue";
 
 const route = useRoute()
 const userManager = useUserManager(route.params.vsName)
@@ -68,20 +69,10 @@ const onFormSubmit = async () => {
           subtitle="You can do things on this page"
       />
     </template>
-    <div
+    <ModelMetadata
         v-if="!isPending && !isError && data"
-        class="border-2 border-slate-500 p-2 flex flex-row justify-between items-center"
-    >
-      <span>
-        ID: {{ data.id }}
-      </span>
-      <span>
-        Created: {{ data.createdAt }}
-      </span>
-      <span>
-        Updated: {{ data.updatedAt }}
-      </span>
-    </div>
+        :model="data"
+    />
     <Form title="Profile" v-if="!isPending && !isError && data"
           @submit="onFormSubmit"
           :vuelidate="v$"
