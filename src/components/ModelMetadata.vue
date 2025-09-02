@@ -1,5 +1,22 @@
 <script setup>
 
+import {useI18n} from "vue-i18n";
+
+const { t } = useI18n({
+  messages: {
+    en: {
+      identifier: 'Identifier',
+      created: 'Created',
+      updated: 'Updated',
+    },
+    de: {
+      identifier: 'Identifier',
+      created: 'Erstellt',
+      updated: 'Updated',
+    },
+  }
+})
+
 const props = defineProps({
   model: {
     type: Object,
@@ -11,21 +28,18 @@ const props = defineProps({
 
 <template>
   <div class="flex flex-row justify-between flex-wrap text-slate-500">
-      <span>
-        Identifier
-        <br/>
-        {{ model.id }}
-      </span>
-    <span>
-        Created
-        <br/>
-        {{ model.createdAt }}
-      </span>
-    <span>
-        Updated
-        <br/>
-        {{ model.updatedAt }}
-      </span>
+    <div class="flex flex-col">
+      <span class="font-semibold">{{ t('identifier') }}</span>
+      <span>{{ model.id }}</span>
+    </div>
+    <div class="flex flex-col">
+      <span class="font-semibold">{{ t('created') }}</span>
+      <span>{{ model.createdAt }}</span>
+    </div>
+    <div class="flex flex-col">
+      <span class="font-semibold">{{ t('updated') }}</span>
+      <span>{{ model.updatedAt }}</span>
+    </div>
   </div>
 </template>
 
