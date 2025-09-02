@@ -1,6 +1,6 @@
 <script setup>
 
-import {computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch} from "vue";
+import {computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch, provide} from "vue";
 import Button from "../Button.vue";
 import {computePosition, flip, offset, shift} from "@floating-ui/dom";
 import {useRoute} from "vue-router";
@@ -14,6 +14,22 @@ const props = defineProps({
     default: 'bottom-start',
     validator: v => ['bottom-start', 'bottom-end', 'top-start', 'top-end'].includes(v),
   },
+})
+
+const closeMenu = () => {
+  isOpen.value = false
+}
+
+const items = ref([])
+
+const registerItem = (item) => {
+  items.value.push(item)
+}
+
+provide('menuManager', {
+  id,
+  closeMenu,
+  registerItem,
 })
 
 const isOpen = ref(false)
