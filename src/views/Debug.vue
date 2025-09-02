@@ -6,9 +6,7 @@ import {useToast} from "../composables/toast.js";
 const toast = useToast()
 
 const demoButton = () => {
-  toast.show({
-    text: "Hello World",
-  })
+  toast.success("Hello World")
 }
 
 </script>
