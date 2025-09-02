@@ -1,6 +1,6 @@
 <script setup>
 
-import {provide, ref} from "vue";
+import {computed, provide, ref, watch} from "vue";
 import {TOAST_SYMBOL} from "../../composables/toast.js";
 import {cva} from "class-variance-authority";
 import variants from "./toastVariants.js";
@@ -106,6 +106,7 @@ const toastClass = cva([
     "absolute",
     "transition-all",
     "w-64",
+    "toast",
   ], {
     variants: variants,
   },
@@ -145,5 +146,12 @@ const toastClass = cva([
 </template>
 
 <style scoped>
-
+.toast::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 100px;
+}
 </style>
