@@ -21,7 +21,7 @@ const isHovered = ref(false)
 
 const show = (options) => {
   if (toasts.value.length >= props.maximum) {
-    toasts.value.shift()
+    toasts.value.pop()
   }
 
   const id = Date.now() + Math.random()
