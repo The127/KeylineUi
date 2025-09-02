@@ -98,7 +98,9 @@ const toastClass = cva([
 
 <template>
   <slot/>
-  <div class="fixed top-0 right-0 z-50">
+  <div
+      class="fixed top-2 right-2 flex flex-col items-end z-50"
+  >
     <div
       v-for="toast in toasts"
       :class="toastClass({intent: toast.type})"
