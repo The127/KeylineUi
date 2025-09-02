@@ -58,19 +58,16 @@ const toggleMenu = () => {
 }
 
 const openAndFocus = async (index) => {
-  isOpen.value = true
-
-  await nextTick()
-
-  if (index < 0) {
+   if (index < 0) {
     index = items.value.length - 1
   } else if (index >= items.value.length) {
     index = 0
   }
 
-  console.log(index)
   focusIndex.value = index
-  items.value[index].focus()
+  items.value[index]?.focus()
+
+  isOpen.value = true
 }
 
 const activatorAttrs = computed(() => ({
@@ -83,17 +80,22 @@ const activatorAttrs = computed(() => ({
   onKeydown: (e) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      if (items.value.length > 0) {
-        openAndFocus(0);
+      if (!isOpen.value) {
+        toggleMenu();
       }
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      if (items.value.length > 0) {
-        openAndFocus(-1);
+      if (isOpen.value) {
+        toggleMenu();
       }
     } else if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       toggleMenu();
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      if (isOpen.value) {
+        toggleMenu();
+      }
     }
   },
 }))
