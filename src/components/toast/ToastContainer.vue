@@ -23,7 +23,12 @@ const show = (info) => {
     toasts.value.shift()
   }
 
+  info.id = Date.now() + Math.random()
   toasts.value.push(info)
+
+  setTimeout(() => {
+    toasts.value = toasts.value.filter(t => t.id !== info.id)
+  }, info.timeout)
 }
 
 const success = (text, options) => {
