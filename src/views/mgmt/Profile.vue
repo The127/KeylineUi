@@ -2,7 +2,7 @@
 
 import PageHeader from "../../components/PageHeader.vue";
 import PageLayout from "../../components/PageLayout.vue";
-import {useMutation, useQuery} from "@tanstack/vue-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/vue-query";
 import {useRoute} from "vue-router";
 import {useUserManager} from "../../composables/userManager.js";
 import {onMounted, reactive, ref, watch} from "vue";
@@ -27,6 +27,7 @@ import Input from "../../components/Input.vue";
 
 const toast = useToast()
 const route = useRoute()
+const queryClient = useQueryClient()
 const userManager = useUserManager(route.params.vsName)
 
 const { isPending, isError, data, error } = useQuery({
@@ -66,6 +67,7 @@ const updateProfile = useMutation({
         'Content-Type': 'application/json',
       },
     })
+    await queryClient.invalidateQueries(['profile'])
   }
 })
 
