@@ -1,10 +1,14 @@
 <script setup>
 
-import {computed} from "vue";
+import {computed, onMounted} from "vue";
+
+defineOptions({
+  inheritAttrs: false,
+})
 
 const props = defineProps({
   dep: {
-    type: Object,
+    type: undefined,
     required: true,
   },
   type: {
@@ -25,6 +29,7 @@ const isDependencyLoaded = computed(() => props.dep !== undefined)
   <span
       v-else
       class="rounded-full bg-slate-300 animate-pulse"
+      v-bind="$attrs"
   />
 </template>
 
