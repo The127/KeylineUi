@@ -27,7 +27,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="flex flex-row justify-between flex-wrap text-slate-500">
+  <div class="flex flex-row justify-between flex-wrap text-slate-500 text-xs">
     <div class="flex flex-col">
       <span class="font-semibold">{{ t('identifier') }}</span>
       <span>{{ model.id }}</span>
