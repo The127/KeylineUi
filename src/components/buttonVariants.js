@@ -36,11 +36,11 @@ const variants = {
     },
     size: {
         inline: [
-
+            "rounded-sm",
         ],
         sm: [
-            "px-1",
-            "py-2",
+            "px-2",
+            "py-1",
             "rounded-md",
         ],
         md: [

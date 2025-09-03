@@ -22,19 +22,19 @@ const demoButton = () => {
     </div>
 
     <div class="flex flex-col gap-3 w-64 p-3">
-      <Button variant="primary" size="sm" text="Start Login Flow" @click="demoButton"/>
-      <Button variant="secondary" size="sm" text="Start Login Flow" @click="demoButton"/>
-      <Button variant="danger" size="sm" text="Start Login Flow" @click="demoButton"/>
-      <Button variant="link" size="sm" text="Start Login Flow" @click="demoButton"/>
-      <Button variant="special" size="sm" text="Start Login Flow" @click="demoButton"/>
-    </div>
-
-    <div class="flex flex-col gap-3 w-64 p-3">
       <Button variant="primary" size="md" text="Start Login Flow" @click="demoButton"/>
       <Button variant="secondary" size="md" text="Start Login Flow" @click="demoButton"/>
       <Button variant="danger" size="md" text="Start Login Flow" @click="demoButton"/>
       <Button variant="link" size="md" text="Start Login Flow" @click="demoButton"/>
       <Button variant="special" size="md" text="Start Login Flow" @click="demoButton"/>
+    </div>
+
+    <div class="flex flex-col gap-3 w-64 p-3">
+      <Button variant="primary" size="sm" text="Start Login Flow" @click="demoButton"/>
+      <Button variant="secondary" size="sm" text="Start Login Flow" @click="demoButton"/>
+      <Button variant="danger" size="sm" text="Start Login Flow" @click="demoButton"/>
+      <Button variant="link" size="sm" text="Start Login Flow" @click="demoButton"/>
+      <Button variant="special" size="sm" text="Start Login Flow" @click="demoButton"/>
     </div>
 
     <div class="flex flex-col gap-3 w-64 p-3">
