@@ -92,6 +92,11 @@ const onEditEmail = () => {
   alert('Edit email')
 }
 
+const onEditPassword = () => {
+  alert('Password')
+}
+
+
 </script>
 
 <template>
@@ -185,8 +190,49 @@ const onEditEmail = () => {
         </Box>
       </Tab>
 
-      <Tab title="Credentials">
-        TODO
+      <Tab title="Security">
+        <Box>
+          <DataLayout title="Password">
+            <template #actions>
+              <Button
+                  @click="onEditPassword"
+                  text="Edit"
+                  variant="secondary"
+                  size="sm"
+              />
+            </template>
+
+            <DataLayoutItem title="Temporary">
+              false
+            </DataLayoutItem>
+          </DataLayout>
+        </Box>
+
+        <Box>
+          <DataLayout title="2 Factor Authentication">
+            <template #actions>
+              <Button
+                  @click="onEditPassword"
+                  text="Add"
+                  variant="secondary"
+                  size="sm"
+              />
+            </template>
+          </DataLayout>
+        </Box>
+
+        <Box>
+          <DataLayout title="Passkeys">
+            <template #actions>
+              <Button
+                  @click="onEditPassword"
+                  text="Add"
+                  variant="secondary"
+                  size="sm"
+              />
+            </template>
+          </DataLayout>
+        </Box>
       </Tab>
     </Tabs>
 
