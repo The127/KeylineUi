@@ -2,8 +2,8 @@
 const variants = {
     intent: {
         primary: [
-            "border-slate-700",
-            "bg-slate-700",
+            "border-slate-900",
+            "bg-slate-900",
             "hover:bg-transparent",
             "text-slate-100",
             "hover:text-slate-900",
