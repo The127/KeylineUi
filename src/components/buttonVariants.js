@@ -50,24 +50,28 @@ const variants = {
         inline: [
             "rounded-sm",
             "border-1",
+            "text-xs",
         ],
         sm: [
             "px-2",
             "py-1",
             "rounded-md",
             "border-1",
+            "text-sm",
         ],
         md: [
             "px-3",
             "py-2",
             "rounded-md",
             "border-1",
+            "text-md",
         ],
         lg: [
             "px-5",
             "py-3",
             "rounded-md",
             "border-1",
+            "text-lg",
         ],
     },
 }
