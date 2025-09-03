@@ -11,12 +11,14 @@ const variants = {
         secondary: [
             "bg-transparent",
             "border-slate-500",
+            "text-slate-500",
             "hover:text-slate-100",
             "hover:bg-slate-500",
         ],
         danger: [
             "bg-transparent",
             "border-red-700",
+            "text-red-700",
             "hover:text-slate-100",
             "hover:bg-red-700",
         ],
@@ -49,19 +51,19 @@ const variants = {
             "px-2",
             "py-1",
             "rounded-md",
-            "border-2",
+            "border-1",
         ],
         md: [
             "px-3",
             "py-2",
             "rounded-md",
-            "border-3",
+            "border-1",
         ],
         lg: [
             "px-5",
             "py-3",
             "rounded-md",
-            "border-4",
+            "border-1",
         ],
     },
 }
