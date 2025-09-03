@@ -40,6 +40,7 @@ const select = (tab) => {
 <template>
   <div class="flex flex-row">
     <div v-for="tab in tabs"
+         :key="tab.title"
          @click="select(tab)"
         :data-active="tab.active ? true : null"
          class="font-semibold ease-linear px-2 py-1 [[data-active]]:text-emerald-500 hover:text-slate-500 cursor-pointer [[!data-active]]:border-b-transparent [[data-active]]:border-b-emerald-500 border-b-2"
