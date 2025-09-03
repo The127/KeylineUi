@@ -20,6 +20,9 @@ import DataLayoutItem from "../../components/dataLayout/DataLayoutItem.vue";
 import Skeleton from "../../components/Skeleton.vue";
 import Tabs from "../../components/tabs/Tabs.vue";
 import Tab from "../../components/tabs/Tab.vue";
+import Modal from "../../components/Modal.vue";
+import Form from "../../components/Form.vue";
+import Input from "../../components/Input.vue";
 
 
 const toast = useToast()
@@ -34,6 +37,8 @@ const { isPending, isError, data, error } = useQuery({
     return response.json()
   }
 })
+
+const userInfoModal = ref(null)
 
 const formModel = reactive({
   displayName: '',
@@ -70,6 +75,7 @@ const onFormSubmit = async () => {
       displayName: formModel.displayName,
     })
 
+    userInfoModal.value.close()
     toast.success('Profile updated')
   } catch {
     toast.error('Failed to update profile')
@@ -77,7 +83,7 @@ const onFormSubmit = async () => {
 }
 
 const onEditPersonalInfo = () => {
-  alert('Edit personal info')
+  userInfoModal.value.open()
 }
 
 const onEditEmail = () => {
@@ -87,6 +93,19 @@ const onEditEmail = () => {
 </script>
 
 <template>
+  <Modal ref="userInfoModal">
+    <Form title="Profile" v-if="!isPending && !isError && data"
+          @submit="onFormSubmit"
+          :vuelidate="v$"
+    >
+      <Input label="DisplayName"
+             v-model="v$.displayName.$model"
+             :vuelidate="v$.displayName"
+             required
+      />
+    </Form>
+  </Modal>
+
   <PageLayout>
     <template #header>
       <PageHeader
