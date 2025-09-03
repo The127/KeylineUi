@@ -2,18 +2,17 @@ const variants = {
     intent: {
         success: [
             "bg-emerald-500",
+            "text-slate-100",
         ],
         error: [
-            "bg-red-200",
+            "bg-red-500",
+            "text-slate-100",
         ],
         info: [
-            "bg-blue-200",
+            "bg-slate-100",
         ],
         warning: [
             "bg-yellow-200",
-        ],
-        plain: [
-            "bg-slate-200",
         ],
     }
 }

@@ -87,21 +87,12 @@ const warning = (text, options) => {
   })
 }
 
-const plain = (text, options) => {
-  show({
-    text,
-    type: 'plain',
-    ...options,
-  })
-}
-
 provide(TOAST_SYMBOL, {
   show,
   success,
   error,
   info,
   warning,
-  plain,
 })
 
 const toastClass = cva([
@@ -152,7 +143,7 @@ const toastClass = cva([
           class="absolute bottom-0 left-0 w-full h-1"
           :value="toast.remaining"
           :max="toast.timeout"
-      ></progress>
+      />
     </div>
   </div>
 </template>
