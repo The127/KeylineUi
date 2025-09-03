@@ -17,6 +17,7 @@ import Avatar from "../../components/Avatar.vue";
 import Heading from "../../components/Heading.vue";
 import Button from "../../components/Button.vue";
 import { BadgeCheck, BadgeX } from "lucide-vue-next"
+import VerifiedBadge from "../../components/VerifiedBadge.vue";
 
 
 const toast = useToast()
@@ -134,8 +135,11 @@ const onFormSubmit = async () => {
             <span class="text-sm">
               {{data.primaryEmail}}
             </span>
-            <BadgeCheck class="w-4 h-4 text-emerald-500" v-if="data.emailVerified"/>
-            <BadgeX class="w-4 h-4 text-red-700" v-if="!data.emailVerified"/>
+            <VerifiedBadge
+                tooltip="Email verified"
+                anti-tooltip="Email not verified"
+                :verified="data.emailVerified"
+            />
           </div>
         </div>
       </div>
