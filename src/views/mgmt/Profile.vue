@@ -18,6 +18,8 @@ import Heading from "../../components/Heading.vue";
 import Button from "../../components/Button.vue";
 import { BadgeCheck, BadgeX } from "lucide-vue-next"
 import VerifiedBadge from "../../components/VerifiedBadge.vue";
+import DataLayout from "../../components/dataLayout/DataLayout.vue";
+import DataLayoutItem from "../../components/dataLayout/DataLayoutItem.vue";
 
 
 const toast = useToast()
@@ -84,6 +86,7 @@ const onFormSubmit = async () => {
           subtitle="Manage your profile and settings"
       />
     </template>
+
     <Box v-if="!isPending && !isError && data">
       <div class="flex flex-row items-center gap-4">
         <Avatar :username="data.displayName"/>
@@ -93,53 +96,41 @@ const onFormSubmit = async () => {
         </div>
       </div>
     </Box>
+
     <Box v-if="!isPending && !isError && data">
-      <div class="flex flex-row justify-between items-center gap-4 flex-wrap">
-        <Heading level="h3">Personal information</Heading>
-        <Button text="Edit" variant="secondary" size="sm"/>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="flex flex-col gap-2">
-          <span class="text-sm text-gray-500">
-            Username
-          </span>
-          <span class="text-sm ">
-            {{data.username}}
-          </span>
-        </div>
-        <div class="flex flex-col gap-2">
-          <span class="text-sm text-gray-500">
-            Display name
-          </span>
-          <span class="text-sm ">
-            {{data.displayName}}
-          </span>
-        </div>
-      </div>
+     <DataLayout title="Personal information">
+       <template #actions>
+         <Button text="Edit" variant="secondary" size="sm"/>
+       </template>
+
+       <DataLayoutItem title="Username">
+         {{data.username}}
+       </DataLayoutItem>
+        <DataLayoutItem title="Display name">
+          {{data.displayName}}
+        </DataLayoutItem>
+     </DataLayout>
     </Box>
+
     <Box  v-if="!isPending && !isError && data">
-      <div class="flex flex-row justify-between items-center gap-4 flex-wrap">
-        <Heading level="h3">Email adresses</Heading>
-        <Button text="Edit" variant="secondary" size="sm"/>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="flex flex-col gap-2">
-          <span class="text-sm text-gray-500">
-            Primary email
+      <DataLayout title="Email adresses">
+        <template #actions>
+          <Button text="Edit" variant="secondary" size="sm"/>
+        </template>
+
+        <DataLayoutItem title="Primary email">
+          <span class="text-sm">
+            {{data.primaryEmail}}
           </span>
-          <div class="flex flex-row items-center gap-2">
-            <span class="text-sm">
-              {{data.primaryEmail}}
-            </span>
-            <VerifiedBadge
-                tooltip="Email verified"
-                anti-tooltip="Email not verified"
-                :verified="data.emailVerified"
-            />
-          </div>
-        </div>
-      </div>
+          <VerifiedBadge
+              tooltip="Email verified"
+              anti-tooltip="Email not verified"
+              :verified="data.emailVerified"
+          />
+        </DataLayoutItem>
+      </DataLayout>
     </Box>
+
     <template #footer>
       <ModelMetadata
           v-if="!isPending && !isError && data"
