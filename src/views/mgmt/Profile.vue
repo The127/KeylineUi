@@ -15,6 +15,7 @@ import {useToast} from "../../composables/toast.js";
 import Box from "../../components/Box.vue";
 import Avatar from "../../components/Avatar.vue";
 import Heading from "../../components/Heading.vue";
+import Button from "../../components/Button.vue";
 
 const toast = useToast()
 const route = useRoute()
@@ -93,17 +94,13 @@ const onFormSubmit = async () => {
         </div>
       </div>
     </Box>
-    <Box>
-    <Form title="Profile" v-if="!isPending && !isError && data"
-          @submit="onFormSubmit"
-          :vuelidate="v$"
-    >
-      <Input label="DisplayName"
-             v-model="v$.displayName.$model"
-             :vuelidate="v$.displayName"
-             required
-      />
-    </Form>
+    <Box v-if="!isPending && !isError && data">
+      <div class="flex flex-row justify-between items-center gap-4 flex-wrap">
+        <Heading level="h3">Peronal information</Heading>
+        <Button text="Edit" variant="secondary" size="sm"/>
+      </div>
+      <span class="text-sm text-gray-500">Display name</span>
+      <span class="text-sm ">{{data.displayName}}</span>
     </Box>
     <Box>
       Change email address
