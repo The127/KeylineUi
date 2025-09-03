@@ -12,6 +12,7 @@ import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import ModelMetadata from "../../components/ModelMetadata.vue";
 import {useToast} from "../../composables/toast.js";
+import Box from "../../components/Box.vue";
 
 const toast = useToast()
 const route = useRoute()
@@ -81,6 +82,10 @@ const onFormSubmit = async () => {
         v-if="!isPending && !isError && data"
         :model="data"
     />
+    <Box>
+      asdasd
+    </Box>
+    <Box>
     <Form title="Profile" v-if="!isPending && !isError && data"
           @submit="onFormSubmit"
           :vuelidate="v$"
@@ -91,9 +96,10 @@ const onFormSubmit = async () => {
              required
       />
     </Form>
-    <div class="border-2 border-slate-500 p-2">
+    </Box>
+    <Box>
       Change email address
-    </div>
+    </Box>
     <template #footer>
       Footer content
     </template>
