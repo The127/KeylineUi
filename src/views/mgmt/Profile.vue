@@ -117,7 +117,7 @@ const onEditPassword = () => {
     <template #header>
       <PageHeader
           title="Profile"
-          subtitle="Manage your profile and settings"
+          subtitle="Manage your account and personal information."
       />
     </template>
 
