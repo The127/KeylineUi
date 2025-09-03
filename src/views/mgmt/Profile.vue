@@ -5,8 +5,6 @@ import PageLayout from "../../components/PageLayout.vue";
 import {useMutation, useQuery} from "@tanstack/vue-query";
 import {useRoute} from "vue-router";
 import {useUserManager} from "../../composables/userManager.js";
-import Form from "../../components/Form.vue";
-import Input from "../../components/Input.vue";
 import {reactive, watch} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
@@ -16,7 +14,6 @@ import Box from "../../components/Box.vue";
 import Avatar from "../../components/Avatar.vue";
 import Heading from "../../components/Heading.vue";
 import Button from "../../components/Button.vue";
-import { BadgeCheck, BadgeX } from "lucide-vue-next"
 import VerifiedBadge from "../../components/VerifiedBadge.vue";
 import DataLayout from "../../components/dataLayout/DataLayout.vue";
 import DataLayoutItem from "../../components/dataLayout/DataLayoutItem.vue";
