@@ -99,8 +99,24 @@ const onFormSubmit = async () => {
         <Heading level="h3">Peronal information</Heading>
         <Button text="Edit" variant="secondary" size="sm"/>
       </div>
-      <span class="text-sm text-gray-500">Display name</span>
-      <span class="text-sm ">{{data.displayName}}</span>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-gray-500">
+            Username
+          </span>
+          <span class="text-sm ">
+            {{data.username}}
+          </span>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-gray-500">
+            Display name
+          </span>
+          <span class="text-sm ">
+            {{data.displayName}}
+          </span>
+        </div>
+      </div>
     </Box>
     <Box>
       Change email address
