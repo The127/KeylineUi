@@ -13,6 +13,8 @@ import useVuelidate from "@vuelidate/core";
 import ModelMetadata from "../../components/ModelMetadata.vue";
 import {useToast} from "../../composables/toast.js";
 import Box from "../../components/Box.vue";
+import Avatar from "../../components/Avatar.vue";
+import Heading from "../../components/Heading.vue";
 
 const toast = useToast()
 const route = useRoute()
@@ -82,8 +84,14 @@ const onFormSubmit = async () => {
         v-if="!isPending && !isError && data"
         :model="data"
     />
-    <Box>
-      asdasd
+    <Box v-if="!isPending && !isError && data">
+      <div class="flex flex-row items-center gap-4">
+        <Avatar :username="data.displayName"/>
+        <div class="flex flex-col">
+          <Heading level="h3">{{ data.displayName }}</Heading>
+          <span class="text-sm text-gray-500">@{{ data.username }}</span>
+        </div>
+      </div>
     </Box>
     <Box>
     <Form title="Profile" v-if="!isPending && !isError && data"
