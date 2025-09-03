@@ -17,6 +17,7 @@ import Button from "../../components/Button.vue";
 import VerifiedBadge from "../../components/VerifiedBadge.vue";
 import DataLayout from "../../components/dataLayout/DataLayout.vue";
 import DataLayoutItem from "../../components/dataLayout/DataLayoutItem.vue";
+import Skeleton from "../../components/Skeleton.vue";
 
 
 const toast = useToast()
@@ -92,17 +93,23 @@ const onEditEmail = () => {
       />
     </template>
 
-    <Box v-if="!isPending && !isError && data">
+    <Box>
       <div class="flex flex-row items-center gap-4">
-        <Avatar :username="data.displayName"/>
-        <div class="flex flex-col">
-          <Heading level="h3">{{ data.displayName }}</Heading>
-          <span class="text-sm text-gray-500">@{{ data.username }}</span>
+        <Skeleton :dep="data" class="w-12 h-12">
+          <Avatar :username="data.displayName"/>
+        </Skeleton>
+        <div class="flex flex-col gap-1">
+          <Skeleton :dep="data" class="w-42 h-5">
+            <Heading level="h3">{{ data.displayName }}</Heading>
+          </Skeleton>
+          <Skeleton :dep="data" class="w-32 h-4">
+            <span class="text-sm text-gray-500">@{{ data.username }}</span>
+          </Skeleton>
         </div>
       </div>
     </Box>
 
-    <Box v-if="!isPending && !isError && data">
+    <Box>
      <DataLayout title="Personal information">
        <template #actions>
          <Button
@@ -114,15 +121,19 @@ const onEditEmail = () => {
        </template>
 
        <DataLayoutItem title="Username">
-         {{data.username}}
+         <Skeleton :dep="data" class="w-32 h-4">
+          {{data.username}}
+         </Skeleton>
        </DataLayoutItem>
         <DataLayoutItem title="Display name">
-          {{data.displayName}}
+          <Skeleton :dep="data" class="w-32 h-4">
+            {{data.displayName}}
+          </Skeleton>
         </DataLayoutItem>
      </DataLayout>
     </Box>
 
-    <Box  v-if="!isPending && !isError && data">
+    <Box>
       <DataLayout title="Email adresses">
         <template #actions>
           <Button
@@ -134,21 +145,22 @@ const onEditEmail = () => {
         </template>
 
         <DataLayoutItem title="Primary email">
-          <span class="text-sm">
-            {{data.primaryEmail}}
-          </span>
-          <VerifiedBadge
-              tooltip="Email verified"
-              anti-tooltip="Email not verified"
-              :verified="data.emailVerified"
-          />
+          <Skeleton :dep="data" class="w-32 h-4">
+            <span class="text-sm">
+              {{data.primaryEmail}}
+            </span>
+            <VerifiedBadge
+                tooltip="Email verified"
+                anti-tooltip="Email not verified"
+                :verified="data.emailVerified"
+            />
+          </Skeleton>
         </DataLayoutItem>
       </DataLayout>
     </Box>
 
     <template #footer>
       <ModelMetadata
-          v-if="!isPending && !isError && data"
           :model="data"
       />
     </template>
