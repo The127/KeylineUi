@@ -16,6 +16,8 @@ import Box from "../../components/Box.vue";
 import Avatar from "../../components/Avatar.vue";
 import Heading from "../../components/Heading.vue";
 import Button from "../../components/Button.vue";
+import { BadgeCheck, BadgeX } from "lucide-vue-next"
+
 
 const toast = useToast()
 const route = useRoute()
@@ -118,7 +120,7 @@ const onFormSubmit = async () => {
         </div>
       </div>
     </Box>
-    <Box>
+    <Box  v-if="!isPending && !isError && data">
       <div class="flex flex-row justify-between items-center gap-4 flex-wrap">
         <Heading level="h3">Email</Heading>
         <Button text="Edit" variant="secondary" size="sm"/>
@@ -128,9 +130,13 @@ const onFormSubmit = async () => {
           <span class="text-sm text-gray-500">
             Primary email
           </span>
-          <span class="text-sm ">
-            {{data.primaryEmail}}
-          </span>
+          <div class="flex flex-row items-center gap-2">
+            <span class="text-sm">
+              {{data.primaryEmail}}
+            </span>
+            <BadgeCheck class="w-4 h-4 text-emerald-500" v-if="data.emailVerified"/>
+            <BadgeX class="w-4 h-4 text-red-700" v-if="!data.emailVerified"/>
+          </div>
         </div>
       </div>
     </Box>
