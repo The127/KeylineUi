@@ -27,16 +27,16 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="flex flex-row justify-between flex-wrap text-slate-500 text-xs">
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 text-slate-500 text-xs">
     <div class="flex flex-col">
       <span class="font-semibold">{{ t('identifier') }}</span>
       <span>{{ model.id }}</span>
     </div>
-    <div class="flex flex-col">
+    <div class="flex flex-col md:items-end lg:items-center">
       <span class="font-semibold">{{ t('created') }}</span>
       <span>{{ d(new Date(model.createdAt), 'long',)  }}</span>
     </div>
-    <div class="flex flex-col">
+    <div class="flex flex-col lg:items-end">
       <span class="font-semibold">{{ t('updated') }}</span>
       <span>{{ d(new Date(model.updatedAt), 'long',)  }}</span>
     </div>
