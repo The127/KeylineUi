@@ -84,10 +84,6 @@ const onFormSubmit = async () => {
           subtitle="Manage your profile and settings"
       />
     </template>
-    <ModelMetadata
-        v-if="!isPending && !isError && data"
-        :model="data"
-    />
     <Box v-if="!isPending && !isError && data">
       <div class="flex flex-row items-center gap-4">
         <Avatar :username="data.displayName"/>
@@ -145,7 +141,10 @@ const onFormSubmit = async () => {
       </div>
     </Box>
     <template #footer>
-      Footer content
+      <ModelMetadata
+          v-if="!isPending && !isError && data"
+          :model="data"
+      />
     </template>
   </PageLayout>
 </template>
