@@ -76,6 +76,14 @@ const onFormSubmit = async () => {
   }
 }
 
+const onEditPersonalInfo = () => {
+  alert('Edit personal info')
+}
+
+const onEditEmail = () => {
+  alert('Edit email')
+}
+
 </script>
 
 <template>
@@ -100,7 +108,12 @@ const onFormSubmit = async () => {
     <Box v-if="!isPending && !isError && data">
      <DataLayout title="Personal information">
        <template #actions>
-         <Button text="Edit" variant="secondary" size="sm"/>
+         <Button
+             @click="onEditPersonalInfo"
+             text="Edit"
+             variant="secondary"
+             size="sm"
+         />
        </template>
 
        <DataLayoutItem title="Username">
@@ -115,7 +128,12 @@ const onFormSubmit = async () => {
     <Box  v-if="!isPending && !isError && data">
       <DataLayout title="Email adresses">
         <template #actions>
-          <Button text="Edit" variant="secondary" size="sm"/>
+          <Button
+              @click="onEditEmail"
+              text="Edit"
+              variant="secondary"
+              size="sm"
+          />
         </template>
 
         <DataLayoutItem title="Primary email">
