@@ -123,7 +123,7 @@ const onFormSubmit = async () => {
     </Box>
     <Box  v-if="!isPending && !isError && data">
       <div class="flex flex-row justify-between items-center gap-4 flex-wrap">
-        <Heading level="h3">Email</Heading>
+        <Heading level="h3">Email adresses</Heading>
         <Button text="Edit" variant="secondary" size="sm"/>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
