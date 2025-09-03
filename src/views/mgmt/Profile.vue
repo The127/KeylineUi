@@ -96,7 +96,7 @@ const onFormSubmit = async () => {
     </Box>
     <Box v-if="!isPending && !isError && data">
       <div class="flex flex-row justify-between items-center gap-4 flex-wrap">
-        <Heading level="h3">Peronal information</Heading>
+        <Heading level="h3">Personal information</Heading>
         <Button text="Edit" variant="secondary" size="sm"/>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -119,7 +119,20 @@ const onFormSubmit = async () => {
       </div>
     </Box>
     <Box>
-      Change email address
+      <div class="flex flex-row justify-between items-center gap-4 flex-wrap">
+        <Heading level="h3">Email</Heading>
+        <Button text="Edit" variant="secondary" size="sm"/>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-gray-500">
+            Primary email
+          </span>
+          <span class="text-sm ">
+            {{data.primaryEmail}}
+          </span>
+        </div>
+      </div>
     </Box>
     <template #footer>
       Footer content
