@@ -5,7 +5,7 @@ import PageLayout from "../../components/PageLayout.vue";
 import {useMutation, useQuery} from "@tanstack/vue-query";
 import {useRoute} from "vue-router";
 import {useUserManager} from "../../composables/userManager.js";
-import {reactive, watch} from "vue";
+import {onMounted, reactive, ref, watch} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import ModelMetadata from "../../components/ModelMetadata.vue";
@@ -18,6 +18,8 @@ import VerifiedBadge from "../../components/VerifiedBadge.vue";
 import DataLayout from "../../components/dataLayout/DataLayout.vue";
 import DataLayoutItem from "../../components/dataLayout/DataLayoutItem.vue";
 import Skeleton from "../../components/Skeleton.vue";
+import Tabs from "../../components/tabs/Tabs.vue";
+import Tab from "../../components/tabs/Tab.vue";
 
 
 const toast = useToast()
@@ -93,71 +95,79 @@ const onEditEmail = () => {
       />
     </template>
 
-    <Box>
-      <div class="flex flex-row items-center gap-4">
-        <Skeleton :dep="data" class="w-12 h-12">
-          <Avatar :username="data.displayName"/>
-        </Skeleton>
-        <div class="flex flex-col gap-1">
-          <Skeleton :dep="data" class="w-42 h-5">
-            <Heading level="h3">{{ data.displayName }}</Heading>
-          </Skeleton>
-          <Skeleton :dep="data" class="w-32 h-4">
-            <span class="text-sm text-gray-500">@{{ data.username }}</span>
-          </Skeleton>
-        </div>
-      </div>
-    </Box>
+    <Tabs>
+      <Tab title="General">
+        <Box>
+          <div class="flex flex-row items-center gap-4">
+            <Skeleton :dep="data" class="w-12 h-12">
+              <Avatar :username="data.displayName"/>
+            </Skeleton>
+            <div class="flex flex-col gap-1">
+              <Skeleton :dep="data" class="w-42 h-5">
+                <Heading level="h3">{{ data.displayName }}</Heading>
+              </Skeleton>
+              <Skeleton :dep="data" class="w-32 h-4">
+                <span class="text-sm text-gray-500">@{{ data.username }}</span>
+              </Skeleton>
+            </div>
+          </div>
+        </Box>
 
-    <Box>
-     <DataLayout title="Personal information">
-       <template #actions>
-         <Button
-             @click="onEditPersonalInfo"
-             text="Edit"
-             variant="secondary"
-             size="sm"
-         />
-       </template>
+        <Box>
+          <DataLayout title="Personal information">
+            <template #actions>
+              <Button
+                  @click="onEditPersonalInfo"
+                  text="Edit"
+                  variant="secondary"
+                  size="sm"
+              />
+            </template>
 
-       <DataLayoutItem title="Username">
-         <Skeleton :dep="data" class="w-32 h-4">
-          {{data.username}}
-         </Skeleton>
-       </DataLayoutItem>
-        <DataLayoutItem title="Display name">
-          <Skeleton :dep="data" class="w-32 h-4">
-            {{data.displayName}}
-          </Skeleton>
-        </DataLayoutItem>
-     </DataLayout>
-    </Box>
+            <DataLayoutItem title="Username">
+              <Skeleton :dep="data" class="w-32 h-4">
+                {{data.username}}
+              </Skeleton>
+            </DataLayoutItem>
+            <DataLayoutItem title="Display name">
+              <Skeleton :dep="data" class="w-32 h-4">
+                {{data.displayName}}
+              </Skeleton>
+            </DataLayoutItem>
+          </DataLayout>
+        </Box>
 
-    <Box>
-      <DataLayout title="Email adresses">
-        <template #actions>
-          <Button
-              @click="onEditEmail"
-              text="Edit"
-              variant="secondary"
-              size="sm"
-          />
-        </template>
+        <Box>
+          <DataLayout title="Email adresses">
+            <template #actions>
+              <Button
+                  @click="onEditEmail"
+                  text="Edit"
+                  variant="secondary"
+                  size="sm"
+              />
+            </template>
 
-        <DataLayoutItem title="Primary email">
-          <Skeleton :dep="data" class="w-32 h-4">
+            <DataLayoutItem title="Primary email">
+              <Skeleton :dep="data" class="w-32 h-4">
             <span class="text-sm">
               {{data.primaryEmail}}
             </span>
-            <VerifiedBadge
-                tooltip="Email verified"
-                anti-tooltip="Email not verified"
-                :verified="data.emailVerified"
-            />
-          </Skeleton>
-        </DataLayoutItem>
-      </DataLayout>
-    </Box>
+                <VerifiedBadge
+                    tooltip="Email verified"
+                    anti-tooltip="Email not verified"
+                    :verified="data.emailVerified"
+                />
+              </Skeleton>
+            </DataLayoutItem>
+          </DataLayout>
+        </Box>
+      </Tab>
+
+      <Tab title="Credentials">
+        TODO
+      </Tab>
+    </Tabs>
 
     <template #footer>
       <ModelMetadata
