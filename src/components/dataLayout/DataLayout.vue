@@ -1,7 +1,6 @@
 <script setup>
 
 import Heading from "../Heading.vue";
-import Button from "../Button.vue";
 
 const props = defineProps({
   title: {
