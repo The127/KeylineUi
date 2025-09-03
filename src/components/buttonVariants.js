@@ -51,6 +51,7 @@ const variants = {
             "rounded-sm",
             "border-1",
             "text-xs",
+            "font-thin",
         ],
         sm: [
             "px-2",
@@ -58,6 +59,7 @@ const variants = {
             "rounded-md",
             "border-1",
             "text-sm",
+            "font-extralight",
         ],
         md: [
             "px-3",
@@ -65,6 +67,7 @@ const variants = {
             "rounded-md",
             "border-1",
             "text-md",
+            "font-light",
         ],
         lg: [
             "px-5",
@@ -72,6 +75,7 @@ const variants = {
             "rounded-md",
             "border-1",
             "text-lg",
+            "font-normal",
         ],
     },
 }
