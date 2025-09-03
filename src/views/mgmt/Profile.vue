@@ -11,7 +11,9 @@ import {reactive, watch} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import ModelMetadata from "../../components/ModelMetadata.vue";
+import {useToast} from "../../composables/toast.js";
 
+const toast = useToast()
 const route = useRoute()
 const userManager = useUserManager(route.params.vsName)
 
@@ -54,9 +56,15 @@ const updateProfile = useMutation({
 })
 
 const onFormSubmit = async () => {
-  await updateProfile.mutateAsync({
-    displayName: formModel.displayName,
-  })
+  try{
+    await updateProfile.mutateAsync({
+      displayName: formModel.displayName,
+    })
+
+    toast.success('Profile updated')
+  } catch {
+    toast.error('Failed to update profile')
+  }
 }
 
 </script>
