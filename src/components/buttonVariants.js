@@ -7,6 +7,7 @@ const variants = {
             "hover:bg-transparent",
             "text-slate-100",
             "hover:text-slate-900",
+            "hover:inset-shadow-xs",
         ],
         secondary: [
             "bg-transparent",
@@ -14,6 +15,7 @@ const variants = {
             "text-slate-500",
             "hover:text-slate-100",
             "hover:bg-slate-500",
+            "hover:inset-shadow-xs",
         ],
         danger: [
             "bg-transparent",
@@ -21,6 +23,7 @@ const variants = {
             "text-red-700",
             "hover:text-slate-100",
             "hover:bg-red-700",
+            "hover:inset-shadow-xs",
         ],
         link: [
             "bg-transparent",
@@ -40,6 +43,7 @@ const variants = {
             "tracking-wider",
             "uppercase",
             "border-none",
+            "hover:inset-shadow-xs",
         ]
     },
     size: {
