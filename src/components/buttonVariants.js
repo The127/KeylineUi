@@ -2,17 +2,17 @@
 const variants = {
     intent: {
         primary: [
-            "border-emerald-500",
-            "bg-emerald-500",
+            "border-slate-700",
+            "bg-slate-700",
             "hover:bg-transparent",
             "text-slate-100",
             "hover:text-slate-900",
         ],
         secondary: [
             "bg-transparent",
-            "border-slate-700",
+            "border-slate-500",
             "hover:text-slate-100",
-            "hover:bg-slate-700",
+            "hover:bg-slate-500",
         ],
         danger: [
             "bg-transparent",
