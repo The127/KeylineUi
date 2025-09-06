@@ -15,10 +15,40 @@ import {useRoute} from "vue-router";
 import Modal from "../../../../components/Modal.vue";
 import Input from "../../../../components/Input.vue";
 import Form from "../../../../components/Form.vue";
-import {useMutation} from "@tanstack/vue-query";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import {useToast} from "../../../../composables/toast.js";
+import {useI18n} from "vue-i18n";
+
+const { t } = useI18n({
+  messages: {
+    en: {
+      personalInfo: 'Personal information',
+      username: 'Username',
+      displayName: 'Display name',
+      emailAddresses: 'Email addresses',
+      primaryEmail: 'Primary email',
+      emailVerified: 'Email verified',
+      emailNotVerified: 'Email not verified',
+      editPersonalInfo: 'Edit personal information',
+      profileUpdated: 'Profile updated',
+      failedToUpdateProfile: 'Failed to update profile',
+    },
+    de: {
+      personalInfo: 'Persönliche Informationen',
+      username: 'Benutzername',
+      displayName: 'Anzeigename',
+      emailAddresses: 'E-Mail Adressen',
+      primaryEmail: 'Primäre E-Mail',
+      emailVerified: 'E-Mail verifiziert',
+      emailNotVerified: 'E-Mail nicht verifiziert',
+      editPersonalInfo: 'Persönliche Informationen bearbeiten',
+      profileUpdated: 'Profil aktualisiert',
+      failedToUpdateProfile: 'Profil konnte nicht aktualisiert werden',
+    },
+  },
+  inheritLocale: true,
+})
 
 const toast = useToast()
 const userInfoModal = ref(null)
@@ -66,10 +96,10 @@ const onFormSubmit = async () => {
     })
 
     userInfoModal.value.close()
-    toast.success('Profile updated')
+    toast.success(t('profileUpdated'))
   } catch (e) {
     console.error(e)
-    toast.error('Failed to update profile')
+    toast.error(t('failedToUpdateProfile'))
   }
 }
 
@@ -77,11 +107,11 @@ const onFormSubmit = async () => {
 
 <template>
   <Modal ref="userInfoModal">
-    <Form title="Profile" v-if="!isPending && !isError && data"
+    <Form :title="t('editPersonalInfo')" v-if="!isPending && !isError && data"
           @submit="onFormSubmit"
           :vuelidate="v$"
     >
-      <Input label="DisplayName"
+      <Input :label="t('displayName')"
              v-model="v$.displayName.$model"
              :vuelidate="v$.displayName"
              required
@@ -106,7 +136,7 @@ const onFormSubmit = async () => {
   </Box>
 
   <Box>
-    <DataLayout title="Personal information">
+    <DataLayout :title="t('personalInfo')">
       <template #actions>
         <Button
             @click="onEditPersonalInfo"
@@ -116,12 +146,12 @@ const onFormSubmit = async () => {
         />
       </template>
 
-      <DataLayoutItem title="Username">
+      <DataLayoutItem :title="t('username')">
         <Skeleton :dep="data" class="w-32 h-4">
           {{data.username}}
         </Skeleton>
       </DataLayoutItem>
-      <DataLayoutItem title="Display name">
+      <DataLayoutItem :title="t('displayName')">
         <Skeleton :dep="data" class="w-32 h-4">
           {{data.displayName}}
         </Skeleton>
@@ -130,7 +160,7 @@ const onFormSubmit = async () => {
   </Box>
 
   <Box>
-    <DataLayout title="Email adresses">
+    <DataLayout :title="t('emailAddresses')">
       <template #actions>
         <Button
             @click="onEditEmail"
@@ -140,14 +170,14 @@ const onFormSubmit = async () => {
         />
       </template>
 
-      <DataLayoutItem title="Primary email">
+      <DataLayoutItem :title="t('primaryEmail')">
         <Skeleton :dep="data" class="w-32 h-4">
             <span class="text-sm">
               {{data.primaryEmail}}
             </span>
           <VerifiedBadge
-              tooltip="Email verified"
-              anti-tooltip="Email not verified"
+              :tooltip="t('emailVerified')"
+              :anti-tooltip="t('emailNotVerified')"
               :verified="data.emailVerified"
           />
         </Skeleton>
