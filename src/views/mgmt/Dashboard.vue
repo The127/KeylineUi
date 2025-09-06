@@ -9,6 +9,8 @@ import {adminUiBaseUrl, useUserManager} from "../../composables/userManager.js";
 import Box from "../../components/Box.vue";
 import Heading from "../../components/Heading.vue";
 import GridLayout from "../../components/GridLayout.vue";
+import DataLayoutItem from "../../components/dataLayout/DataLayoutItem.vue";
+import DashboardItem from "../../components/DashboardItem.vue";
 
 const { t } = useI18n({
   messages: {
@@ -41,22 +43,14 @@ const mgr = useUserManager(route.params.vsName)
     </template>
 
     <GridLayout>
-      <Box class="flex flex-col gap-2 cursor-pointer hover:shadow-xl transition-shadow">
-        <Heading level="h4">
-          Applications
-        </Heading>
-        <span>
-          Manage applications
-        </span>
-      </Box>
-      <Box>
-        <Heading level="h4">
-          Profile
-        </Heading>
-        <span>
-          Configure your profile
-        </span>
-      </Box>
+      <DashboardItem
+          title="Applications"
+          subtitle="Manage your applications"
+      />
+      <DashboardItem
+          title="Profile"
+          subtitle="Configure your profile"
+      />
     </GridLayout>
   </PageLayout>
 </template>
