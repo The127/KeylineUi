@@ -114,7 +114,7 @@ const toastClass = cva([
 <template>
   <slot/>
   <div
-      class="fixed top-2 right-2 flex flex-col items-end z-50"
+      class="fixed bottom-2 right-2 flex flex-col items-end z-50"
       @mouseenter="isHovered = true"
       @mouseleave="isHovered = false"
   >
@@ -125,7 +125,7 @@ const toastClass = cva([
       :style="{
           zIndex: toasts.length - idx, // newest on top
           opacity: isHovered || idx === 0 ? 1 : 0.9,
-          top: isHovered ? `${idx * 70}px` : `${idx * 10}px`, // fan out vs stacked
+          bottom: isHovered ? `${idx * 70}px` : `${idx * 10}px`, // fan out vs stacked
           filter: isHovered || idx === 0 ? 'none' : 'brightness(0.9)',
         }"
     >
