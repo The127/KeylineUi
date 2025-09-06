@@ -3,7 +3,9 @@
 </script>
 
 <template>
-  <slot/>
+  <Suspense>
+    <slot/>
+  </Suspense>
 </template>
 
 <style scoped>
