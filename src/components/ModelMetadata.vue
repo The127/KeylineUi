@@ -13,7 +13,7 @@ const { d, t } = useI18n({
     de: {
       identifier: 'Identifier',
       created: 'Erstellt',
-      updated: 'Updated',
+      updated: 'Geändert',
     },
   }
 })
