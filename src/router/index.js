@@ -81,7 +81,7 @@ const routes = [
             {
                 path: 'profile',
                 name: 'mgmt-profile',
-                component: () => import('../views/mgmt/Profile.vue'),
+                component: () => import('../views/mgmt/profile/Profile.vue'),
             },
         ]
     },
