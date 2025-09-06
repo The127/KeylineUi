@@ -2,6 +2,9 @@
 
 import Heading from "./Heading.vue";
 import Box from "./Box.vue";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
 
 const props = defineProps({
   title: {
@@ -11,12 +14,19 @@ const props = defineProps({
   subtitle: {
     type: String,
   },
+  to: {
+    type: undefined,
+    required: true,
+  },
 })
 
 </script>
 
 <template>
-  <Box class="flex flex-col gap-2 cursor-pointer hover:shadow-xl transition-shadow">
+  <Box
+      class="flex flex-col gap-2 cursor-pointer hover:shadow-xl transition-shadow"
+      @click="router.push(to)"
+  >
     <Heading level="h4">
       {{ title }}
     </Heading>

@@ -46,10 +46,12 @@ const mgr = useUserManager(route.params.vsName)
       <DashboardItem
           title="Applications"
           subtitle="Manage your applications"
+          :to="{ name: 'mgmt-applications' }"
       />
       <DashboardItem
           title="Profile"
           subtitle="Configure your profile"
+          :to="{ name: 'mgmt-profile' }"
       />
     </GridLayout>
   </PageLayout>
