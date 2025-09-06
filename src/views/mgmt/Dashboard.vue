@@ -16,9 +16,11 @@ const { t } = useI18n({
   messages: {
     en: {
       title: 'Dashboard',
+      subtitle: 'Your entrypoint to Keyline',
     },
     de: {
       title: 'Dashboard',
+      subtitle: 'Ihr Einstiegspunkt in Keyline',
     },
     da : {
       title: 'Dashboard',
@@ -28,7 +30,6 @@ const { t } = useI18n({
 })
 
 const route = useRoute()
-const mgr = useUserManager(route.params.vsName)
 
 </script>
 
@@ -37,7 +38,7 @@ const mgr = useUserManager(route.params.vsName)
     <template #header>
       <PageHeader
           :title="t('title')"
-          subtitle="You can do things on this page"
+          :subtitle="t('subtitle')"
       >
       </PageHeader>
     </template>
