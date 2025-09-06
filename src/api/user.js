@@ -1,4 +1,5 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/vue-query";
+import {apiFetch} from "./index.js";
 
 export const useProfileQuery = (vsName, userId) => useQuery({
     queryKey: ['profile', vsName, userId],
@@ -6,10 +7,9 @@ export const useProfileQuery = (vsName, userId) => useQuery({
 })
 
 export const profileQueryFn = async (vsName, userId) => {
-    const response = await fetch(
+    return await apiFetch(
         `http://127.0.0.1:8081/api/virtual-servers/${vsName}/users/${userId}`
     )
-    return response.json()
 }
 
 export const useProfileMutation = (vsName, userId) => {
@@ -23,7 +23,7 @@ export const useProfileMutation = (vsName, userId) => {
 }
 
 export const profileMutationFn = async (vsName, userId, data) => {
-    await fetch(
+    return await apiFetch(
         `http://127.0.0.1:8081/api/virtual-servers/${vsName}/users/${userId}`,
     {
             method: 'PATCH',
