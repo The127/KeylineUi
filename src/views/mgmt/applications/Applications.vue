@@ -26,8 +26,8 @@ const route = useRoute()
         :queryFn="() => useListApplicationQuery(route.params.vsName)"
     >
       <template #columns>
-        <DataTableColumn title="Name"/>
-        <DataTableColumn title="Display Name"/>
+        <DataTableColumn title="Name" field="name"/>
+        <DataTableColumn title="Display Name" field="displayName"/>
       </template>
 
       <template #row="{ item: app }">

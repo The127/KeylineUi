@@ -16,6 +16,21 @@ const props = defineProps({
 
 const {data, isPending} = props.queryFn()
 
+const columns = ref([])
+
+provide('tableManager', {
+  register: (column) => {
+    for (let i = 0; i < columns.value.length; i++) {
+      if (columns.value[i].field === column.field) {
+        columns.value[i] = column
+        return
+      }
+    }
+
+    columns.value.push(column)
+  },
+})
+
 </script>
 
 <template>
@@ -29,7 +44,7 @@ const {data, isPending} = props.queryFn()
         </tr>
 
         <tr v-if="isPending" class="bg-emerald-100 relative h-1">
-          <td :colspan="2" class="p-0">
+          <td :colspan="columns.length" class="p-0">
             <div class="overflow-hidden h-1">
               <div class="loading-bar bg-emerald-300 h-1"></div>
             </div>
@@ -56,7 +71,7 @@ const {data, isPending} = props.queryFn()
           class="bg-slate-200 border-t border-slate-300"
       >
         <tr>
-          <td :colspan="2" class="px-5 py-3">
+          <td :colspan="columns.length" class="px-5 py-3">
             TODO: Pagination
           </td>
         </tr>

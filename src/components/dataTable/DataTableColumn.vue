@@ -3,10 +3,23 @@
 import {inject, onMounted} from "vue";
 
 const props = defineProps({
+  field: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
   },
+})
+
+const tableManager = inject('tableManager')
+
+onMounted(() => {
+  tableManager.register({
+    field: props.field,
+    title: props.title,
+  })
 })
 
 </script>
