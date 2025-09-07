@@ -37,6 +37,7 @@ const onNavigateToAppDetails = async (app) => {
 const formModel = reactive({
   name: '',
   displayName: '',
+  redirectUris: [],
 })
 
 const formRules = {
@@ -49,6 +50,7 @@ const v$ = useVuelidate(formRules, formModel)
 const onAddApplication = () => {
   formModel.name = ''
   formModel.displayName = ''
+  formModel.redirectUris = []
 
   v$.value.$reset()
   addAppModal.value.open()
@@ -61,6 +63,7 @@ const createApplication = async () => {
     await createApplicationMutation.mutateAsync({
       name: formModel.name,
       displayName: formModel.displayName,
+      redirectUris: formModel.redirectUris,
     })
     toast.success('Application created')
   } catch (e) {
