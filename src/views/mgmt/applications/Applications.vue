@@ -1,7 +1,7 @@
 <script setup>
 
 import {useRoute, useRouter} from "vue-router";
-import {useListApplicationQuery} from "../../../api/applications.js";
+import {useCreateApplicationMutation, useListApplicationQuery} from "../../../api/applications.js";
 import PageLayout from "../../../components/PageLayout.vue";
 import PageHeader from "../../../components/PageHeader.vue";
 import DataTable from "../../../components/dataTable/DataTable.vue";
@@ -54,16 +54,20 @@ const onAddApplication = () => {
   addAppModal.value.open()
 }
 
+const createApplicationMutation = useCreateApplicationMutation(route.params.vsName)
+
 const createApplication = async () => {
   try{
-    // TODO: call app creation
-
-    addAppModal.value.close()
+    await createApplicationMutation.mutateAsync({
+      name: formModel.name,
+      displayName: formModel.displayName,
+    })
     toast.success('Application created')
   } catch (e) {
     console.error(e)
     toast.error('Failed to create application')
   }
+  addAppModal.value.close()
 }
 
 </script>
