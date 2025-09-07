@@ -1,7 +1,6 @@
 <script setup>
 
-import {useRoute} from "vue-router";
-import {useProfileQuery} from "../../../api/user.js";
+import {useRoute, useRouter} from "vue-router";
 import {useListApplicationQuery} from "../../../api/applications.js";
 import PageLayout from "../../../components/PageLayout.vue";
 import PageHeader from "../../../components/PageHeader.vue";
@@ -10,6 +9,19 @@ import DataTableCell from "../../../components/dataTable/DataTableCell.vue";
 import DataTableColumn from "../../../components/dataTable/DataTableColumn.vue";
 
 const route = useRoute()
+const router = useRouter()
+
+const onNavigateToAppDetails = async (app) => {
+  await router.push(
+      {
+        name: 'mgmt-application-details',
+        params: {
+          vsName: route.params.vsName,
+          appId: "foo",
+        },
+      },
+  )
+}
 
 </script>
 
@@ -24,6 +36,7 @@ const route = useRoute()
 
     <DataTable
         :queryFn="() => useListApplicationQuery(route.params.vsName)"
+        :on-click="onNavigateToAppDetails"
     >
       <template #columns>
         <DataTableColumn title="Name" field="name"/>

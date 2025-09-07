@@ -75,6 +75,7 @@ function getSkeletonWidth(rowIndex, cellIndex) {
             :key="props.idSelector(item)"
             class="'hover:text-emerald-700' odd:bg-slate-50 even:bg-slate-100 hover:bg-emerald-100"
             :class="{'cursor-pointer': !!onClick}"
+            @click="!!onClick && onClick(item)"
         >
           <slot name="row" :item="item"/>
         </tr>

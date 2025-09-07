@@ -84,6 +84,11 @@ const routes = [
                 component: () => import('../views/mgmt/applications/Applications.vue'),
             },
             {
+                path: 'applications/:appId',
+                name: 'mgmt-application-details',
+                component: () => import('../views/mgmt/applications/details/ApplicationDetails.vue'),
+            },
+            {
                 path: 'users',
                 name: 'mgmt-users',
                 component: () => import('../views/mgmt/users/Users.vue'),
