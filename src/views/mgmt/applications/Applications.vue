@@ -18,7 +18,7 @@ const onNavigateToAppDetails = async (app) => {
         name: 'mgmt-application-details',
         params: {
           vsName: route.params.vsName,
-          appId: "foo",
+          appId: app.id,
         },
       },
   )
