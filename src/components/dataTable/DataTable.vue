@@ -79,26 +79,26 @@ function getSkeletonWidth(rowIndex, cellIndex) {
         >
           <slot name="row" :item="item"/>
         </tr>
-      <tr
-          v-if="isPending && !data"
-          v-for="rowIndex in 5"
-          :key="rowIndex"
-          class="odd:bg-slate-50 even:bg-slate-100"
-      >
-        <td
-            v-for="cellIndex in columns.length"
-            :key="cellIndex"
-            class="px-5 py-3"
+        <tr
+            v-if="isPending && !data"
+            v-for="rowIndex in 5"
+            :key="rowIndex"
+            class="odd:bg-slate-50 even:bg-slate-100"
         >
-          <Skeleton
-              :dep="undefined"
-              class="h-4"
-              :style="{
-                width: getSkeletonWidth(rowIndex, cellIndex)
-              }"
-          />
-        </td>
-      </tr>
+          <td
+              v-for="cellIndex in columns.length"
+              :key="cellIndex"
+              class="px-5 py-3"
+          >
+            <Skeleton
+                :dep="undefined"
+                class="h-4"
+                :style="{
+                  width: getSkeletonWidth(rowIndex, cellIndex)
+                }"
+            />
+          </td>
+        </tr>
       </tbody>
 
       <tfoot
