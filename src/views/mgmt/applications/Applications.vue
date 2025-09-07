@@ -22,13 +22,13 @@ const route = useRoute()
     </template>
 
     <DataTable
-        :query="() => useListApplicationQuery(route.params.vsName)"
+        :queryFn="() => useListApplicationQuery(route.params.vsName)"
         v-slot="{ item: app }"
     >
-      <DataTableColumn title="Name">
+      <DataTableColumn title="Name" column-name="name">
         {{ app.name }}
       </DataTableColumn>
-      <DataTableColumn title="Display Name">
+      <DataTableColumn title="Display Name" column-name="displayName">
         {{ app.displayName }}
       </DataTableColumn>
     </DataTable>
