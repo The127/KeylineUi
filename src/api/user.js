@@ -28,9 +28,6 @@ export const profileMutationFn = async (vsName, userId, data) => {
     {
             method: 'PATCH',
             body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json',
-            },
         }
     )
 }
