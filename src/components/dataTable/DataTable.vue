@@ -73,7 +73,7 @@ function getSkeletonWidth(rowIndex, cellIndex) {
             v-if="!!data"
             v-for="item in data.items"
             :key="props.idSelector(item)"
-            class="'hover:text-emerald-700' odd:bg-slate-50 even:bg-slate-100 hover:bg-emerald-100"
+            class="hover:text-emerald-700 odd:bg-slate-50 even:bg-slate-100 hover:bg-emerald-100"
             :class="{'cursor-pointer': !!onClick}"
             @click="!!onClick && onClick(item)"
         >
