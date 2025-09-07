@@ -1,9 +1,15 @@
 <script setup>
 
+import PageLayout from "../../../../components/PageLayout.vue";
+import PageHeader from "../../../../components/PageHeader.vue";
 </script>
 
 <template>
-  Application details
+  <PageLayout>
+    <PageHeader title="Application details">
+
+    </PageHeader>
+  </PageLayout>
 </template>
 
 <style scoped>
