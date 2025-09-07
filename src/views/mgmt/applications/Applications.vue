@@ -14,8 +14,24 @@ const { isPending, isError, data, error } = useListApplicationQuery(
 
 <template>
   Applications View
-  <br/>
-  {{data}}
+  <table v-if="!isPending">
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Display Name
+      </th>
+    </tr>
+    <tr v-for="app in data.items" :key="app.name">
+      <td>
+        {{ app.name }}
+      </td>
+      <td>
+        {{ app.displayName }}
+      </td>
+    </tr>
+  </table>
 </template>
 
 <style scoped>
