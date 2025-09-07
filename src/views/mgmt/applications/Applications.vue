@@ -9,11 +9,16 @@ import DataTableCell from "../../../components/dataTable/DataTableCell.vue";
 import DataTableColumn from "../../../components/dataTable/DataTableColumn.vue";
 import Button from "../../../components/Button.vue";
 import Modal from "../../../components/Modal.vue";
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import Form from "../../../components/Form.vue";
+import {required} from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
+import Input from "../../../components/Input.vue";
+import {useToast} from "../../../composables/toast.js";
 
 const route = useRoute()
 const router = useRouter()
+const toast = useToast()
 
 const addAppModal = ref(null)
 
@@ -29,16 +34,57 @@ const onNavigateToAppDetails = async (app) => {
   )
 }
 
+const formModel = reactive({
+  name: '',
+  displayName: '',
+})
+
+const formRules = {
+  name: { required, },
+  displayName: { required, },
+}
+
+const v$ = useVuelidate(formRules, formModel)
+
 const onAddApplication = () => {
+  formModel.name = ''
+  formModel.displayName = ''
+
+  v$.value.$reset()
   addAppModal.value.open()
+}
+
+const createApplication = async () => {
+  try{
+    // TODO: call app creation
+
+    addAppModal.value.close()
+    toast.success('Application created')
+  } catch (e) {
+    console.error(e)
+    toast.error('Failed to create application')
+  }
 }
 
 </script>
 
 <template>
   <Modal ref="addAppModal" title="Add application">
-    <Form title="Add application">
-      TODO: Add application form
+    <Form
+        title="Add application"
+        @submit="createApplication"
+        :vuelidate="v$"
+    >
+      <Input label="Name"
+             v-model="v$.name.$model"
+             :vuelidate="v$.name"
+             required
+      />
+      <Input label="Display Name"
+             v-model="v$.displayName.$model"
+             :vuelidate="v$.displayName"
+             required
+      />
     </Form>
   </Modal>
 

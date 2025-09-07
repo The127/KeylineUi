@@ -107,7 +107,8 @@ const onFormSubmit = async () => {
 
 <template>
   <Modal ref="userInfoModal">
-    <Form :title="t('editPersonalInfo')" v-if="!isPending && !isError && data"
+    <Form :title="t('editPersonalInfo')"
+          v-if="!isPending && !isError && data"
           @submit="onFormSubmit"
           :vuelidate="v$"
     >
