@@ -2,6 +2,7 @@
 
 import {provide, ref} from "vue";
 import Box from "../Box.vue";
+import Skeleton from "../Skeleton.vue";
 
 const props = defineProps({
   queryFn: {
@@ -30,6 +31,15 @@ provide('tableManager', {
     columns.value.push(column)
   },
 })
+
+function getSkeletonWidth(rowIndex, cellIndex) {
+  // Simple deterministic hash from indices
+  const seed = (rowIndex * 31 + cellIndex * 17) % 100
+  const min = 30 // %
+  const max = 90 // %
+  const width = min + (seed % (max - min))
+  return width + '%'
+}
 
 </script>
 
@@ -61,13 +71,30 @@ provide('tableManager', {
         >
           <slot name="row" :item="item"/>
         </tr>
-      <tr v-if="isPending && !data">
-        asd
+      <tr
+          v-if="isPending && !data"
+          v-for="rowIndex in 5"
+          :key="rowIndex"
+          class="odd:bg-slate-50 even:bg-slate-100"
+      >
+        <td
+            v-for="cellIndex in columns.length"
+            :key="cellIndex"
+            class="px-5 py-3"
+        >
+          <Skeleton
+              :dep="undefined"
+              class="h-4"
+              :style="{
+                width: getSkeletonWidth(rowIndex, cellIndex)
+              }"
+          />
+        </td>
       </tr>
       </tbody>
 
       <tfoot
-          v-if="!isPending"
+          v-if="!!data"
           class="bg-slate-200 border-t border-slate-300"
       >
         <tr>
