@@ -79,6 +79,12 @@ function getSkeletonWidth(rowIndex, cellIndex) {
         >
           <slot name="row" :item="item"/>
         </tr>
+        <tr v-if="!!data && data.items.length === 0">
+          <td :colspan="columns.length" class="px-5 py-3 text-center">
+            No data&hellip;
+          </td>
+        </tr>
+
         <tr
             v-if="isPending && !data"
             v-for="rowIndex in 5"
