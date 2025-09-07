@@ -7,6 +7,7 @@ import PageHeader from "../../../components/PageHeader.vue";
 import DataTable from "../../../components/dataTable/DataTable.vue";
 import DataTableCell from "../../../components/dataTable/DataTableCell.vue";
 import DataTableColumn from "../../../components/dataTable/DataTableColumn.vue";
+import Button from "../../../components/Button.vue";
 
 const route = useRoute()
 const router = useRouter()
@@ -23,6 +24,10 @@ const onNavigateToAppDetails = async (app) => {
   )
 }
 
+const onAddApplication = () => {
+  alert('Add application')
+}
+
 </script>
 
 <template>
@@ -31,7 +36,9 @@ const onNavigateToAppDetails = async (app) => {
       <PageHeader
           title="Applications"
           subtitle="Manage applications"
-      />
+      >
+        <Button text="Add" @click="onAddApplication"/>
+      </PageHeader>
     </template>
 
     <DataTable
