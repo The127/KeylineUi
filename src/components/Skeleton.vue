@@ -26,7 +26,7 @@ const isDependencyLoaded = computed(() => props.dep !== undefined)
   <template v-if="isDependencyLoaded">
     <slot/>
   </template>
-  <span
+  <div
       v-else
       class="rounded-full bg-slate-300 animate-pulse"
       v-bind="$attrs"
