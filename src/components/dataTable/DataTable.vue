@@ -39,7 +39,9 @@ provide('tableManager', {
   <Box class="px-0 py-0 overflow-x-hidden">
     <table class="w-full">
       <thead>
-        <tr class="bg-emerald-600 text-slate-50">
+        <tr
+            class="bg-emerald-600 text-slate-50"
+        >
           <th
               v-for="column in columns"
               :key="column.title"
@@ -47,6 +49,14 @@ provide('tableManager', {
           >
             {{ column.title }}
           </th>
+        </tr>
+
+        <tr v-if="isPending" class="bg-emerald-100 relative h-1">
+          <td :colspan="columns.length" class="p-0">
+            <div class="overflow-hidden h-1">
+              <div class="loading-bar bg-emerald-300 h-1"></div>
+            </div>
+          </td>
         </tr>
       </thead>
 
@@ -76,5 +86,13 @@ provide('tableManager', {
 </template>
 
 <style scoped>
+@keyframes loadingBar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
 
+.loading-bar {
+  width: 50%;
+  animation: loadingBar 1.5s linear infinite;
+}
 </style>
