@@ -5,7 +5,6 @@ const props = defineProps({
     required: true,
   },
   idSelector: {
-    required: true,
     type: Function,
     validator: v => typeof v === 'function',
     default: x => x.id ?? x,
