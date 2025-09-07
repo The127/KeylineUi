@@ -114,7 +114,7 @@ function getSkeletonWidth(rowIndex, cellIndex) {
       </tbody>
 
       <tfoot
-          v-if="!!data"
+          v-if="!!data && !!data.pagination"
           class="bg-slate-200 border-t border-slate-300"
       >
         <tr>
