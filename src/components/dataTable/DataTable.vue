@@ -35,7 +35,7 @@ provide('tableManager', {
 </script>
 
 <template>
-  <table>
+  <table class="w-full">
     <thead>
       <tr>
         <th
