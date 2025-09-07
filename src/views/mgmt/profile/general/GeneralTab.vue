@@ -94,13 +94,12 @@ const onFormSubmit = async () => {
     await updateProfile.mutateAsync({
       displayName: formModel.displayName,
     })
-
-    userInfoModal.value.close()
     toast.success(t('profileUpdated'))
   } catch (e) {
     console.error(e)
     toast.error(t('failedToUpdateProfile'))
   }
+  userInfoModal.value.close()
 }
 
 </script>
