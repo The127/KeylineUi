@@ -37,6 +37,10 @@ const {data, isPending} = props.query()
         <slot :item="item"/>
       </tr>
     </tbody>
+
+    <tfoot v-if="!isPending">
+      TODO: Pagination
+    </tfoot>
   </table>
 </template>
 
