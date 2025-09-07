@@ -61,8 +61,15 @@ provide('tableManager', {
         </tr>
       </tbody>
 
-      <tfoot v-if="!isPending">
-        TODO: Pagination
+      <tfoot
+          v-if="!isPending"
+          class="bg-slate-200"
+      >
+        <tr>
+          <td :colspan="columns.length" class="px-5 py-3">
+            TODO: Pagination
+          </td>
+        </tr>
       </tfoot>
     </table>
   </Box>
