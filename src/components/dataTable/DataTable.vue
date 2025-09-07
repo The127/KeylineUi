@@ -63,7 +63,7 @@ provide('tableManager', {
 
       <tfoot
           v-if="!isPending"
-          class="bg-slate-200"
+          class="bg-slate-200 border-t border-slate-300"
       >
         <tr>
           <td :colspan="columns.length" class="px-5 py-3">
