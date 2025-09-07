@@ -1,5 +1,7 @@
 <script setup>
 
+import {provide, ref} from "vue";
+
 const props = defineProps({
   query: {
     required: true,
@@ -13,17 +15,34 @@ const props = defineProps({
 
 const {data, isPending} = props.query()
 
+const columns = ref([])
+
+const register = (column) => {
+  for (let i = 0; i < columns.value.length; i++) {
+    if (columns.value[i].title === column.title) {
+      columns.value[i] = column
+      return
+    }
+  }
+
+  columns.value.push(column)
+}
+
+provide('tableManager', {
+  register,
+})
+
 </script>
 
 <template>
   <table>
     <thead>
       <tr>
-        <th>
-          Name
-        </th>
-        <th>
-          Display Name
+        <th
+            v-for="column in columns"
+            :key="column.title"
+        >
+          {{ column.title }}
         </th>
       </tr>
     </thead>
