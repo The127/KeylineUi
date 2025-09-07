@@ -6,6 +6,7 @@ import {useListApplicationQuery} from "../../../api/applications.js";
 import PageLayout from "../../../components/PageLayout.vue";
 import PageHeader from "../../../components/PageHeader.vue";
 import DataTable from "../../../components/dataTable/DataTable.vue";
+import DataTableCell from "../../../components/dataTable/DataTableCell.vue";
 import DataTableColumn from "../../../components/dataTable/DataTableColumn.vue";
 
 const route = useRoute()
@@ -23,14 +24,20 @@ const route = useRoute()
 
     <DataTable
         :queryFn="() => useListApplicationQuery(route.params.vsName)"
-        v-slot="{ item: app }"
     >
-      <DataTableColumn title="Name" column-name="name">
-        {{ app.name }}
-      </DataTableColumn>
-      <DataTableColumn title="Display Name" column-name="displayName">
-        {{ app.displayName }}
-      </DataTableColumn>
+      <template #columns>
+        <DataTableColumn title="Name"/>
+        <DataTableColumn title="Display Name"/>
+      </template>
+
+      <template #row="{ item: app }">
+        <DataTableCell>
+          {{ app.name }}
+        </DataTableCell>
+        <DataTableCell>
+          {{ app.displayName }}
+        </DataTableCell>
+      </template>
     </DataTable>
   </PageLayout>
 </template>
