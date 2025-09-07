@@ -8,9 +8,14 @@ import DataTable from "../../../components/dataTable/DataTable.vue";
 import DataTableCell from "../../../components/dataTable/DataTableCell.vue";
 import DataTableColumn from "../../../components/dataTable/DataTableColumn.vue";
 import Button from "../../../components/Button.vue";
+import Modal from "../../../components/Modal.vue";
+import {ref} from "vue";
+import Form from "../../../components/Form.vue";
 
 const route = useRoute()
 const router = useRouter()
+
+const addAppModal = ref(null)
 
 const onNavigateToAppDetails = async (app) => {
   await router.push(
@@ -25,12 +30,18 @@ const onNavigateToAppDetails = async (app) => {
 }
 
 const onAddApplication = () => {
-  alert('Add application')
+  addAppModal.value.open()
 }
 
 </script>
 
 <template>
+  <Modal ref="addAppModal" title="Add application">
+    <Form title="Add application">
+      TODO: Add application form
+    </Form>
+  </Modal>
+
   <PageLayout>
     <template #header>
       <PageHeader
