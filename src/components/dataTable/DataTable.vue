@@ -31,15 +31,10 @@ const {data, isPending} = props.query()
     <tbody>
       <tr
           v-if="!isPending"
-          v-for="app in data.items"
-          :key="props.idSelector(app)"
+          v-for="item in data.items"
+          :key="props.idSelector(item)"
       >
-        <td>
-          {{ app.name }}
-        </td>
-        <td>
-          {{ app.displayName }}
-        </td>
+        <slot :item="item"/>
       </tr>
     </tbody>
   </table>
