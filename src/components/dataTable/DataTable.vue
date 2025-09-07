@@ -21,7 +21,7 @@ const props = defineProps({
   },
 })
 
-const {data, isPending} = props.queryFn()
+const {data, isPending, isFetching,} = props.queryFn()
 
 const columns = ref([])
 
@@ -59,7 +59,7 @@ function getSkeletonWidth(rowIndex, cellIndex) {
           <slot name="columns"/>
         </tr>
 
-        <tr v-if="isPending" class="bg-emerald-100 relative h-1">
+        <tr v-if="isPending || isFetching" class="bg-emerald-100 relative h-1">
           <td :colspan="columns.length" class="p-0">
             <div class="overflow-hidden h-1">
               <div class="loading-bar bg-emerald-300 h-1"></div>
