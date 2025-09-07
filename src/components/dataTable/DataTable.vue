@@ -43,7 +43,7 @@ provide('tableManager', {
           <th
               v-for="column in columns"
               :key="column.title"
-              class="px-5 py-3"
+              class="px-5 py-3 font-semibold text-sm uppercase tracking-wide border-b border-emerald-700"
           >
             {{ column.title }}
           </th>
@@ -55,7 +55,7 @@ provide('tableManager', {
             v-if="!isPending"
             v-for="item in data.items"
             :key="props.idSelector(item)"
-            class="bg-slate-200 hover:bg-emerald-100"
+            class="bg-slate-50 hover:bg-emerald-100"
         >
           <slot :item="item"/>
         </tr>
