@@ -13,6 +13,12 @@ const props = defineProps({
     validator: v => typeof v === 'function',
     default: x => x.id ?? x,
   },
+  onClick: {
+    type: Function,
+    default: null,
+    required: false,
+    validator: v => typeof v === 'function',
+  },
 })
 
 const {data, isPending} = props.queryFn()
@@ -67,7 +73,8 @@ function getSkeletonWidth(rowIndex, cellIndex) {
             v-if="!!data"
             v-for="item in data.items"
             :key="props.idSelector(item)"
-            class="odd:bg-slate-50 even:bg-slate-100 hover:bg-emerald-200"
+            class="'hover:text-emerald-700' odd:bg-slate-50 even:bg-slate-100 hover:bg-emerald-100"
+            :class="{'cursor-pointer': !!onClick}"
         >
           <slot name="row" :item="item"/>
         </tr>
