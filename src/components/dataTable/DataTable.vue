@@ -39,11 +39,11 @@ provide('tableManager', {
   <Box class="px-0 py-0 overflow-x-hidden">
     <table class="w-full">
       <thead>
-        <tr class="bg-emerald-500">
+        <tr class="bg-emerald-600 text-slate-50">
           <th
               v-for="column in columns"
               :key="column.title"
-              class="px-5 py-3 font-semibold text-sm uppercase tracking-wide border-b border-emerald-700"
+              class="text-start px-5 py-3 font-semibold text-sm uppercase tracking-wide"
           >
             {{ column.title }}
           </th>
