@@ -35,7 +35,7 @@ const onNavigateToAppDetails = async (app) => {
     </template>
 
     <DataTable
-        :queryFn="() => useListApplicationQuery(route.params.vsName)"
+        :queryFn="(pagination) => useListApplicationQuery(route.params.vsName, pagination)"
         :on-click="onNavigateToAppDetails"
     >
       <template #columns>

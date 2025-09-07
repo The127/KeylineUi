@@ -21,7 +21,13 @@ const props = defineProps({
   },
 })
 
-const {data, isPending, isFetching,} = props.queryFn()
+const page = ref(1)
+const pageSize = ref(10)
+
+const {data, isPending, isFetching,} = props.queryFn({
+  page: page.value,
+  pageSize: pageSize.value,
+})
 
 const columns = ref([])
 
@@ -113,7 +119,7 @@ function getSkeletonWidth(rowIndex, cellIndex) {
       >
         <tr>
           <td :colspan="columns.length" class="px-5 py-3">
-            TODO: Pagination
+            {{ data }}
           </td>
         </tr>
       </tfoot>
