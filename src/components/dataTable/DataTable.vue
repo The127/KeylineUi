@@ -27,9 +27,9 @@ const props = defineProps({
 const page = ref(1)
 const pageSize = ref(10)
 
-const {data, isPending, isFetching,} = props.queryFn({
-  page: page.value,
-  pageSize: pageSize.value,
+const {data, isPending, isFetching, } = props.queryFn({
+  page: page,
+  pageSize: pageSize,
 })
 
 const columns = ref([])
@@ -55,13 +55,6 @@ function getSkeletonWidth(rowIndex, cellIndex) {
   const width = min + (seed % (max - min))
   return width + '%'
 }
-
-watch(page, () => {
-  props.queryFn({
-    page: page.value,
-    pageSize: pageSize.value,
-  })
-})
 
 </script>
 
