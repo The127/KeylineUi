@@ -43,7 +43,10 @@ const select = (tab) => {
          :key="tab.title"
          @click="select(tab)"
         :data-active="tab.active ? true : null"
-         class="font-semibold ease-linear px-2 py-1 [[data-active]]:text-emerald-500 hover:text-slate-500 cursor-pointer [[!data-active]]:border-b-transparent [[data-active]]:border-b-emerald-500 border-b-2"
+         class="font-semibold ease-linear px-2 py-1 border-b-2
+            [[data-active]]:text-emerald-600 [[data-active]]:border-b-emerald-600
+            hover:text-slate-500 cursor-pointer
+            border-b-slate-300"
     >
       {{ tab.title }}
     </div>
