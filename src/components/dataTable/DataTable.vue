@@ -122,7 +122,7 @@ function getSkeletonWidth(rowIndex, cellIndex) {
         <tr>
           <td :colspan="columns.length" class="px-5 py-3">
             <div class="flex justify-between items-center flex-wrap gap-5">
-              <div class="flex flex-row gap-5">
+              <div class="flex flex-row gap-5 items-center">
                 <span class="text-sm text-slate-500">
                   Showing <span class="text-slate-900">{{ data.items.length }}</span> out of <span class="text-slate-900">{{ data.pagination.totalItems }}</span> entries
                 </span>

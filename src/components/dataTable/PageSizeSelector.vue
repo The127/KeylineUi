@@ -5,7 +5,10 @@ const model = defineModel()
 </script>
 
 <template>
-  <select v-model="model" class="border rounded px-2 py-1">
+  <select
+      v-model="model"
+      class="border rounded px-2 py-1 text-sm"
+  >
     <option :value="5">5</option>
     <option :value="10">10</option>
     <option :value="20">20</option>
