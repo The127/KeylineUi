@@ -126,7 +126,12 @@ function getSkeletonWidth(rowIndex, cellIndex) {
               <span class="text-sm text-slate-500">
                 Showing <span class="text-slate-900">{{ data.items.length }}</span> out of <span class="text-slate-900">{{ data.pagination.totalItems }}</span> entries
               </span>
-              <Pagination/>
+              <Pagination
+                :total-pages="data.pagination.totalPages"
+                :page="page"
+                :page-size="pageSize"
+                @pageChange="page = $event"
+              />
             </div>
           </td>
         </tr>
