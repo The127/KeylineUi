@@ -3,6 +3,8 @@
 import {provide, ref} from "vue";
 import Box from "../Box.vue";
 import Skeleton from "../Skeleton.vue";
+import { ChevronsLeft, ChevronLeft, Ellipsis, ChevronRight, ChevronsRight } from "lucide-vue-next"
+import PaginationButton from "./PaginationButton.vue";
 
 const props = defineProps({
   queryFn: {
@@ -123,8 +125,36 @@ function getSkeletonWidth(rowIndex, cellIndex) {
               <span class="text-sm text-slate-500">
                 Showing <span class="text-slate-900">{{ data.items.length }}</span> out of <span class="text-slate-900">{{ data.pagination.totalItems }}</span> entries
               </span>
-              <div>
-                TODO: page selector
+              <div class="flex flex-row items-center gap-1">
+                <PaginationButton>
+                  <ChevronsLeft class="h-4 w-4"/>
+                </PaginationButton>
+                <PaginationButton>
+                  <ChevronLeft class="h-4 w-4"/>
+                </PaginationButton>
+                <Ellipsis class="h-4 w-4"/>
+                <PaginationButton>
+                  3
+                </PaginationButton>
+                <PaginationButton>
+                  4
+                </PaginationButton>
+                <PaginationButton>
+                  5
+                </PaginationButton>
+                <PaginationButton>
+                  6
+                </PaginationButton>
+                <PaginationButton>
+                  7
+                </PaginationButton>
+                <Ellipsis class="h-4 w-4"/>
+                <PaginationButton>
+                  <ChevronRight class="h-4 w-4"/>
+                </PaginationButton>
+                <PaginationButton>
+                  <ChevronsRight class="h-4 w-4"/>
+                </PaginationButton>
               </div>
             </div>
           </td>
