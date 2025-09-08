@@ -32,7 +32,7 @@ const pagesAfter = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-row items-center gap-1">
+  <div class="flex flex-row items-center">
     <PaginationButton
         :disabled="page === 1"
         @click="emit('pageChange', 1)"
