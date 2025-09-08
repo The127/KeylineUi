@@ -58,7 +58,7 @@ const pagesAfter = computed(() => {
       {{ page - (pagesBefore - i + 1) }}
     </PaginationButton>
     <PaginationButton
-      class="underline bg-slate-100"
+      class="bg-slate-50 text-slate-900"
     >
       {{ page }}
     </PaginationButton>

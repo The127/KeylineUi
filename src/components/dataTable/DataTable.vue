@@ -74,6 +74,9 @@ function getSkeletonWidth(rowIndex, cellIndex) {
             </div>
           </td>
         </tr>
+        <tr v-else class="bg-emerald-600 relative h-1">
+          <td :colspan="columns.length" class="p-0"/>
+        </tr>
       </thead>
 
       <tbody>
