@@ -1,6 +1,6 @@
 <script setup>
 
-import {provide, ref} from "vue";
+import {provide, ref, watch} from "vue";
 import Box from "../Box.vue";
 import Skeleton from "../Skeleton.vue";
 import { ChevronsLeft, ChevronLeft, Ellipsis, ChevronRight, ChevronsRight } from "lucide-vue-next"
@@ -55,6 +55,13 @@ function getSkeletonWidth(rowIndex, cellIndex) {
   const width = min + (seed % (max - min))
   return width + '%'
 }
+
+watch(page, () => {
+  props.queryFn({
+    page: page.value,
+    pageSize: pageSize.value,
+  })
+})
 
 </script>
 
