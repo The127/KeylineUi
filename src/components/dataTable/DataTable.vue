@@ -4,6 +4,7 @@ import {provide, ref} from "vue";
 import Box from "../Box.vue";
 import Skeleton from "../Skeleton.vue";
 import Pagination from "./Pagination.vue";
+import PageSizeSelector from "./PageSizeSelector.vue";
 
 const props = defineProps({
   queryFn: {
@@ -121,9 +122,12 @@ function getSkeletonWidth(rowIndex, cellIndex) {
         <tr>
           <td :colspan="columns.length" class="px-5 py-3">
             <div class="flex justify-between items-center flex-wrap gap-5">
-              <span class="text-sm text-slate-500">
-                Showing <span class="text-slate-900">{{ data.items.length }}</span> out of <span class="text-slate-900">{{ data.pagination.totalItems }}</span> entries
-              </span>
+              <div class="flex flex-row gap-5">
+                <span class="text-sm text-slate-500">
+                  Showing <span class="text-slate-900">{{ data.items.length }}</span> out of <span class="text-slate-900">{{ data.pagination.totalItems }}</span> entries
+                </span>
+                <PageSizeSelector v-model="pageSize"/>
+              </div>
               <Pagination
                 :total-pages="data.pagination.totalPages"
                 :page="page"
