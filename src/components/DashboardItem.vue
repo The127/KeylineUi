@@ -24,7 +24,7 @@ const props = defineProps({
 
 <template>
   <Box
-      class="flex flex-col gap-2 cursor-pointer hover:shadow-xl transition-shadow"
+      class="flex flex-col gap-2 cursor-pointer hover:shadow-lg transition-shadow"
       @click="router.push(to)"
   >
     <Heading level="h4">
