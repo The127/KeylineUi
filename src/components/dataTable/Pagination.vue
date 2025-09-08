@@ -53,7 +53,7 @@ const pagesAfter = computed(() => {
     <PaginationButton
         v-if="pagesBefore > 0"
         v-for="i in pagesBefore"
-        @click="emit('pageChange', page - i)"
+        @click="emit('pageChange', page - (pagesBefore - i + 1))"
     >
       {{ page - (pagesBefore - i + 1) }}
     </PaginationButton>
