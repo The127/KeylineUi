@@ -1,10 +1,8 @@
 <script setup>
 
-import {provide, ref, watch} from "vue";
+import {provide, ref} from "vue";
 import Box from "../Box.vue";
 import Skeleton from "../Skeleton.vue";
-import { ChevronsLeft, ChevronLeft, Ellipsis, ChevronRight, ChevronsRight } from "lucide-vue-next"
-import PaginationButton from "./PaginationButton.vue";
 import Pagination from "./Pagination.vue";
 
 const props = defineProps({
