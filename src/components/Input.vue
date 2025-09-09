@@ -16,6 +16,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  hideLabel: {
+    type: Boolean,
+    default: false,
+  },
   vuelidate: {
     type: Object,
   },
@@ -49,6 +53,7 @@ const hasError = computed(() => !!props.vuelidate && props.vuelidate.$error)
       <label
           :for="inputId"
           class="text-slate-700 group-focus-within:text-slate-900 font-bold"
+          :class="{'sr-only': hideLabel}"
       >
         {{ label }}
         <sup v-if="required">*</sup>

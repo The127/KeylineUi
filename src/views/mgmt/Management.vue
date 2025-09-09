@@ -38,7 +38,11 @@ const onLogout = async () => {
             <KeylineIcon class="w-12 h-12 "/>
           </RouterLink>
           <div>
-            <Input placeholder="Search anything..."/>
+            <Input
+                label="Global search"
+                hide-label
+                placeholder="Search anything..."
+            />
           </div>
           <div>
             <Menu>
