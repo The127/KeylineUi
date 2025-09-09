@@ -26,6 +26,9 @@ export const listApplicationQueryFn = async (vsName, queryOps) => {
     if (toValue(queryOps?.orderDirection)) {
         url.searchParams.append('orderDir', toValue(queryOps.orderDirection))
     }
+    if (toValue(queryOps?.search)) {
+        url.searchParams.append('search', toValue(queryOps.search))
+    }
 
     return await apiFetch(url.toString())
 }

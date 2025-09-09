@@ -5,6 +5,8 @@ import Box from "../Box.vue";
 import Skeleton from "../Skeleton.vue";
 import Pagination from "./Pagination.vue";
 import PageSizeSelector from "./PageSizeSelector.vue";
+import Heading from "../Heading.vue";
+import Input from "../Input.vue";
 
 const props = defineProps({
   queryFn: {
@@ -21,18 +23,28 @@ const props = defineProps({
     required: false,
     validator: v => typeof v === 'function',
   },
+  enableSearch: {
+    type: Boolean,
+    default: false,
+  },
+  title: {
+    type: String,
+    default: null,
+  },
 })
 
 const page = ref(1)
 const pageSize = ref(10)
 const orderBy = ref(null)
 const orderDirection = ref(null)
+const search = ref('')
 
 const {data, isPending, isFetching, } = props.queryFn({
   page: page,
   pageSize: pageSize,
   orderBy: orderBy,
   orderDirection: orderDirection,
+  search: search,
 })
 
 const columns = ref([])
@@ -77,6 +89,32 @@ function getSkeletonWidth(rowIndex, cellIndex) {
     <table class="w-full">
       <thead>
         <tr
+            v-if="enableSearch || !!title"
+            class="bg-emerald-600 text-slate-50"
+        >
+          <td :colspan="columns.length" class="px-5 py-3">
+            <div class="flex flex-row justify-between flex-wrap gap-5">
+              <Heading
+                  v-if="!!title"
+                  level="h3"
+                  class="text-sm"
+              >
+                {{ title }}
+              </Heading>
+              <div v-else/>
+              <Input
+                  hide-label
+                  label="Search"
+                  placeholder="Search..."
+                  class="text-slate-900"
+                  type="text"
+                  v-if="enableSearch"
+                  v-model="search"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr
             class="bg-emerald-600 text-slate-50"
         >
           <slot name="columns"/>
@@ -103,7 +141,7 @@ function getSkeletonWidth(rowIndex, cellIndex) {
             :class="{'cursor-pointer': !!onClick}"
             @click="!!onClick && onClick(item)"
         >
-          <slot name="row" :item="item"/>
+          <slot name="row" :item="item" :search="search"/>
         </tr>
         <tr v-if="!!data && data.items.length === 0">
           <td :colspan="columns.length" class="px-5 py-3 text-center">

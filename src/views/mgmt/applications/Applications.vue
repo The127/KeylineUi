@@ -106,6 +106,7 @@ const createApplication = async () => {
     </template>
 
     <DataTable
+        enable-search
         :queryFn="(pagination) => useListApplicationQuery(route.params.vsName, pagination)"
         :on-click="onNavigateToAppDetails"
     >
