@@ -25,10 +25,14 @@ const props = defineProps({
 
 const page = ref(1)
 const pageSize = ref(10)
+const orderBy = ref(null)
+const orderDirection = ref(null)
 
 const {data, isPending, isFetching, } = props.queryFn({
   page: page,
   pageSize: pageSize,
+  orderBy: orderBy,
+  orderDirection: orderDirection,
 })
 
 const columns = ref([])
@@ -43,6 +47,12 @@ provide('tableManager', {
     }
 
     columns.value.push(column)
+  },
+  orderBy: (field, direction) => {
+    orderBy.value = field
+    orderDirection.value = direction
+    page.value = 1
+    console.log('orderBy', field, direction)
   },
 })
 

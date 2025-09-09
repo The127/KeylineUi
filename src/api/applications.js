@@ -2,21 +2,29 @@ import {apiFetch} from "./index.js";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/vue-query";
 import {toValue} from "vue";
 
-export const useListApplicationQuery = (vsName, pagination) => useQuery({
-    queryKey: ['applications', vsName, pagination],
-    queryFn: () => listApplicationQueryFn(vsName, pagination),
+export const useListApplicationQuery = (vsName, queryOps) => useQuery({
+    queryKey: ['applications', vsName, queryOps],
+    queryFn: () => listApplicationQueryFn(vsName, queryOps),
 })
 
-export const listApplicationQueryFn = async (vsName, pagination) => {
+export const listApplicationQueryFn = async (vsName, queryOps) => {
     const url = new URL(
         `http://127.0.0.1:8081/api/virtual-servers/${vsName}/applications`
     )
 
-    console.log(pagination)
+    console.log(queryOps)
 
-    if (pagination) {
-        url.searchParams.append('page', toValue(pagination.page) ?? 1)
-        url.searchParams.append('pageSize', toValue(pagination.pageSize) ?? 10)
+    if (toValue(queryOps?.page)) {
+        url.searchParams.append('page', toValue(queryOps.page) ?? 1)
+    }
+    if (toValue(queryOps?.pageSize)) {
+        url.searchParams.append('pageSize', toValue(queryOps.pageSize) ?? 10)
+    }
+    if (toValue(queryOps?.orderBy)) {
+        url.searchParams.append('orderBy', toValue(queryOps.orderBy))
+    }
+    if (toValue(queryOps?.orderDirection)) {
+        url.searchParams.append('orderDir', toValue(queryOps.orderDirection))
     }
 
     return await apiFetch(url.toString())

@@ -110,7 +110,7 @@ const createApplication = async () => {
         :on-click="onNavigateToAppDetails"
     >
       <template #columns>
-        <DataTableColumn title="Name" field="name"/>
+        <DataTableColumn title="Name" field="name" enable-order initial-order="asc"/>
         <DataTableColumn title="Display Name" field="displayName"/>
       </template>
 
