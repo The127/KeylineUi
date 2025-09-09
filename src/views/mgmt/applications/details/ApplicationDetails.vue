@@ -23,6 +23,9 @@ import ModelMetadata from "../../../../components/ModelMetadata.vue";
       <Tab title="General">
         TODO: general tab
       </Tab>
+      <Tab title="Security">
+        TODO: security tab
+      </Tab>
     </Tabs>
 
     <template #footer>
