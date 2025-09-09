@@ -52,7 +52,12 @@ provide('tableManager', {
     orderBy.value = field
     orderDirection.value = direction
     page.value = 1
-    console.log('orderBy', field, direction)
+
+    for (let i = 0; i < columns.value.length; i++) {
+      if (columns.value[i].field !== field) {
+        columns.value[i].resetOrder()
+      }
+    }
   },
 })
 

@@ -111,7 +111,7 @@ const createApplication = async () => {
     >
       <template #columns>
         <DataTableColumn title="Name" field="name" enable-order initial-order="asc"/>
-        <DataTableColumn title="Display Name" field="displayName"/>
+        <DataTableColumn title="Display Name" field="display_name" enable-order/>
       </template>
 
       <template #row="{ item: app }">

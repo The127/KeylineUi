@@ -30,6 +30,9 @@ onMounted(() => {
   tableManager.register({
     field: props.field,
     title: props.title,
+    resetOrder: () => {
+      direction.value = null
+    },
   })
 
   if (props.initialOrder && props.enableOrder) {
@@ -61,22 +64,20 @@ const toggleOrder = () => {
     :class="{'cursor-pointer': enableOrder}"
     @click="toggleOrder"
   >
-    <span class="flex flex-row gap-1">
-      {{ title }}
+    <div class="flex flex-row gap-1 items-center">
+      <span>{{ title }}</span>
       <template v-if="enableOrder">
-        <span v-if="direction">
-          <span v-if="direction === 'asc'">
-            <ChevronUp/>
-          </span>
-          <span v-else>
-            <ChevronDown/>
-          </span>
-        </span>
-        <span v-else>
+        <template v-if="direction === 'asc'">
+          <ChevronDown/>
+        </template>
+        <template v-else-if="direction === 'desc'">
+          <ChevronUp/>
+        </template>
+        <template v-else>
           <Minus/>
-        </span>
+        </template>
       </template>
-    </span>
+    </div>
   </th>
 </template>
 
