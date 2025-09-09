@@ -93,7 +93,7 @@ function getSkeletonWidth(rowIndex, cellIndex) {
             class="bg-emerald-600 text-slate-50"
         >
           <td :colspan="columns.length" class="px-5 py-3">
-            <div class="flex flex-row justify-between flex-wrap gap-5">
+            <div class="flex flex-row justify-between items-center flex-wrap gap-5">
               <Heading
                   v-if="!!title"
                   level="h3"
