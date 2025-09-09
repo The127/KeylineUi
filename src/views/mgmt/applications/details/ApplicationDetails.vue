@@ -2,13 +2,34 @@
 
 import PageLayout from "../../../../components/PageLayout.vue";
 import PageHeader from "../../../../components/PageHeader.vue";
+import Tab from "../../../../components/tabs/Tab.vue";
+import Tabs from "../../../../components/tabs/Tabs.vue";
+import ModelMetadata from "../../../../components/ModelMetadata.vue";
+
+
+
 </script>
 
 <template>
   <PageLayout>
-    <PageHeader title="Application details">
+    <template #header>
+      <PageHeader
+          title="Application details"
+          subtitle="Manage application configuration and settings"
+      />
+    </template>
 
-    </PageHeader>
+    <Tabs>
+      <Tab title="General">
+        TODO: general tab
+      </Tab>
+    </Tabs>
+
+    <template #footer>
+      <ModelMetadata
+          :model="data"
+      />
+    </template>
   </PageLayout>
 </template>
 

@@ -104,6 +104,7 @@ const onEditPassword = () => {
         </Box>
       </Tab>
     </Tabs>
+
     <template #footer>
       <ModelMetadata
           :model="data"
