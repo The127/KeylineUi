@@ -17,6 +17,17 @@ export const listApplicationQueryFn = async (vsName, queryOps) => {
     return await apiFetch(url.toString())
 }
 
+export const useGetApplicationQuery = (vsName, applicationId) => useQuery({
+    queryKey: ['application', vsName, applicationId],
+    queryFn: () => getApplicationQueryFn(vsName, applicationId),
+})
+
+export const getApplicationQueryFn = async (vsName, applicationId) => {
+    return await apiFetch(
+        `http://127.0.0.1:8081/api/virtual-servers/${vsName}/applications/${applicationId}`
+    )
+}
+
 export const useCreateApplicationMutation = (vsName) => {
     const queryClient = useQueryClient()
     return useMutation({

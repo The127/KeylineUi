@@ -5,8 +5,16 @@ import PageHeader from "../../../../components/PageHeader.vue";
 import Tab from "../../../../components/tabs/Tab.vue";
 import Tabs from "../../../../components/tabs/Tabs.vue";
 import ModelMetadata from "../../../../components/ModelMetadata.vue";
+import {useProfileQuery} from "../../../../api/user.js";
+import {useGetApplicationQuery} from "../../../../api/applications.js";
+import {useRoute} from "vue-router";
 
+const route = useRoute()
 
+const { isPending, isError, data, error } = useGetApplicationQuery(
+    route.params.vsName,
+    route.params.appId,
+)
 
 </script>
 
@@ -27,6 +35,8 @@ import ModelMetadata from "../../../../components/ModelMetadata.vue";
         TODO: security tab
       </Tab>
     </Tabs>
+
+    {{ data }}
 
     <template #footer>
       <ModelMetadata
