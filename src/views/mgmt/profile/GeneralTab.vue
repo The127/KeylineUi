@@ -1,23 +1,23 @@
 <script setup>
 
-import Skeleton from "../../../../components/Skeleton.vue";
-import Heading from "../../../../components/Heading.vue";
-import Button from "../../../../components/Button.vue";
-import Avatar from "../../../../components/Avatar.vue";
-import DataLayoutItem from "../../../../components/dataLayout/DataLayoutItem.vue";
-import VerifiedBadge from "../../../../components/VerifiedBadge.vue";
-import Box from "../../../../components/Box.vue";
-import DataLayout from "../../../../components/dataLayout/DataLayout.vue";
+import Skeleton from "../../../components/Skeleton.vue";
+import Heading from "../../../components/Heading.vue";
+import Button from "../../../components/Button.vue";
+import Avatar from "../../../components/Avatar.vue";
+import DataLayoutItem from "../../../components/dataLayout/DataLayoutItem.vue";
+import VerifiedBadge from "../../../components/VerifiedBadge.vue";
+import Box from "../../../components/Box.vue";
+import DataLayout from "../../../components/dataLayout/DataLayout.vue";
 import {reactive, ref, watch} from "vue";
-import {useUserManager} from "../../../../composables/userManager.js";
-import {useProfileMutation, useProfileQuery} from "../../../../api/user.js";
+import {useUserManager} from "../../../composables/userManager.js";
+import {useProfileMutation, useProfileQuery} from "../../../api/user.js";
 import {useRoute} from "vue-router";
-import Modal from "../../../../components/Modal.vue";
-import Input from "../../../../components/Input.vue";
-import Form from "../../../../components/Form.vue";
+import Modal from "../../../components/Modal.vue";
+import Input from "../../../components/Input.vue";
+import Form from "../../../components/Form.vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
-import {useToast} from "../../../../composables/toast.js";
+import {useToast} from "../../../composables/toast.js";
 import {useI18n} from "vue-i18n";
 
 const { t } = useI18n({

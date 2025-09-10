@@ -23,7 +23,7 @@ import Tab from "../../../components/tabs/Tab.vue";
 import Modal from "../../../components/Modal.vue";
 import Form from "../../../components/Form.vue";
 import Input from "../../../components/Input.vue";
-import GeneralTab from "./general/GeneralTab.vue";
+import GeneralTab from "./GeneralTab.vue";
 
 const toast = useToast()
 const route = useRoute()
