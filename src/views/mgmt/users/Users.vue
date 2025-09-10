@@ -1,9 +1,54 @@
 <script setup>
 
+import {useListApplicationQuery} from "../../../api/applications.js";
+import DataTableCell from "../../../components/dataTable/DataTableCell.vue";
+import Button from "../../../components/Button.vue";
+import PageLayout from "../../../components/PageLayout.vue";
+import PageHeader from "../../../components/PageHeader.vue";
+import DataTable from "../../../components/dataTable/DataTable.vue";
+import DataTableColumn from "../../../components/dataTable/DataTableColumn.vue";
+import {useListUsersQuery} from "../../../api/user.js";
+import {useRoute} from "vue-router";
+
+const route = useRoute()
+
 </script>
 
 <template>
-  User view
+  <PageLayout>
+    <template #header>
+      <PageHeader
+          title="Applications"
+          subtitle="Manage applications"
+      >
+      </PageHeader>
+    </template>
+
+    <DataTable
+        enable-search
+        autofocus
+        title="Users"
+        :queryFn="(pagination) => useListUsersQuery(route.params.vsName, pagination)"
+    >
+      <template #columns>
+        <DataTableColumn title="Username" field="username" enable-order initial-order="asc"/>
+        <DataTableColumn title="Display Name" field="display_name" enable-order/>
+        <DataTableColumn title="Email" field="primary_email" enable-order/>
+      </template>
+
+      <template #row="{ item: app }">
+        <DataTableCell>
+          {{ app.username }}
+        </DataTableCell>
+        <DataTableCell>
+          {{ app.displayName }}
+        </DataTableCell>
+        <DataTableCell>
+          {{ app.primaryEmail }}
+        </DataTableCell>
+      </template>
+    </DataTable>
+  </PageLayout>
 </template>
 
 <style scoped>
