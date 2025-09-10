@@ -18,8 +18,8 @@ const route = useRoute()
   <PageLayout>
     <template #header>
       <PageHeader
-          title="Applications"
-          subtitle="Manage applications"
+          title="Users"
+          subtitle="Manage users"
       >
       </PageHeader>
     </template>
