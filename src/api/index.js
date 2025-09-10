@@ -1,3 +1,5 @@
+import {toValue} from "vue";
+
 export async function apiFetch(url, options = {}) {
     const opts = { ...options }
     const method = (opts.method || "GET").toUpperCase()
@@ -24,4 +26,22 @@ export async function apiFetch(url, options = {}) {
     }
 
     return response.json()
+}
+
+export function applyQueryOps(url, queryOps) {
+    if (toValue(queryOps?.page)) {
+        url.searchParams.append('page', toValue(queryOps.page) ?? 1)
+    }
+    if (toValue(queryOps?.pageSize)) {
+        url.searchParams.append('pageSize', toValue(queryOps.pageSize) ?? 10)
+    }
+    if (toValue(queryOps?.orderBy)) {
+        url.searchParams.append('orderBy', toValue(queryOps.orderBy))
+    }
+    if (toValue(queryOps?.orderDirection)) {
+        url.searchParams.append('orderDir', toValue(queryOps.orderDirection))
+    }
+    if (toValue(queryOps?.search)) {
+        url.searchParams.append('search', toValue(queryOps.search))
+    }
 }
