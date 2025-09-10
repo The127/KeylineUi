@@ -27,6 +27,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  autofocus: {
+    type: Boolean,
+    default: false,
+  },
   title: {
     type: String,
     default: null,
@@ -110,6 +114,7 @@ function getSkeletonWidth(rowIndex, cellIndex) {
                   type="text"
                   v-if="enableSearch"
                   v-model="search"
+                  :autofocus="autofocus"
               />
             </div>
           </td>
