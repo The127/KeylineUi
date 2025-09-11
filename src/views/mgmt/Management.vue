@@ -30,7 +30,23 @@ const onLogout = async () => {
 <template>
   <div class="flex flex-row">
     <div class="w-64 bg-slate-200 p-5">
-      side menu
+      <ol class="list-none">
+        <li>
+          <RouterLink :to="{name: 'mgmt-dashboard'}">
+            Home
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink :to="{name: 'mgmt-applications'}">
+            Applications
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink :to="{name: 'mgmt-users'}">
+            Users
+          </RouterLink>
+        </li>
+      </ol>
     </div>
     <div class="flex-1">
       <div class="flex flex-col h-screen overflow-hidden">
