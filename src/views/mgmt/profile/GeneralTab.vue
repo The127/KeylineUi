@@ -10,7 +10,7 @@ import Box from "../../../components/Box.vue";
 import DataLayout from "../../../components/dataLayout/DataLayout.vue";
 import {reactive, ref, watch} from "vue";
 import {useUserManager} from "../../../composables/userManager.js";
-import {useProfileMutation, useProfileQuery} from "../../../api/user.js";
+import {useUserMutation, useGetUserQuery} from "../../../api/user.js";
 import {useRoute} from "vue-router";
 import Modal from "../../../components/Modal.vue";
 import Input from "../../../components/Input.vue";
@@ -55,7 +55,7 @@ const userInfoModal = ref(null)
 const route = useRoute()
 const userManager = useUserManager(route.params.vsName)
 
-const { isPending, isError, data, error } = useProfileQuery(
+const { isPending, isError, data, error } = useGetUserQuery(
     route.params.vsName,
     (await userManager.getUser()).profile.sub,
 )
@@ -84,7 +84,7 @@ watch(data, (newData) => {
   }
 })
 
-const updateProfile = useProfileMutation(
+const updateProfile = useUserMutation(
     route.params.vsName,
     (await userManager.getUser()).profile.sub,
 )

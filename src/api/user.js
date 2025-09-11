@@ -1,28 +1,28 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/vue-query";
 import {apiFetch, applyQueryOps} from "./index.js";
 
-export const useProfileQuery = (vsName, userId) => useQuery({
+export const useGetUserQuery = (vsName, userId) => useQuery({
     queryKey: ['profile', vsName, userId],
-    queryFn: () => profileQueryFn(vsName, userId),
+    queryFn: () => getUserQueryFn(vsName, userId),
 })
 
-export const profileQueryFn = async (vsName, userId) => {
+export const getUserQueryFn = async (vsName, userId) => {
     return await apiFetch(
         `http://127.0.0.1:8081/api/virtual-servers/${vsName}/users/${userId}`
     )
 }
 
-export const useProfileMutation = (vsName, userId) => {
+export const useUserMutation = (vsName, userId) => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: (data) => profileMutationFn(vsName, userId, data),
+        mutationFn: (data) => userMutationFn(vsName, userId, data),
         onSuccess: () => {
             queryClient.invalidateQueries(['profile', vsName, userId])
         }
     })
 }
 
-export const profileMutationFn = async (vsName, userId, data) => {
+export const userMutationFn = async (vsName, userId, data) => {
     return await apiFetch(
         `http://127.0.0.1:8081/api/virtual-servers/${vsName}/users/${userId}`,
     {
