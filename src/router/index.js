@@ -51,6 +51,7 @@ const routes = [
         meta: {
             layout: "main-layout",
             requiresAuth: true,
+            breadcrumbFn: () => "Home",
         },
         children: [
             {
@@ -81,6 +82,9 @@ const routes = [
             {
                 path: 'applications',
                 name: 'mgmt-applications-root',
+                meta: {
+                    breadcrumbFn: () => "Applications",
+                },
                 children: [
                     {
                         path: '',
@@ -91,12 +95,18 @@ const routes = [
                         path: 'applications/:appId',
                         name: 'mgmt-application-details',
                         component: () => import('../views/mgmt/applications/details/ApplicationDetails.vue'),
+                        meta: {
+                            breadcrumbFn: async () => "Details",
+                        },
                     },
                 ],
             },
             {
                 path: 'users',
                 name: 'mgmt-users-root',
+                meta: {
+                    breadcrumbFn: async () => "Users",
+                },
                 children: [
                     {
                         path: '',
@@ -107,6 +117,9 @@ const routes = [
                         path: 'users/:userId',
                         name: 'mgmt-user-details',
                         component: () => import('../views/mgmt/users/details/UserDetails.vue'),
+                        meta: {
+                            breadcrumbFn: async () => "Details",
+                        },
                     },
                 ],
             },
@@ -114,6 +127,9 @@ const routes = [
                 path: 'profile',
                 name: 'mgmt-profile',
                 component: () => import('../views/mgmt/profile/Profile.vue'),
+                meta: {
+                    breadcrumbFn: async () => "Profile",
+                },
             },
         ]
     },

@@ -9,6 +9,7 @@ import {computedAsync} from "@vueuse/core";
 import Menu from "../../components/menu/Menu.vue";
 import MenuItem from "../../components/menu/MenuItem.vue";
 import MenuDivider from "../../components/menu/MenuDivider.vue";
+import Breadcrumbs from "../../components/Breadcrumbs.vue";
 
 const route = useRoute()
 const mgr = useUserManager(route.params.vsName)
@@ -61,6 +62,7 @@ const onLogout = async () => {
           </div>
         </div>
 
+        <Breadcrumbs/>
         <router-view />
       </div>
     </div>
