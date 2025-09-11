@@ -102,6 +102,20 @@ const routes = [
                 ],
             },
             {
+              path: 'roles',
+              name: 'mgmt-roles-root',
+              meta: {
+                  breadcrumbFn: async () => "Roles",
+              },
+              children: [
+                  {
+                      path: '',
+                      name: 'mgmt-roles',
+                      component: () => import('../views/mgmt/roles/Roles.vue'),
+                  },
+              ]
+            },
+            {
                 path: 'users',
                 name: 'mgmt-users-root',
                 meta: {

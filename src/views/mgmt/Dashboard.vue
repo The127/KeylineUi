@@ -50,6 +50,11 @@ const route = useRoute()
           :to="{ name: 'mgmt-applications' }"
       />
       <DashboardItem
+          title="Roles"
+          subtitle="Manage your tenant roles"
+          :to="{ name: 'mgmt-roles' }"
+      />
+      <DashboardItem
           title="Users"
           subtitle="Manage users"
           :to="{ name: 'mgmt-users' }"
