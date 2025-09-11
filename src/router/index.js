@@ -80,23 +80,35 @@ const routes = [
             },
             {
                 path: 'applications',
-                name: 'mgmt-applications',
-                component: () => import('../views/mgmt/applications/Applications.vue'),
-            },
-            {
-                path: 'applications/:appId',
-                name: 'mgmt-application-details',
-                component: () => import('../views/mgmt/applications/details/ApplicationDetails.vue'),
+                name: 'mgmt-applications-root',
+                children: [
+                    {
+                        path: '',
+                        name: 'mgmt-applications',
+                        component: () => import('../views/mgmt/applications/Applications.vue'),
+                    },
+                    {
+                        path: 'applications/:appId',
+                        name: 'mgmt-application-details',
+                        component: () => import('../views/mgmt/applications/details/ApplicationDetails.vue'),
+                    },
+                ],
             },
             {
                 path: 'users',
-                name: 'mgmt-users',
-                component: () => import('../views/mgmt/users/Users.vue'),
-            },
-            {
-                path: 'users/:userId',
-                name: 'mgmt-user-details',
-                component: () => import('../views/mgmt/users/details/UserDetails.vue'),
+                name: 'mgmt-users-root',
+                children: [
+                    {
+                        path: '',
+                        name: 'mgmt-users',
+                        component: () => import('../views/mgmt/users/Users.vue'),
+                    },
+                    {
+                        path: 'users/:userId',
+                        name: 'mgmt-user-details',
+                        component: () => import('../views/mgmt/users/details/UserDetails.vue'),
+                    },
+                ],
             },
             {
                 path: 'profile',
