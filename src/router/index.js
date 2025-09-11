@@ -94,6 +94,11 @@ const routes = [
                 component: () => import('../views/mgmt/users/Users.vue'),
             },
             {
+                path: 'users/:userId',
+                name: 'mgmt-user-details',
+                component: () => import('../views/mgmt/users/details/UserDetails.vue'),
+            },
+            {
                 path: 'profile',
                 name: 'mgmt-profile',
                 component: () => import('../views/mgmt/profile/Profile.vue'),
