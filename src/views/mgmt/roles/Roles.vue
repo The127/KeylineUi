@@ -2,6 +2,14 @@
 
 import PageLayout from "../../../components/PageLayout.vue";
 import PageHeader from "../../../components/PageHeader.vue";
+import DataTable from "../../../components/dataTable/DataTable.vue";
+import DataTableColumn from "../../../components/dataTable/DataTableColumn.vue";
+import {useListRolesQuery} from "../../../api/roles.js";
+import {useRoute} from "vue-router";
+import DataTableCell from "../../../components/dataTable/DataTableCell.vue";
+
+const route = useRoute()
+
 </script>
 
 <template>
@@ -13,7 +21,22 @@ import PageHeader from "../../../components/PageHeader.vue";
       />
     </template>
 
+    <DataTable
+      enable-search
+      autofocus
+      title="Roles"
+      :query-fn="(pagination) => useListRolesQuery(route.params.vsName, pagination)"
+    >
+      <template #columns>
+        <DataTableColumn title="Name" field="name" enable-order/>
+      </template>
 
+      <template #row="{ item: role }">
+        <DataTableCell>
+          {{ role.name }}
+        </DataTableCell>
+      </template>
+    </DataTable>
   </PageLayout>
 </template>
 
