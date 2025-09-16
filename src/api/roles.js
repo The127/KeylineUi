@@ -15,3 +15,14 @@ export const listRolesQueryFn = async(vsName, queryOps) => {
 
     return await apiFetch(url.toString())
 }
+
+export const useGetRoleQuery = (vsName, roleId) => useQuery({
+    queryKey: ['role', vsName, roleId],
+    queryFn: () => getRoleQueryFn(vsName, roleId),
+})
+
+export const getRoleQueryFn = async(vsName, roleId) => {
+    return await apiFetch(
+        `http://127.0.0.1:8081/api/virtual-servers/${vsName}/roles/${roleId}`
+    )
+}
