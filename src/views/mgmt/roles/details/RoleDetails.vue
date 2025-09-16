@@ -21,7 +21,7 @@ const { data } = useGetRoleQuery(
   <PageLayout>
     <template #header>
       <PageHeader
-        title="Role details"
+        :title="data?.name"
         subtitle="Manage role configuration and settings"
       />
     </template>
