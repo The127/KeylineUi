@@ -5,7 +5,6 @@ import PageHeader from "../../../../components/PageHeader.vue";
 import Tab from "../../../../components/tabs/Tab.vue";
 import Tabs from "../../../../components/tabs/Tabs.vue";
 import ModelMetadata from "../../../../components/ModelMetadata.vue";
-import {useGetUserQuery} from "../../../../api/user.js";
 import {useGetApplicationQuery} from "../../../../api/applications.js";
 import {useRoute} from "vue-router";
 

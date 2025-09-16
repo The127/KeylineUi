@@ -113,6 +113,14 @@ const routes = [
                       name: 'mgmt-roles',
                       component: () => import('../views/mgmt/roles/Roles.vue'),
                   },
+                  {
+                      path: 'roles/:roleId',
+                      name: 'mgmt-role-details',
+                      component: () => import('../views/mgmt/roles/details/RoleDetails.vue'),
+                      meta: {
+                          breadcrumbFn: async () => "Details",
+                      },
+                  },
               ]
             },
             {
