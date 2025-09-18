@@ -27,6 +27,11 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  adornment: {
+    type: String,
+    default: 'start',
+    validator: (value) => ['start', 'end'].includes(value),
+  },
 })
 
 const buttonClass = cva([
@@ -47,10 +52,15 @@ const buttonClass = cva([
       :class="buttonClass({intent: variant, size: size,})"
       :type="type"
       :aria-label="text"
-      v-text="text"
       :disabled="disabled"
       v-bind="$attrs"
-  />
+  >
+    <div class="flex flex-row items-center gap-2">
+      <slot v-if="adornment === 'start'" name="adornment"/>
+      {{ text }}
+      <slot v-if="adornment === 'end'" name="adornment"/>
+    </div>
+  </button>
 </template>
 
 <style scoped>

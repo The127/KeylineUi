@@ -15,6 +15,8 @@ import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import Input from "../../../components/Input.vue";
 import {useToast} from "../../../composables/toast.js";
+import { Plus } from "lucide-vue-next"
+
 
 const route = useRoute()
 const router = useRouter()
@@ -101,7 +103,11 @@ const createApplication = async () => {
           title="Applications"
           subtitle="Manage applications"
       >
-        <Button text="Add" @click="onAddApplication"/>
+        <Button text="Add" @click="onAddApplication">
+          <template #adornment>
+            <Plus/>
+          </template>
+        </Button>
       </PageHeader>
     </template>
 
