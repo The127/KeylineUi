@@ -13,6 +13,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  helperText: {
+    type: String,
+    required: false,
+  },
 })
 
 const manager = inject('radioManager')
@@ -22,6 +26,7 @@ onMounted(() => {
     id: id,
     value: props.value,
     label: props.label,
+    helperText: props.helperText,
   })
 })
 
