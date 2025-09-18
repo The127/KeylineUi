@@ -16,6 +16,9 @@ import useVuelidate from "@vuelidate/core";
 import Input from "../../../components/Input.vue";
 import {useToast} from "../../../composables/toast.js";
 import { Plus } from "lucide-vue-next"
+import FormGroup from "../../../components/FormGroup.vue";
+import RadioButtonGroup from "../../../components/radio/RadioButtonGroup.vue";
+import RadioButton from "../../../components/radio/RadioButton.vue";
 
 
 const route = useRoute()
@@ -40,11 +43,13 @@ const formModel = reactive({
   name: '',
   displayName: '',
   redirectUris: [],
+  type: 'public',
 })
 
 const formRules = {
   name: { required, },
   displayName: { required, },
+  type: { required, },
 }
 
 const v$ = useVuelidate(formRules, formModel)
@@ -96,6 +101,23 @@ const createApplication = async () => {
              required
              helper-text="The display name of the application. Will be shown to the user."
       />
+      <FormGroup title="Application type">
+        <RadioButtonGroup
+            name="appType"
+            v-model="v$.type.$model"
+        >
+          <RadioButton
+              value="public"
+              label="Public"
+              helper-text="Use for SPAs and mobile Apps."
+          />
+          <RadioButton
+              value="confidential"
+              label="Confidential"
+              helper-text="Use for server side applications."
+          />
+        </RadioButtonGroup>
+      </FormGroup>
     </Form>
   </Modal>
 
