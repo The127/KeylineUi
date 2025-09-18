@@ -88,11 +88,13 @@ const createApplication = async () => {
              v-model="v$.name.$model"
              :vuelidate="v$.name"
              required
+             helper-text="The name of the application. Must be unique."
       />
       <Input label="Display Name"
              v-model="v$.displayName.$model"
              :vuelidate="v$.displayName"
              required
+             helper-text="The display name of the application. Will be shown to the user."
       />
     </Form>
   </Modal>
