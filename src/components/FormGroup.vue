@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <fieldset class="flex flex-col gap-2 p-2 border-none">
+  <fieldset class="flex flex-col gap-2 py-2 border-none">
     <legend class="text-sm font-semibold">
       {{ title }}
     </legend>
