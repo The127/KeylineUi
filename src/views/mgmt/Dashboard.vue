@@ -51,7 +51,7 @@ const route = useRoute()
       />
       <DashboardItem
           title="Roles"
-          subtitle="Manage your tenant roles"
+          subtitle="Manage your global roles"
           :to="{ name: 'mgmt-roles' }"
       />
       <DashboardItem

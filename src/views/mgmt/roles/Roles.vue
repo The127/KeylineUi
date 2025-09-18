@@ -28,7 +28,7 @@ const navigateToRoleDetails = (role) => {
     <template #header>
       <PageHeader
           title="Roles"
-          subtitle="Manage roles"
+          subtitle="Manage global roles"
       />
     </template>
 
