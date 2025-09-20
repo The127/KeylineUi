@@ -91,6 +91,7 @@ const createApplication = async () => {
         title="Add application"
         @submit="createApplication"
         :vuelidate="v$"
+        submit-text="Create application"
     >
       <Input label="Name"
              v-model="v$.name.$model"
@@ -125,6 +126,7 @@ const createApplication = async () => {
         <ListInput
             label="Redirect URI"
             v-model="v$.redirectUris.$model"
+            helper-text="The redirect URIs of the application. Must be unique."
         />
       </FormGroup>
     </Form>

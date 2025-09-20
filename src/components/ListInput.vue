@@ -15,6 +15,11 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  helperText: {
+    type: String,
+    required: false,
+    default: null,
+  },
 })
 
 const addCurrentValue = () => {
@@ -59,6 +64,7 @@ const onInputKeydown = (e) => {
           hide-label
           :label="label" v-model="currentValue"
           @keydown="onInputKeydown"
+          :helper-text="helperText"
       />
       <Button
           text="add"
