@@ -72,7 +72,7 @@ const onDeleteApplication = () => {
         </Box>
 
         <Box>
-          <DataLayout title="Login Redirect URIs">
+          <DataLayout title="Redirect URIs">
             <DataLayoutItem title="Login Redirect URIs" full-row>
               <Skeleton :dep="data" class="w-32 h-4">
                 <span v-for="uri in data.redirectUris" :key="uri">
