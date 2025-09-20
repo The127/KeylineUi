@@ -32,6 +32,11 @@ const onLogout = async () => {
     <div class="w-64 bg-slate-200 p-5">
       <ol class="list-none">
         <li>
+          <RouterLink :to="{name: 'mgmt-admin'}">
+            Administration
+          </RouterLink>
+        </li>
+        <li>
           <RouterLink :to="{name: 'mgmt-applications'}">
             Applications
           </RouterLink>

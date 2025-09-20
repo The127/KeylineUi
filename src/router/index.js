@@ -102,6 +102,20 @@ const routes = [
                 ],
             },
             {
+                path: 'admin',
+                name: 'mgmt-admin-root',
+                meta: {
+                    breadcrumbFn: async () => "Administration",
+                },
+                children: [
+                    {
+                        path: '',
+                        name: 'mgmt-admin',
+                        component: () => import('../views/mgmt/administration/Administration.vue'),
+                    },
+                ],
+            },
+            {
               path: 'roles',
               name: 'mgmt-roles-root',
               meta: {
@@ -110,18 +124,8 @@ const routes = [
               children: [
                   {
                       path: '',
-                      name: 'mgmt-admin',
-                      component: () => import('../views/mgmt/administration/Administration.vue'),
-                  },
-                  {
-                      path: '',
                       name: 'mgmt-roles',
                       component: () => import('../views/mgmt/roles/Roles.vue'),
-                  },
-                  {
-                      path: '',
-                      name: 'mgmt-groups',
-                      component: () => import('../views/mgmt/groups/Groups.vue'),
                   },
                   {
                       path: 'roles/:roleId',
@@ -132,6 +136,20 @@ const routes = [
                       },
                   },
               ]
+            },
+            {
+                path: 'groups',
+                name: 'mgmt-groups-root',
+                meta: {
+                    breadcrumbFn: async () => "Groups",
+                },
+                children: [
+                    {
+                        path: '',
+                        name: 'mgmt-groups',
+                        component: () => import('../views/mgmt/groups/Groups.vue'),
+                    }
+                ]
             },
             {
                 path: 'users',
