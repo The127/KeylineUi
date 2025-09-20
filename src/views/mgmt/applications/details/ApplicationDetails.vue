@@ -40,7 +40,7 @@ const onDeleteApplication = () => {
   <PageLayout>
     <template #header>
       <PageHeader
-          title="Application details"
+          :title="data?.name"
           subtitle="Manage application configuration and settings"
       >
         <DotMenu>
