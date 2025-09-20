@@ -23,6 +23,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  hideText: {
+    type: Boolean,
+    default: false,
+  },
   disabled: {
     type: Boolean,
     default: false,
@@ -55,9 +59,11 @@ const buttonClass = cva([
       :disabled="disabled"
       v-bind="$attrs"
   >
-    <div class="flex flex-row items-center gap-2">
+    <div class="flex flex-row items-center justify-center gap-2">
       <slot v-if="adornment === 'start'" name="adornment"/>
-      {{ text }}
+      <template v-if="!hideText">
+        {{ text }}
+      </template>
       <slot v-if="adornment === 'end'" name="adornment"/>
     </div>
   </button>
