@@ -10,6 +10,10 @@ import {useRoute} from "vue-router";
 import DotMenu from "../../../../components/DotMenu.vue";
 import MenuItem from "../../../../components/menu/MenuItem.vue";
 import {usePopup} from "../../../../composables/popup.js";
+import Box from "../../../../components/Box.vue";
+import DataLayout from "../../../../components/dataLayout/DataLayout.vue";
+import DataLayoutItem from "../../../../components/dataLayout/DataLayoutItem.vue";
+import Skeleton from "../../../../components/Skeleton.vue";
 
 const route = useRoute()
 const popupService = usePopup()
@@ -47,7 +51,20 @@ const onDeleteApplication = () => {
 
     <Tabs>
       <Tab title="General">
-        TODO: general tab
+        <Box>
+          <DataLayout title="Info">
+            <DataLayoutItem title="Name">
+              <Skeleton :dep="data" class="w-32 h-4">
+                {{ data.name }}
+              </Skeleton>
+            </DataLayoutItem>
+            <DataLayoutItem title="Display Name">
+              <Skeleton :dep="data" class="w-32 h-4">
+                {{ data.displayName }}
+              </Skeleton>
+            </DataLayoutItem>
+          </DataLayout>
+        </Box>
       </Tab>
       <Tab title="Roles">
         TODO: role tab
