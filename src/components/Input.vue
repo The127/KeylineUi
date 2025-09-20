@@ -40,6 +40,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  containerClass: {
+    type: String,
+    default: null,
+  },
 })
 
 const placeholderValue = computed(() => props.placeholder ?? props.label)
@@ -48,7 +52,7 @@ const hasError = computed(() => !!props.vuelidate && props.vuelidate.$error)
 </script>
 
 <template>
-  <div class="flex flex-col gap-1 group">
+  <div class="flex flex-col gap-1 group" :class="containerClass">
     <div class="flex flex-row justify-between text-sm">
       <label
           :for="inputId"
