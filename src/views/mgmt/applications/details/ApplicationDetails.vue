@@ -9,8 +9,10 @@ import {useGetApplicationQuery} from "../../../../api/applications.js";
 import {useRoute} from "vue-router";
 import DotMenu from "../../../../components/DotMenu.vue";
 import MenuItem from "../../../../components/menu/MenuItem.vue";
+import {usePopup} from "../../../../composables/popup.js";
 
 const route = useRoute()
+const popupService = usePopup()
 
 const { isPending, isError, data, error } = useGetApplicationQuery(
     route.params.vsName,
@@ -18,7 +20,14 @@ const { isPending, isError, data, error } = useGetApplicationQuery(
 )
 
 const onDeleteApplication = () => {
-  alert('Delete')
+  console.log(popupService)
+  popupService.confirm({
+    title: 'Delete application',
+    message: 'Are you sure you want to delete this application?',
+    onConfirm: async () => {
+      console.log('confirmed')
+    },
+  })
 }
 
 </script>
