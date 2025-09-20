@@ -89,8 +89,6 @@ const onDeleteApplication = () => {
       </Tab>
     </Tabs>
 
-    {{ data }}
-
     <template #footer>
       <ModelMetadata
           :model="data"
