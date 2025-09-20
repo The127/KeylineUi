@@ -110,6 +110,11 @@ const routes = [
               children: [
                   {
                       path: '',
+                      name: 'mgmt-admin',
+                      component: () => import('../views/mgmt/administration/Administration.vue'),
+                  },
+                  {
+                      path: '',
                       name: 'mgmt-roles',
                       component: () => import('../views/mgmt/roles/Roles.vue'),
                   },

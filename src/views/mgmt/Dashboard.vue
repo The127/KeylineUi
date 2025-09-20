@@ -45,6 +45,11 @@ const route = useRoute()
 
     <GridLayout>
       <DashboardItem
+          title="Administration"
+          subtitle="Manage this instance of Keyline"
+          :to="{ name: 'mgmt-admin' }"
+      />
+      <DashboardItem
           title="Applications"
           subtitle="Manage your applications"
           :to="{ name: 'mgmt-applications' }"
