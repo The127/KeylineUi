@@ -30,8 +30,8 @@ const { isPending, isError, data, error } = useGetApplicationQuery(
       <Tab title="General">
         TODO: general tab
       </Tab>
-      <Tab title="Security">
-        TODO: security tab
+      <Tab title="Roles">
+        TODO: role tab
       </Tab>
     </Tabs>
 
