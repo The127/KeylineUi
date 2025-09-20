@@ -5,12 +5,16 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  fullRow: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-2" :class="{'col-span-full': fullRow}">
     <span class="text-sm text-gray-500">
       {{ title }}
     </span>

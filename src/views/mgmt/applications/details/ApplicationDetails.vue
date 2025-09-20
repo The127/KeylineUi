@@ -52,7 +52,7 @@ const onDeleteApplication = () => {
     <Tabs>
       <Tab title="General">
         <Box>
-          <DataLayout title="Info">
+          <DataLayout title="Information">
             <DataLayoutItem title="Name">
               <Skeleton :dep="data" class="w-32 h-4">
                 {{ data.name }}
@@ -63,9 +63,27 @@ const onDeleteApplication = () => {
                 {{ data.displayName }}
               </Skeleton>
             </DataLayoutItem>
+            <DataLayoutItem title="Type">
+              <Skeleton :dep="data" class="w-32 h-4">
+                {{ data.type === 'public' ? 'Public' : 'Confidential' }}
+              </Skeleton>
+            </DataLayoutItem>
+          </DataLayout>
+        </Box>
+
+        <Box>
+          <DataLayout title="Login Redirect URIs">
+            <DataLayoutItem title="Login Redirect URIs" full-row>
+              <Skeleton :dep="data" class="w-32 h-4">
+                <span v-for="uri in data.redirectUris" :key="uri">
+                  {{ uri }}
+                </span>
+              </Skeleton>
+            </DataLayoutItem>
           </DataLayout>
         </Box>
       </Tab>
+
       <Tab title="Roles">
         TODO: role tab
       </Tab>
