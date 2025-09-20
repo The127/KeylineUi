@@ -7,6 +7,8 @@ import Tabs from "../../../../components/tabs/Tabs.vue";
 import ModelMetadata from "../../../../components/ModelMetadata.vue";
 import {useGetApplicationQuery} from "../../../../api/applications.js";
 import {useRoute} from "vue-router";
+import DotMenu from "../../../../components/DotMenu.vue";
+import MenuItem from "../../../../components/menu/MenuItem.vue";
 
 const route = useRoute()
 
@@ -14,6 +16,10 @@ const { isPending, isError, data, error } = useGetApplicationQuery(
     route.params.vsName,
     route.params.appId,
 )
+
+const onDeleteApplication = () => {
+  alert('Delete')
+}
 
 </script>
 
@@ -23,7 +29,11 @@ const { isPending, isError, data, error } = useGetApplicationQuery(
       <PageHeader
           title="Application details"
           subtitle="Manage application configuration and settings"
-      />
+      >
+        <DotMenu>
+          <MenuItem variant="danger" text="Delete" @click="onDeleteApplication"/>
+        </DotMenu>
+      </PageHeader>
     </template>
 
     <Tabs>
