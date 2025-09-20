@@ -114,6 +114,11 @@ const routes = [
                       component: () => import('../views/mgmt/roles/Roles.vue'),
                   },
                   {
+                      path: '',
+                      name: 'mgmt-groups',
+                      component: () => import('../views/mgmt/groups/Groups.vue'),
+                  },
+                  {
                       path: 'roles/:roleId',
                       name: 'mgmt-role-details',
                       component: () => import('../views/mgmt/roles/details/RoleDetails.vue'),

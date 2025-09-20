@@ -51,8 +51,13 @@ const route = useRoute()
       />
       <DashboardItem
           title="Roles"
-          subtitle="Manage your global roles"
+          subtitle="Manage global roles"
           :to="{ name: 'mgmt-roles' }"
+      />
+      <DashboardItem
+          title="Groups"
+          subtitle="Bundle roles into groups and assign users to groups"
+          :to="{ name: 'mgmt-groups' }"
       />
       <DashboardItem
           title="Users"
