@@ -13,6 +13,11 @@ const props = defineProps({
   to: {
     type: Object,
   },
+  variant: {
+    type: String,
+    default: 'text',
+    validator: (value) => ['text', 'danger'].includes(value),
+  },
 })
 
 const emit = defineEmits(["click"])
@@ -73,7 +78,10 @@ onMounted(() => {
       @keydown="onKeyDown"
       @focusin="onFocus"
   >
-    <span class="hover:text-slate-500">
+    <span
+        class="transition-colors"
+        :class="{'hover:text-slate-500': variant === 'text', 'hover:text-red-600': variant === 'danger'}"
+    >
       {{ text }}
     </span>
   </li>
