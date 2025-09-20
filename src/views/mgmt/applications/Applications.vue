@@ -19,6 +19,7 @@ import { Plus } from "lucide-vue-next"
 import FormGroup from "../../../components/FormGroup.vue";
 import RadioButtonGroup from "../../../components/radio/RadioButtonGroup.vue";
 import RadioButton from "../../../components/radio/RadioButton.vue";
+import ListInput from "../../../components/ListInput.vue";
 
 
 const route = useRoute()
@@ -49,6 +50,7 @@ const formModel = reactive({
 const formRules = {
   name: { required, },
   displayName: { required, },
+  redirectUris: { required, },
   type: { required, },
 }
 
@@ -58,6 +60,7 @@ const onAddApplication = () => {
   formModel.name = ''
   formModel.displayName = ''
   formModel.redirectUris = []
+  formModel.type = 'public'
 
   v$.value.$reset()
   addAppModal.value.open()
@@ -117,6 +120,12 @@ const createApplication = async () => {
               helper-text="Use for server side applications."
           />
         </RadioButtonGroup>
+      </FormGroup>
+      <FormGroup title="Redirect URIs">
+        <ListInput
+            label="Redirect URI"
+            v-model="v$.redirectUris.$model"
+        />
       </FormGroup>
     </Form>
   </Modal>
