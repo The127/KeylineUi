@@ -13,11 +13,16 @@ import useVuelidate from "@vuelidate/core";
 import {useCreateApplicationMutation} from "../../../api/applications.js";
 import {useRoute} from "vue-router";
 import {useToast} from "../../../composables/toast.js";
+import Heading from "../../../components/Heading.vue";
+import Button from "../../../components/Button.vue";
+import SpecialText from "../../../components/SpecialText.vue";
 
 const route = useRoute()
 const toast = useToast()
 
 const addAppModal = ref(null)
+
+const secret = ref('')
 
 const formModel = reactive({
   name: '',
@@ -50,17 +55,24 @@ const createApplicationMutation = useCreateApplicationMutation(route.params.vsNa
 
 const createApplication = async () => {
   try{
-    await createApplicationMutation.mutateAsync({
+    const createResponse = await createApplicationMutation.mutateAsync({
       name: formModel.name,
       displayName: formModel.displayName,
       type: formModel.type,
       redirectUris: formModel.redirectUris,
     })
+
+    if (formModel.type === 'confidential') {
+      secret.value = createResponse.secret
+      return
+    }
+
     toast.success('Application created')
   } catch (e) {
     console.error(e)
     toast.error('Failed to create application')
   }
+
   addAppModal.value.close()
 }
 
@@ -77,6 +89,7 @@ defineExpose({
         @submit="createApplication"
         :vuelidate="v$"
         submit-text="Create application"
+        v-if="!secret"
     >
       <Input label="Name"
              v-model="v$.name.$model"
@@ -115,6 +128,16 @@ defineExpose({
         />
       </FormGroup>
     </Form>
+    <div v-else class="flex flex-col gap-5">
+      <Heading level="h3">Application Secret</Heading>
+      <span>
+        Please make sure to save the secret securely. The secret will not be shown again. You can regenerate the secret at any time.
+      </span>
+      <SpecialText>
+        {{ secret }}
+      </SpecialText>
+      <Button text="I have stored the secret" @click="addAppModal.close()"/>
+    </div>
   </Modal>
 </template>
 
