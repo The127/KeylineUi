@@ -2,17 +2,18 @@
 
 import PageLayout from "../../../components/PageLayout.vue";
 import PageHeader from "../../../components/PageHeader.vue";
-import DataTable from "../../../components/dataTable/DataTable.vue";
-import DataTableColumn from "../../../components/dataTable/DataTableColumn.vue";
-import {useListRolesQuery} from "../../../api/roles.js";
-import {useRoute, useRouter} from "vue-router";
-import DataTableCell from "../../../components/dataTable/DataTableCell.vue";
-import GridLayout from "../../../components/GridLayout.vue";
-import DashboardItem from "../../../components/DashboardItem.vue";
 import Tabs from "../../../components/tabs/Tabs.vue";
 import Tab from "../../../components/tabs/Tab.vue";
+import GeneralTab from "./GeneralTab.vue";
+import ModelMetadata from "../../../components/ModelMetadata.vue";
+import {useRoute} from "vue-router";
+import {useGetVirtualServerQuery} from "../../../api/virtualServers.js";
 
 const route = useRoute()
+
+const { data } = useGetVirtualServerQuery(
+    route.params.vsName,
+)
 
 </script>
 
@@ -27,7 +28,7 @@ const route = useRoute()
 
     <Tabs>
       <Tab title="General">
-        TODO: general tab
+        <GeneralTab/>
       </Tab>
       <Tab title="Email">
         TODO: email tab
@@ -36,6 +37,10 @@ const route = useRoute()
         TODO: templates tab
       </Tab>
     </Tabs>
+
+    <template #footer>
+      <ModelMetadata :model="data"/>
+    </template>
   </PageLayout>
 </template>
 
