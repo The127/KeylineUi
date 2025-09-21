@@ -1,8 +1,6 @@
 <script setup>
 
 import LoadingSkeleton from "../../../components/LoadingSkeleton.vue";
-import Heading from "../../../components/Heading.vue";
-import Button from "../../../components/Button.vue";
 import DataLayoutItem from "../../../components/dataLayout/DataLayoutItem.vue";
 import VerifiedBadge from "../../../components/VerifiedBadge.vue";
 import DataLayout from "../../../components/dataLayout/DataLayout.vue";
@@ -10,8 +8,7 @@ import {reactive, ref, watch} from "vue";
 import {useUserManager} from "../../../composables/userManager.js";
 import {useUserMutation, useGetUserQuery} from "../../../api/user.js";
 import {useRoute} from "vue-router";
-import Input from "../../../components/Input.vue";
-import Form from "../../../components/Form.vue";
+import KeylineInput from "../../../components/KeylineInput.vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import {useToast} from "../../../composables/toast.js";
@@ -19,6 +16,9 @@ import {useI18n} from "vue-i18n";
 import UserAvatar from "../../../components/UserAvatar.vue";
 import BoxContainer from "../../../components/BoxContainer.vue";
 import ModalPopup from "../../../components/ModalPopup.vue";
+import KeylineForm from "../../../components/KeylineForm.vue";
+import HeadingText from "../../../components/HeadingText.vue";
+import KeylineButton from "../../../components/KeylineButton.vue";
 
 const { t } = useI18n({
   messages: {
@@ -106,17 +106,17 @@ const onFormSubmit = async () => {
 
 <template>
   <ModalPopup ref="userInfoModal">
-    <Form :title="t('editPersonalInfo')"
+    <KeylineForm :title="t('editPersonalInfo')"
           v-if="!isPending && !isError && data"
           @submit="onFormSubmit"
           :vuelidate="v$"
     >
-      <Input :label="t('displayName')"
+      <KeylineInput :label="t('displayName')"
              v-model="v$.displayName.$model"
              :vuelidate="v$.displayName"
              required
       />
-    </Form>
+    </KeylineForm>
   </ModalPopup>
 
   <BoxContainer>
@@ -126,7 +126,7 @@ const onFormSubmit = async () => {
       </LoadingSkeleton>
       <div class="flex flex-col gap-1">
         <LoadingSkeleton :dep="data" class="w-42 h-5">
-          <Heading level="h3">{{ data.displayName }}</Heading>
+          <HeadingText level="h3">{{ data.displayName }}</HeadingText>
         </LoadingSkeleton>
         <LoadingSkeleton :dep="data" class="w-32 h-4">
           <span class="text-sm text-gray-500">@{{ data.username }}</span>
@@ -138,7 +138,7 @@ const onFormSubmit = async () => {
   <BoxContainer>
     <DataLayout :title="t('personalInfo')">
       <template #actions>
-        <Button
+        <KeylineButton
             @click="onEditPersonalInfo"
             text="Edit"
             variant="secondary"
@@ -162,7 +162,7 @@ const onFormSubmit = async () => {
   <BoxContainer>
     <DataLayout :title="t('emailAddresses')">
       <template #actions>
-        <Button
+        <KeylineButton
             @click="onEditEmail"
             text="Edit"
             variant="secondary"

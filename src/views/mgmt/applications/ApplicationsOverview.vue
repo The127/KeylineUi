@@ -7,7 +7,7 @@ import PageHeader from "../../../components/PageHeader.vue";
 import DataTable from "../../../components/dataTable/DataTable.vue";
 import DataTableCell from "../../../components/dataTable/DataTableCell.vue";
 import DataTableColumn from "../../../components/dataTable/DataTableColumn.vue";
-import Button from "../../../components/Button.vue";
+import KeylineButton from "../../../components/KeylineButton.vue";
 import { ref} from "vue";
 import { Plus } from "lucide-vue-next"
 import ApplicationCreateModal from "./ApplicationCreateModal.vue";
@@ -43,11 +43,11 @@ const onAddApplication = () => {
           title="Applications"
           subtitle="Manage applications"
       >
-        <Button text="Add" @click="onAddApplication">
+        <KeylineButton text="Add" @click="onAddApplication">
           <template #adornment>
             <Plus/>
           </template>
-        </Button>
+        </KeylineButton>
       </PageHeader>
     </template>
 

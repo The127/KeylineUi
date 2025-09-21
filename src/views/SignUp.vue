@@ -1,15 +1,16 @@
 <script setup>
 
-import Form from "../components/Form.vue";
 import {useI18n} from "vue-i18n";
-import Heading from "../components/Heading.vue";
-import Button from "../components/Button.vue";
 import {reactive, ref} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
-import Input from "../components/Input.vue";
+import KeylineInput from "../components/KeylineInput.vue";
 import {useRoute} from "vue-router";
 import {useMutation, useQuery} from "@tanstack/vue-query";
+import LoadingSpinner from "../components/LoadingSpinner.vue";
+import KeylineForm from "../components/KeylineForm.vue";
+import HeadingText from "../components/HeadingText.vue";
+import KeylineButton from "../components/KeylineButton.vue";
 
 const route = useRoute()
 
@@ -126,7 +127,7 @@ const onFormSubmit = async () => {
     {{ t('anErrorHappened') }}
     {{ error }}
   </div>
-  <Form
+  <KeylineForm
       v-else-if="!registeringDone"
       :title="t('submit')"
       :submit-text="t('submit')"
@@ -134,11 +135,11 @@ const onFormSubmit = async () => {
       :vuelidate="v$"
   >
     <template #header>
-      <Heading class="text-center">
+      <HeadingText class="text-center">
         {{ t('title', { appName: data.displayName }) }}
-      </Heading>
+      </HeadingText>
     </template>
-    <Input
+    <KeylineInput
         v-model="v$.username.$model"
         :vuelidate="v$.username"
         :label="t('username')"
@@ -146,21 +147,21 @@ const onFormSubmit = async () => {
         maxlength="255"
         autofocus
     />
-    <Input
+    <KeylineInput
         v-model="v$.displayName.$model"
         :vuelidate="v$.displayName"
         :label="t('displayName')"
         required
         maxlength="255"
     />
-    <Input
+    <KeylineInput
         type="email"
         v-model="v$.email.$model"
         :vuelidate="v$.email"
         :label="t('email')"
         required
     />
-    <Input
+    <KeylineInput
         type="password"
         v-model="v$.password.$model"
         :vuelidate="v$.password"
@@ -170,13 +171,13 @@ const onFormSubmit = async () => {
         minlength="8"
     />
     <template #footer>
-      <Button variant="special" size="lg" type="submit" :text="t('submit')"/>
+      <KeylineButton variant="special" size="lg" type="submit" :text="t('submit')"/>
     </template>
-  </Form>
+  </KeylineForm>
   <div v-else class="flex flex-col items-center justify-center">
-    <Heading class="text-center">
+    <HeadingText class="text-center">
       {{ t('registrationCompleted') }}
-    </Heading>
+    </HeadingText>
     <p class="text-center">
       {{ t('youCanNowLogin') }}
     </p>

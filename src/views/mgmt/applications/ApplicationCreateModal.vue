@@ -1,21 +1,21 @@
 <script setup>
 
-import Form from "../../../components/Form.vue";
+import KeylineForm from "../../../components/KeylineForm.vue";
 import RadioButton from "../../../components/radio/RadioButton.vue";
 import ListInput from "../../../components/ListInput.vue";
 import FormGroup from "../../../components/FormGroup.vue";
 import RadioButtonGroup from "../../../components/radio/RadioButtonGroup.vue";
-import Input from "../../../components/Input.vue";
+import KeylineInput from "../../../components/KeylineInput.vue";
 import {defineExpose, reactive, ref} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import {useCreateApplicationMutation} from "../../../api/applications.js";
 import {useRoute} from "vue-router";
 import {useToast} from "../../../composables/toast.js";
-import Heading from "../../../components/Heading.vue";
-import Button from "../../../components/Button.vue";
 import SpecialText from "../../../components/SpecialText.vue";
 import ModalPopup from "../../../components/ModalPopup.vue";
+import HeadingText from "../../../components/HeadingText.vue";
+import KeylineButton from "../../../components/KeylineButton.vue";
 
 const route = useRoute()
 const toast = useToast()
@@ -84,20 +84,20 @@ defineExpose({
 
 <template>
   <ModalPopup ref="addAppModal" title="Add application">
-    <Form
+    <KeylineForm
         title="Add application"
         @submit="createApplication"
         :vuelidate="v$"
         submit-text="Create application"
         v-if="!secret"
     >
-      <Input label="Name"
+      <KeylineInput label="Name"
              v-model="v$.name.$model"
              :vuelidate="v$.name"
              required
              helper-text="The name of the application. Must be unique."
       />
-      <Input label="Display Name"
+      <KeylineInput label="Display Name"
              v-model="v$.displayName.$model"
              :vuelidate="v$.displayName"
              required
@@ -127,16 +127,16 @@ defineExpose({
             helper-text="The redirect URIs of the application. Must be unique."
         />
       </FormGroup>
-    </Form>
+    </KeylineForm>
     <div v-else class="flex flex-col gap-5">
-      <Heading level="h3">Application Secret</Heading>
+      <HeadingText level="h3">Application Secret</HeadingText>
       <span>
         Please make sure to save the secret securely. The secret will not be shown again. You can regenerate the secret at any time.
       </span>
       <SpecialText>
         {{ secret }}
       </SpecialText>
-      <Button text="I have stored the secret" @click="addAppModal.close()"/>
+      <KeylineButton text="I have stored the secret" @click="addAppModal.close()"/>
     </div>
   </ModalPopup>
 </template>

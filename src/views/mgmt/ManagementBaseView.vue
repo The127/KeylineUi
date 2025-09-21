@@ -1,7 +1,7 @@
 <script setup>
 
 import KeylineIcon from "../../components/icons/KeylineIcon.vue";
-import Input from "../../components/Input.vue";
+import KeylineInput from "../../components/KeylineInput.vue";
 import {useUserManager} from "../../composables/userManager.js";
 import {useRoute} from "vue-router";
 import {computedAsync} from "@vueuse/core";
@@ -66,7 +66,7 @@ const onLogout = async () => {
             <KeylineIcon class="w-12 h-12 "/>
           </RouterLink>
           <div>
-            <Input
+            <KeylineInput
                 label="Global search"
                 hide-label
                 placeholder="Search anything..."

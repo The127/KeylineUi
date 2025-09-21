@@ -1,7 +1,7 @@
 <script setup>
 
 import {useI18n} from "vue-i18n";
-import Heading from "../components/Heading.vue";
+import HeadingText from "../components/HeadingText.vue";
 
 const { t } = useI18n({
   messages: {
@@ -25,9 +25,9 @@ const { t } = useI18n({
 
 <template>
   <div class="flex flex-col flex-wrap gap-5 items-center">
-    <Heading>
+    <HeadingText>
       {{ t('title') }}
-    </Heading>
+    </HeadingText>
     <p class="text-center">
       {{ t('text') }}
     </p>

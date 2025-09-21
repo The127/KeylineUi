@@ -6,7 +6,7 @@ import {useQuery} from "@tanstack/vue-query";
 import {useRoute} from "vue-router";
 import {useUserManager} from "../../../composables/userManager.js";
 import ModelMetadata from "../../../components/ModelMetadata.vue";
-import Button from "../../../components/Button.vue";
+import KeylineButton from "../../../components/KeylineButton.vue";
 import DataLayout from "../../../components/dataLayout/DataLayout.vue";
 import DataLayoutItem from "../../../components/dataLayout/DataLayoutItem.vue";
 import GeneralTab from "./GeneralTab.vue";
@@ -50,7 +50,7 @@ const onEditPassword = () => {
         <BoxContainer>
           <DataLayout title="Password">
             <template #actions>
-              <Button
+              <KeylineButton
                   @click="onEditPassword"
                   text="Edit"
                   variant="secondary"
@@ -67,7 +67,7 @@ const onEditPassword = () => {
         <BoxContainer>
           <DataLayout title="2 Factor Authentication">
             <template #actions>
-              <Button
+              <KeylineButton
                   @click="onEditPassword"
                   text="Add"
                   variant="secondary"
@@ -80,7 +80,7 @@ const onEditPassword = () => {
         <BoxContainer>
           <DataLayout title="Passkeys">
             <template #actions>
-              <Button
+              <KeylineButton
                   @click="onEditPassword"
                   text="Add"
                   variant="secondary"

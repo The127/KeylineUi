@@ -4,10 +4,10 @@ import {useI18n} from "vue-i18n";
 import {reactive} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
-import Form from "../components/Form.vue";
-import Heading from "../components/Heading.vue";
-import Input from "../components/Input.vue";
-import Button from "../components/Button.vue";
+import KeylineForm from "../components/KeylineForm.vue";
+import HeadingText from "../components/HeadingText.vue";
+import KeylineInput from "../components/KeylineInput.vue";
+import KeylineButton from "../components/KeylineButton.vue";
 
 const { t } = useI18n({
   messages: {
@@ -50,21 +50,21 @@ const onFormSubmit = async () => {
 </script>
 
 <template>
-  <Form
+  <KeylineForm
       :title="t('submit')"
       :submit-text="t('submit')"
       @submit="onFormSubmit"
       :vuelidate="v$"
   >
     <template #header>
-      <Heading class="text-center">
+      <HeadingText class="text-center">
         {{ t('title') }}
-      </Heading>
+      </HeadingText>
       <p>
         {{ t('descriptionText') }}
       </p>
     </template>
-    <Input
+    <KeylineInput
         type="email"
         v-model="v$.email.$model"
         :vuelidate="v$.email"
@@ -72,7 +72,7 @@ const onFormSubmit = async () => {
         required
     />
     <template #footer>
-      <Button
+      <KeylineButton
           variant="special"
           size="lg"
           type="submit"
@@ -80,7 +80,7 @@ const onFormSubmit = async () => {
           tabindex="3"
       />
     </template>
-  </Form>
+  </KeylineForm>
 </template>
 
 <style scoped>
