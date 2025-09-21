@@ -1,5 +1,6 @@
 import {apiFetch} from "./index.js";
 import {useQuery} from "@tanstack/vue-query";
+import {ConfigApiUrl} from "../config.js";
 
 export const useGetVirtualServerQuery = (vsName) => useQuery({
     queryKey: ['virtualServer', vsName],
@@ -8,6 +9,6 @@ export const useGetVirtualServerQuery = (vsName) => useQuery({
 
 export const getVirtualServerQueryFn = async (vsName) => {
     return await apiFetch(
-        `http://127.0.0.1:8081/api/virtual-servers/${vsName}`
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}`
     )
 }

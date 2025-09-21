@@ -1,11 +1,12 @@
 import {UserManager} from "oidc-client";
+import {ConfigApiUrl} from "../config.js";
 
 let mgr = null;
 
-export const oidcBaseUrl = "http://127.0.0.1:8081"
-export const adminUiBaseUrl = "http://localhost:5173"
-
 export function useUserManager(virtualServer = null) {
+    const oidcBaseUrl = ConfigApiUrl()
+    const adminUiBaseUrl = "http://localhost:5173"
+
     if (!virtualServer) {
         console.error("Can only use `useUserManager` inside a route with a `virtualServer` meta property.")
         return null

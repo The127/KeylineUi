@@ -3,13 +3,14 @@
 import KeylineIcon from "../../components/icons/KeylineIcon.vue";
 import Avatar from "../../components/Avatar.vue";
 import Input from "../../components/Input.vue";
-import {adminUiBaseUrl, useUserManager} from "../../composables/userManager.js";
+import {useUserManager} from "../../composables/userManager.js";
 import {useRoute} from "vue-router";
 import {computedAsync} from "@vueuse/core";
 import Menu from "../../components/menu/Menu.vue";
 import MenuItem from "../../components/menu/MenuItem.vue";
 import MenuDivider from "../../components/menu/MenuDivider.vue";
 import Breadcrumbs from "../../components/Breadcrumbs.vue";
+import {ConfigApiUrl} from "../../config.js";
 
 const route = useRoute()
 const mgr = useUserManager(route.params.vsName)
@@ -21,7 +22,7 @@ const userName = computedAsync(async () => {
 
 const onLogout = async () => {
   await mgr.signoutRedirect({
-    post_logout_redirect_uri: `${adminUiBaseUrl}/mgmt/${route.params.vsName}/logout`
+    post_logout_redirect_uri: `${ConfigApiUrl()}/mgmt/${route.params.vsName}/logout`
   })
 }
 
