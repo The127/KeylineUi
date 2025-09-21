@@ -4,9 +4,9 @@ import {useRoute} from "vue-router";
 import {useQuery, useQueryClient} from "@tanstack/vue-query";
 import PasswordVerification from "../components/login/PasswordVerification.vue";
 import EmailVerification from "../components/login/EmailVerification.vue";
-import Spinner from "../components/Spinner.vue";
 import TemporaryPasswordReset from "../components/login/TemporaryPasswordReset.vue";
 import {useI18n} from "vue-i18n";
+import LoadingSpinner from "../components/LoadingSpinner.vue";
 
 const { t } = useI18n({
   messages: {
@@ -78,7 +78,7 @@ const onNext = () => {
 
 <template>
   <div v-if="isPending" class="flex flex-row justify-center items-center">
-      <Spinner/>
+      <LoadingSpinner/>
   </div>
   <div v-else-if="isError">
     <div v-if="error instanceof AuthError">
@@ -112,7 +112,7 @@ const onNext = () => {
         v-else-if="data.step === 'finish'"
         class="flex flex-row justify-center items-center"
     >
-      <Spinner/>
+      <LoadingSpinner/>
     </div>
     <div v-else>
       Unknown step: {{ data.step }}

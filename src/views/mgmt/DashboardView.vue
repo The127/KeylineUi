@@ -3,7 +3,6 @@
 import PageHeader from "../../components/PageHeader.vue";
 import {useI18n} from "vue-i18n";
 import PageLayout from "../../components/PageLayout.vue";
-import {useRoute} from "vue-router";
 import GridLayout from "../../components/GridLayout.vue";
 import DashboardItem from "../../components/DashboardItem.vue";
 
@@ -23,8 +22,6 @@ const { t } = useI18n({
   },
   inheritLocale: true,
 })
-
-const route = useRoute()
 
 </script>
 

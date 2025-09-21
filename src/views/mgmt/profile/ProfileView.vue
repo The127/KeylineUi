@@ -2,35 +2,22 @@
 
 import PageHeader from "../../../components/PageHeader.vue";
 import PageLayout from "../../../components/PageLayout.vue";
-import {useMutation, useQuery, useQueryClient} from "@tanstack/vue-query";
+import {useQuery} from "@tanstack/vue-query";
 import {useRoute} from "vue-router";
 import {useUserManager} from "../../../composables/userManager.js";
-import {onMounted, reactive, ref, watch} from "vue";
-import {required} from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
 import ModelMetadata from "../../../components/ModelMetadata.vue";
-import {useToast} from "../../../composables/toast.js";
-import Box from "../../../components/Box.vue";
-import Avatar from "../../../components/Avatar.vue";
-import Heading from "../../../components/Heading.vue";
 import Button from "../../../components/Button.vue";
-import VerifiedBadge from "../../../components/VerifiedBadge.vue";
 import DataLayout from "../../../components/dataLayout/DataLayout.vue";
 import DataLayoutItem from "../../../components/dataLayout/DataLayoutItem.vue";
-import Skeleton from "../../../components/Skeleton.vue";
-import Tabs from "../../../components/tabs/Tabs.vue";
-import Tab from "../../../components/tabs/Tab.vue";
-import Modal from "../../../components/Modal.vue";
-import Form from "../../../components/Form.vue";
-import Input from "../../../components/Input.vue";
 import GeneralTab from "./GeneralTab.vue";
+import TabLayout from "../../../components/tabs/TabLayout.vue";
+import TabPage from "../../../components/tabs/TabPage.vue";
+import BoxContainer from "../../../components/BoxContainer.vue";
 
-const toast = useToast()
 const route = useRoute()
-const queryClient = useQueryClient()
 const userManager = useUserManager(route.params.vsName)
 
-const { isPending, isError, data, error } = useQuery({
+const { data } = useQuery({
   queryKey: ['profile'],
   queryFn: async () => {
     const user = await userManager.getUser()
@@ -54,13 +41,13 @@ const onEditPassword = () => {
       />
     </template>
 
-    <Tabs>
-      <Tab title="General">
+    <TabLayout>
+      <TabPage title="General">
         <GeneralTab/>
-      </Tab>
+      </TabPage>
 
-      <Tab title="Security">
-        <Box>
+      <TabPage title="Security">
+        <BoxContainer>
           <DataLayout title="Password">
             <template #actions>
               <Button
@@ -75,9 +62,9 @@ const onEditPassword = () => {
               false
             </DataLayoutItem>
           </DataLayout>
-        </Box>
+        </BoxContainer>
 
-        <Box>
+        <BoxContainer>
           <DataLayout title="2 Factor Authentication">
             <template #actions>
               <Button
@@ -88,9 +75,9 @@ const onEditPassword = () => {
               />
             </template>
           </DataLayout>
-        </Box>
+        </BoxContainer>
 
-        <Box>
+        <BoxContainer>
           <DataLayout title="Passkeys">
             <template #actions>
               <Button
@@ -101,9 +88,9 @@ const onEditPassword = () => {
               />
             </template>
           </DataLayout>
-        </Box>
-      </Tab>
-    </Tabs>
+        </BoxContainer>
+      </TabPage>
+    </TabLayout>
 
     <template #footer>
       <ModelMetadata

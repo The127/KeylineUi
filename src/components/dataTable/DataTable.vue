@@ -1,12 +1,12 @@
 <script setup>
 
 import {provide, ref} from "vue";
-import Box from "../Box.vue";
-import Skeleton from "../Skeleton.vue";
-import Pagination from "./Pagination.vue";
+import LoadingSkeleton from "../LoadingSkeleton.vue";
 import PageSizeSelector from "./PageSizeSelector.vue";
-import Heading from "../Heading.vue";
-import Input from "../Input.vue";
+import KeylineInput from "../KeylineInput.vue";
+import HeadingText from "../HeadingText.vue";
+import BoxContainer from "../BoxContainer.vue";
+import KeylinePagination from "./KeylinePagination.vue";
 
 const props = defineProps({
   queryFn: {
@@ -89,7 +89,7 @@ function getSkeletonWidth(rowIndex, cellIndex) {
 </script>
 
 <template>
-  <Box class="px-0 py-0 overflow-x-hidden">
+  <BoxContainer class="px-0 py-0 overflow-x-hidden">
     <table class="w-full">
       <thead>
         <tr
@@ -98,15 +98,15 @@ function getSkeletonWidth(rowIndex, cellIndex) {
         >
           <td :colspan="columns.length" class="px-5 py-3">
             <div class="flex flex-row justify-between items-center flex-wrap gap-5">
-              <Heading
+              <HeadingText
                   v-if="!!title"
                   level="h3"
                   class="text-sm"
               >
                 {{ title }}
-              </Heading>
+              </HeadingText>
               <div v-else/>
-              <Input
+              <KeylineInput
                   hide-label
                   label="Search"
                   placeholder="Search..."
@@ -138,42 +138,44 @@ function getSkeletonWidth(rowIndex, cellIndex) {
       </thead>
 
       <tbody>
-        <tr
-            v-if="!!data"
-            v-for="item in data.items"
-            :key="props.idSelector(item)"
-            class="hover:text-emerald-700 odd:bg-slate-50 even:bg-slate-100 hover:bg-emerald-100"
-            :class="{'cursor-pointer': !!onClick}"
-            @click="!!onClick && onClick(item)"
-        >
-          <slot name="row" :item="item" :search="search"/>
-        </tr>
+        <template v-if="!!data">
+          <tr
+              v-for="item in data.items"
+              :key="props.idSelector(item)"
+              class="hover:text-emerald-700 odd:bg-slate-50 even:bg-slate-100 hover:bg-emerald-100"
+              :class="{'cursor-pointer': !!onClick}"
+              @click="!!onClick && onClick(item)"
+          >
+            <slot name="row" :item="item" :search="search"/>
+          </tr>
+        </template>
         <tr v-if="!!data && data.items.length === 0">
           <td :colspan="columns.length" class="px-5 py-3 text-center">
             No data&hellip;
           </td>
         </tr>
 
-        <tr
-            v-if="isPending && !data"
-            v-for="rowIndex in 5"
-            :key="rowIndex"
-            class="odd:bg-slate-50 even:bg-slate-100"
-        >
-          <td
-              v-for="cellIndex in columns.length"
-              :key="cellIndex"
-              class="px-5 py-3"
+        <template v-if="isPending && !data">
+          <tr
+              v-for="rowIndex in 5"
+              :key="rowIndex"
+              class="odd:bg-slate-50 even:bg-slate-100"
           >
-            <Skeleton
-                :dep="undefined"
-                class="h-4"
-                :style="{
-                  width: getSkeletonWidth(rowIndex, cellIndex)
-                }"
-            />
-          </td>
-        </tr>
+            <td
+                v-for="cellIndex in columns.length"
+                :key="cellIndex"
+                class="px-5 py-3"
+            >
+              <LoadingSkeleton
+                  :dep="undefined"
+                  class="h-4"
+                  :style="{
+                    width: getSkeletonWidth(rowIndex, cellIndex)
+                  }"
+              />
+            </td>
+          </tr>
+        </template>
       </tbody>
 
       <tfoot
@@ -189,7 +191,7 @@ function getSkeletonWidth(rowIndex, cellIndex) {
                 </span>
                 <PageSizeSelector v-model="pageSize"/>
               </div>
-              <Pagination
+              <KeylinePagination
                 :total-pages="data.pagination.totalPages"
                 :page="page"
                 :page-size="pageSize"
@@ -200,7 +202,7 @@ function getSkeletonWidth(rowIndex, cellIndex) {
         </tr>
       </tfoot>
     </table>
-  </Box>
+  </BoxContainer>
 </template>
 
 <style scoped>

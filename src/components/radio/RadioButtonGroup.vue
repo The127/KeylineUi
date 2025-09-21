@@ -4,7 +4,7 @@ import {provide, ref} from "vue";
 
 const model = defineModel()
 
-const props = defineProps({
+defineProps({
   name: {
     type: String,
     required: true,

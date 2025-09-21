@@ -27,7 +27,7 @@ const itemIndex = ref(0)
 const el = ref(null)
 
 const onClick = () => {
-  if (!!props.to) {
+  if (props.to) {
     router.push(props.to)
   }else{
     emit("click")

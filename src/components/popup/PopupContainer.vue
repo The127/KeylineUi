@@ -1,10 +1,10 @@
 <script setup>
 
-import Modal from "../Modal.vue";
 import {ref, provide} from "vue";
 import {POPUP_SYMBOL} from "../../composables/popup.js";
-import Heading from "../Heading.vue";
-import Button from "../Button.vue";
+import HeadingText from "../HeadingText.vue";
+import ModalPopup from "../ModalPopup.vue";
+import KeylineButton from "../KeylineButton.vue";
 
 const confirmModalRef = ref(null)
 const confirmOptions = ref(null)
@@ -19,16 +19,16 @@ provide(POPUP_SYMBOL, {
 </script>
 
 <template>
-  <Modal ref="confirmModalRef">
+  <ModalPopup ref="confirmModalRef">
     <div class="flex flex-col gap-5" v-if="confirmOptions">
-      <Heading level="h3">
+      <HeadingText level="h3">
         {{ confirmOptions?.title ?? 'Are you sure?' }}
-      </Heading>
+      </HeadingText>
       <span v-if="confirmOptions.message" class="text-sm">
         {{ confirmOptions.message }}
       </span>
       <div class="flex flex-row gap-2 flex-wrap">
-        <Button
+        <KeylineButton
             class="flex-1"
             variant="secondary"
             :text="confirmOptions?.cancelText ?? 'Cancel'"
@@ -38,7 +38,7 @@ provide(POPUP_SYMBOL, {
                 confirmOptions.onCancel()
             }"
         />
-        <Button
+        <KeylineButton
             class="flex-1"
             variant="danger"
             :text="confirmOptions?.confirmText ?? 'Confirm'"
@@ -50,7 +50,7 @@ provide(POPUP_SYMBOL, {
         />
       </div>
     </div>
-  </Modal>
+  </ModalPopup>
 
   <slot/>
 </template>

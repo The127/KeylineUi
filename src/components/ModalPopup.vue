@@ -1,8 +1,8 @@
 <script setup>
 
-import {onMounted, ref, defineExpose, onBeforeUnmount} from "vue";
+import {ref, defineExpose} from "vue";
 
-const props = defineProps({
+defineProps({
   size: {
     type: String,
     default: 'md',

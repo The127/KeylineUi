@@ -1,11 +1,10 @@
 <script setup>
 
-import Menu from "./menu/Menu.vue";
-import Button from "./Button.vue";
 import { EllipsisVertical } from "lucide-vue-next"
-import Avatar from "./Avatar.vue";
+import PopupMenu from "./menu/PopupMenu.vue";
+import KeylineButton from "./KeylineButton.vue";
 
-const props = defineProps({
+defineProps({
   size: {
     type: String,
     default: 'sm',
@@ -16,9 +15,9 @@ const props = defineProps({
 </script>
 
 <template>
-  <Menu>
+  <PopupMenu>
     <template #activator-content="{ attrs }">
-      <Button
+      <KeylineButton
           text="open menu"
           hide-text
           variant="secondary"
@@ -28,11 +27,11 @@ const props = defineProps({
         <template #adornment>
           <EllipsisVertical/>
         </template>
-      </Button>
+      </KeylineButton>
     </template>
 
     <slot/>
-  </Menu>
+  </PopupMenu>
 </template>
 
 <style scoped>

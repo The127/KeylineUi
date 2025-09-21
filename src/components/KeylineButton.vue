@@ -3,7 +3,7 @@
 import variants from "./buttonVariants.js";
 import {cva} from "class-variance-authority";
 
-const props = defineProps({
+defineProps({
   type: {
     type: String,
     default: 'button',

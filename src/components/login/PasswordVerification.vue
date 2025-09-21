@@ -1,15 +1,15 @@
 <script setup>
 
-import Button from "../Button.vue";
-import Input from "../Input.vue";
-import Form from "../Form.vue";
-import Heading from "../Heading.vue";
+import KeylineInput from "../KeylineInput.vue";
 import HorizontalDivider from "../HorizontalDivider.vue";
 import {useI18n} from "vue-i18n";
 import {reactive, ref} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
-import {useMutation, useQueryClient} from "@tanstack/vue-query";
+import {useMutation} from "@tanstack/vue-query";
+import HeadingText from "../HeadingText.vue";
+import KeylineButton from "../KeylineButton.vue";
+import KeylineForm from "../KeylineForm.vue";
 
 const { t } = useI18n({
   messages: {
@@ -129,24 +129,24 @@ const verifyPassword = useMutation({
 </script>
 
 <template>
-  <Form
+  <KeylineForm
       :title="t('submit')"
       :submit-text="t('submit')"
       @submit="onFormSubmit"
       :vuelidate="v$"
   >
     <template #header>
-      <Heading class="text-center">
+      <HeadingText class="text-center">
         {{ t('title', { appName: data.applicationDisplayName }) }}
-      </Heading>
-      <Heading level="h2" class="text-center">
+      </HeadingText>
+      <HeadingText level="h2" class="text-center">
         {{ t('subtitle', { tenantName: data.virtualServerDisplayName}) }}
-      </Heading>
+      </HeadingText>
       <p class="text-center text-red-700" v-if="loginError">
         {{ loginError }}
       </p>
     </template>
-    <Input
+    <KeylineInput
         v-model="v$.username.$model"
         :vuelidate="v$.username"
         :label="t('username')"
@@ -154,7 +154,7 @@ const verifyPassword = useMutation({
         tabindex="1"
         autofocus
     />
-    <Input
+    <KeylineInput
         type="password"
         v-model="v$.password.$model"
         :vuelidate="v$.password"
@@ -167,9 +167,9 @@ const verifyPassword = useMutation({
           {{ t('forgotPassword') }}
         </RouterLink>
       </template>
-    </Input>
+    </KeylineInput>
     <template #footer>
-      <Button
+      <KeylineButton
           variant="special"
           size="lg"
           type="submit"
@@ -181,9 +181,9 @@ const verifyPassword = useMutation({
         <span>{{ t('dontHaveAnAccount') }}</span>
         <RouterLink :to="{name: 'signup', params: {virtualServer: data.virtualServerName}, query: { token: token, },}">{{ t('register') }}</RouterLink>
       </div>
-      <Button variant="link" :text="t('signInWithPasskey')"></Button>
+      <KeylineButton variant="link" :text="t('signInWithPasskey')"></KeylineButton>
     </template>
-  </Form>
+  </KeylineForm>
 </template>
 
 <style scoped>

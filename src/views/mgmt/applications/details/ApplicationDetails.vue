@@ -2,23 +2,23 @@
 
 import PageLayout from "../../../../components/PageLayout.vue";
 import PageHeader from "../../../../components/PageHeader.vue";
-import Tab from "../../../../components/tabs/Tab.vue";
-import Tabs from "../../../../components/tabs/Tabs.vue";
 import ModelMetadata from "../../../../components/ModelMetadata.vue";
 import {useGetApplicationQuery} from "../../../../api/applications.js";
 import {useRoute} from "vue-router";
 import DotMenu from "../../../../components/DotMenu.vue";
 import MenuItem from "../../../../components/menu/MenuItem.vue";
 import {usePopup} from "../../../../composables/popup.js";
-import Box from "../../../../components/Box.vue";
 import DataLayout from "../../../../components/dataLayout/DataLayout.vue";
 import DataLayoutItem from "../../../../components/dataLayout/DataLayoutItem.vue";
-import Skeleton from "../../../../components/Skeleton.vue";
+import TabLayout from "../../../../components/tabs/TabLayout.vue";
+import TabPage from "../../../../components/tabs/TabPage.vue";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton.vue";
+import BoxContainer from "../../../../components/BoxContainer.vue";
 
 const route = useRoute()
 const popupService = usePopup()
 
-const { isPending, isError, data, error } = useGetApplicationQuery(
+const { data } = useGetApplicationQuery(
     route.params.vsName,
     route.params.appId,
 )
@@ -49,45 +49,45 @@ const onDeleteApplication = () => {
       </PageHeader>
     </template>
 
-    <Tabs>
-      <Tab title="General">
-        <Box>
+    <TabLayout>
+      <TabPage title="General">
+        <BoxContainer>
           <DataLayout title="Information">
             <DataLayoutItem title="Name">
-              <Skeleton :dep="data" class="w-32 h-4">
+              <LoadingSkeleton :dep="data" class="w-32 h-4">
                 {{ data.name }}
-              </Skeleton>
+              </LoadingSkeleton>
             </DataLayoutItem>
             <DataLayoutItem title="Display Name">
-              <Skeleton :dep="data" class="w-32 h-4">
+              <LoadingSkeleton :dep="data" class="w-32 h-4">
                 {{ data.displayName }}
-              </Skeleton>
+              </LoadingSkeleton>
             </DataLayoutItem>
             <DataLayoutItem title="Type">
-              <Skeleton :dep="data" class="w-32 h-4">
+              <LoadingSkeleton :dep="data" class="w-32 h-4">
                 {{ data.type === 'public' ? 'Public' : 'Confidential' }}
-              </Skeleton>
+              </LoadingSkeleton>
             </DataLayoutItem>
           </DataLayout>
-        </Box>
+        </BoxContainer>
 
-        <Box>
+        <BoxContainer>
           <DataLayout title="Redirect URIs">
             <DataLayoutItem title="Login Redirect URIs" full-row>
-              <Skeleton :dep="data" class="w-32 h-4">
+              <LoadingSkeleton :dep="data" class="w-32 h-4">
                 <span v-for="uri in data.redirectUris" :key="uri">
                   {{ uri }}
                 </span>
-              </Skeleton>
+              </LoadingSkeleton>
             </DataLayoutItem>
           </DataLayout>
-        </Box>
-      </Tab>
+        </BoxContainer>
+      </TabPage>
 
-      <Tab title="Roles">
+      <TabPage title="Roles">
         TODO: role tab
-      </Tab>
-    </Tabs>
+      </TabPage>
+    </TabLayout>
 
     <template #footer>
       <ModelMetadata

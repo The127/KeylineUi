@@ -1,9 +1,9 @@
 <script setup>
 
-import Heading from "./Heading.vue";
-import Skeleton from "./Skeleton.vue";
+import LoadingSkeleton from "./LoadingSkeleton.vue";
+import HeadingText from "./HeadingText.vue";
 
-const props = defineProps({
+defineProps({
   title: {
     type: String,
     required: true,
@@ -21,13 +21,13 @@ const props = defineProps({
   <div class="flex flex-col gap-3">
     <div class="flex flex-row justify-between items-baseline gap-5 flex-wrap">
       <div>
-        <Skeleton :dep="title" class="w-52 h-9">
-          <Heading>
+        <LoadingSkeleton :dep="title" class="w-52 h-9">
+          <HeadingText>
             {{ title }}
-          </Heading>
-        </Skeleton>
+          </HeadingText>
+        </LoadingSkeleton>
 
-        <Skeleton
+        <LoadingSkeleton
             :dep="subtitle"
             v-if="subtitle !== null"
             class="w-64 h-5"
@@ -35,7 +35,7 @@ const props = defineProps({
             <p class="text-sm text-slate-600">
               {{ subtitle }}
             </p>
-        </Skeleton>
+        </LoadingSkeleton>
       </div>
       <slot/>
     </div>

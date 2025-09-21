@@ -1,16 +1,15 @@
 <script setup>
 
-import Input from "./Input.vue";
-import Button from "./Button.vue";
+import KeylineInput from "./KeylineInput.vue";
 import {ref} from "vue";
-import { Plus, Minus, Pencil } from "lucide-vue-next"
-import Modal from "./Modal.vue";
+import { Plus, Minus } from "lucide-vue-next"
+import KeylineButton from "./KeylineButton.vue";
 
 const model = defineModel()
 
 const currentValue = ref("")
 
-const props = defineProps({
+defineProps({
   label: {
     type: String,
     required: true,
@@ -41,11 +40,12 @@ const onInputKeydown = (e) => {
   <div class="flex flex-col gap-2">
     <div
         v-for="item in model"
+        :key="item"
         class="flex items-center gap-2 flex-wrap justify-between"
     >
       <span>{{ item }}</span>
       <div class="flex items-center gap-2">
-        <Button
+        <KeylineButton
             variant="danger"
             text="remove"
             size="sm"
@@ -55,18 +55,18 @@ const onInputKeydown = (e) => {
           <template #adornment>
             <Minus class="w-4 h-4"/>
           </template>
-        </Button>
+        </KeylineButton>
       </div>
     </div>
     <div class="flex items-center gap-2 justify-between">
-      <Input
+      <KeylineInput
           container-class="flex-1"
           hide-label
           :label="label" v-model="currentValue"
           @keydown="onInputKeydown"
           :helper-text="helperText"
       />
-      <Button
+      <KeylineButton
           text="add"
           hide-text
           variant="secondary"
@@ -76,7 +76,7 @@ const onInputKeydown = (e) => {
         <template #adornment>
           <Plus class="w-4 h-4"/>
         </template>
-      </Button>
+      </KeylineButton>
     </div>
   </div>
 </template>

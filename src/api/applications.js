@@ -1,6 +1,5 @@
 import {apiFetch, applyQueryOps} from "./index.js";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/vue-query";
-import {toValue} from "vue";
 
 export const useListApplicationQuery = (vsName, queryOps) => useQuery({
     queryKey: ['applications', vsName, queryOps],

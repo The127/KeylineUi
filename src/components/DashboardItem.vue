@@ -1,12 +1,12 @@
 <script setup>
 
-import Heading from "./Heading.vue";
-import Box from "./Box.vue";
 import {useRouter} from "vue-router";
+import HeadingText from "./HeadingText.vue";
+import BoxContainer from "./BoxContainer.vue";
 
 const router = useRouter()
 
-const props = defineProps({
+defineProps({
   title: {
     type: String,
     required: true,
@@ -23,17 +23,17 @@ const props = defineProps({
 </script>
 
 <template>
-  <Box
+  <BoxContainer
       class="flex flex-col gap-2 cursor-pointer hover:shadow-lg transition-shadow"
       @click="router.push(to)"
   >
-    <Heading level="h4">
+    <HeadingText level="h4">
       {{ title }}
-    </Heading>
+    </HeadingText>
     <span v-if="subtitle" class="text-sm text-slate-600">
       {{ subtitle }}
     </span>
-  </Box>
+  </BoxContainer>
 </template>
 
 <style scoped>

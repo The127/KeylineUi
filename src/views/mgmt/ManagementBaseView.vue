@@ -1,16 +1,16 @@
 <script setup>
 
 import KeylineIcon from "../../components/icons/KeylineIcon.vue";
-import Avatar from "../../components/Avatar.vue";
 import Input from "../../components/Input.vue";
 import {useUserManager} from "../../composables/userManager.js";
 import {useRoute} from "vue-router";
 import {computedAsync} from "@vueuse/core";
-import Menu from "../../components/menu/Menu.vue";
 import MenuItem from "../../components/menu/MenuItem.vue";
 import MenuDivider from "../../components/menu/MenuDivider.vue";
-import Breadcrumbs from "../../components/Breadcrumbs.vue";
 import {ConfigApiUrl} from "../../config.js";
+import PopupMenu from "../../components/menu/PopupMenu.vue";
+import UserAvatar from "../../components/UserAvatar.vue";
+import BreadcrumbNavigation from "../../components/BreadcrumbNavigation.vue";
 
 const route = useRoute()
 const mgr = useUserManager(route.params.vsName)
@@ -73,9 +73,9 @@ const onLogout = async () => {
             />
           </div>
           <div>
-            <Menu>
+            <PopupMenu>
               <template #activator-content="{ attrs }">
-                <Avatar
+                <UserAvatar
                     class="hover:bg-slate-400 cursor-pointer"
                     :username="userName"
                     v-bind="attrs"
@@ -85,11 +85,11 @@ const onLogout = async () => {
               <MenuItem text="Profile" :to="{name: 'mgmt-profile'}"/>
               <MenuDivider/>
               <MenuItem text="Logout" @click="onLogout"/>
-            </Menu>
+            </PopupMenu>
           </div>
         </div>
 
-        <Breadcrumbs/>
+        <BreadcrumbNavigation/>
         <router-view />
       </div>
     </div>

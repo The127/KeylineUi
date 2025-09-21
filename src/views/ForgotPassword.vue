@@ -8,7 +8,6 @@ import Form from "../components/Form.vue";
 import Heading from "../components/Heading.vue";
 import Input from "../components/Input.vue";
 import Button from "../components/Button.vue";
-import HorizontalDivider from "../components/HorizontalDivider.vue";
 
 const { t } = useI18n({
   messages: {

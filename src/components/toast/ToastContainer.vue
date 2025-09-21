@@ -1,11 +1,10 @@
 <script setup>
 
-import {computed, provide, ref, watch} from "vue";
+import {provide, ref} from "vue";
 import {TOAST_SYMBOL} from "../../composables/toast.js";
 import {cva} from "class-variance-authority";
 import variants from "./toastVariants.js";
 import { X } from "lucide-vue-next"
-
 
 const props = defineProps({
   maximum: {

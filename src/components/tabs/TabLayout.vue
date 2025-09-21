@@ -1,6 +1,6 @@
 <script setup>
 
-import {ref, provide, onMounted} from "vue";
+import {ref, provide} from "vue";
 
 const tabs = ref([])
 

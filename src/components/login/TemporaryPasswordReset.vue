@@ -3,12 +3,11 @@
 import {reactive, ref} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
-import Form from "../Form.vue";
 import {useI18n} from "vue-i18n";
-import Heading from "../Heading.vue";
-import Input from "../Input.vue";
-import Button from "../Button.vue";
 import {useMutation} from "@tanstack/vue-query";
+import HeadingText from "../HeadingText.vue";
+import KeylineButton from "../KeylineButton.vue";
+import KeylineForm from "../KeylineForm.vue";
 
 const { t } = useI18n({
   messages: {
@@ -100,19 +99,19 @@ const resetTemporaryPassword = useMutation({
 </script>
 
 <template>
-  <Form
+  <KeylineForm
       :title="t('submit')"
       :submit-text="t('submit')"
       @submit="onFormSubmit"
       :vuelidate="v$"
   >
     <template #header>
-      <Heading class="text-center">
+      <HeadingText class="text-center">
         {{ t('title', { appName: data.applicationDisplayName }) }}
-      </Heading>
-      <Heading level="h2" class="text-center">
+      </HeadingText>
+      <HeadingText level="h2" class="text-center">
         {{ t('subTitle') }}
-      </Heading>
+      </HeadingText>
       <p class="text-center">
         {{ t('explanationText') }}
       </p>
@@ -120,7 +119,7 @@ const resetTemporaryPassword = useMutation({
         {{ loginError }}
       </p>
     </template>
-    <Input
+    <Key
         v-model="v$.newPassword.$model"
         :vuelidate="v$.newPassword"
         :label="t('newPassword')"
@@ -129,14 +128,14 @@ const resetTemporaryPassword = useMutation({
         autofocus
     />
     <template #footer>
-      <Button
+      <KeylineButton
           variant="special"
           size="lg"
           type="submit"
           :text="t('submit')"
       />
     </template>
-  </Form>
+  </KeylineForm>
 </template>
 
 <style scoped>

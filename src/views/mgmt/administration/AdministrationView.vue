@@ -2,12 +2,12 @@
 
 import PageLayout from "../../../components/PageLayout.vue";
 import PageHeader from "../../../components/PageHeader.vue";
-import Tabs from "../../../components/tabs/Tabs.vue";
-import Tab from "../../../components/tabs/Tab.vue";
 import GeneralTab from "./GeneralTab.vue";
 import ModelMetadata from "../../../components/ModelMetadata.vue";
 import {useRoute} from "vue-router";
 import {useGetVirtualServerQuery} from "../../../api/virtualServers.js";
+import TabLayout from "../../../components/tabs/TabLayout.vue";
+import TabPage from "../../../components/tabs/TabPage.vue";
 
 const route = useRoute()
 
@@ -26,17 +26,17 @@ const { data } = useGetVirtualServerQuery(
       />
     </template>
 
-    <Tabs>
-      <Tab title="General">
+    <TabLayout>
+      <TabPage title="General">
         <GeneralTab/>
-      </Tab>
-      <Tab title="Email">
+      </TabPage>
+      <TabPage title="Email">
         TODO: email tab
-      </Tab>
-      <Tab title="Templates">
+      </TabPage>
+      <TabPage title="Templates">
         TODO: templates tab
-      </Tab>
-    </Tabs>
+      </TabPage>
+    </TabLayout>
 
     <template #footer>
       <ModelMetadata :model="data"/>

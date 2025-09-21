@@ -50,25 +50,29 @@ const pagesAfter = computed(() => {
         class="h-4 w-4"
     />
 
-    <PaginationButton
-        v-if="pagesBefore > 0"
-        v-for="i in pagesBefore"
-        @click="emit('pageChange', page - (pagesBefore - i + 1))"
-    >
-      {{ page - (pagesBefore - i + 1) }}
-    </PaginationButton>
+    <template v-if="pagesBefore > 0">
+      <PaginationButton
+          v-for="i in pagesBefore"
+          :key="i"
+          @click="emit('pageChange', page - (pagesBefore - i + 1))"
+      >
+        {{ page - (pagesBefore - i + 1) }}
+      </PaginationButton>
+    </template>
     <PaginationButton
       class="bg-slate-50 text-slate-900"
     >
       {{ page }}
     </PaginationButton>
-    <PaginationButton
-        v-if="pagesAfter > 0"
-        v-for="i in pagesAfter"
-        @click="emit('pageChange', page + i)"
-    >
-      {{ page + i }}
-    </PaginationButton>
+    <template v-if="pagesAfter > 0">
+      <PaginationButton
+          v-for="i in pagesAfter"
+          :key="i"
+          @click="emit('pageChange', page + i)"
+      >
+        {{ page + i }}
+      </PaginationButton>
+    </template>
 
     <Ellipsis
         v-if="page + 2 < totalPages"

@@ -1,12 +1,11 @@
 <script setup>
 
-import Form from "../Form.vue";
-import Heading from "../Heading.vue";
 import {useI18n} from "vue-i18n";
-import Button from "../Button.vue";
 import {ref} from "vue";
 import {useMutation} from "@tanstack/vue-query";
-import Input from "../Input.vue";
+import HeadingText from "../HeadingText.vue";
+import KeylineButton from "../KeylineButton.vue";
+import KeylineForm from "../KeylineForm.vue";
 
 
 const { t } = useI18n({
@@ -130,19 +129,19 @@ const resendVerificationMail = useMutation({
 </script>
 
 <template>
-  <Form
+  <KeylineForm
       :title="t('submit')"
       :submit-text="t('submit')"
       @submit="onFormSubmit"
       :vuelidate="v$"
   >
     <template #header>
-      <Heading class="text-center">
+      <HeadingText class="text-center">
         {{ t('title', { appName: data.applicationDisplayName }) }}
-      </Heading>
-      <Heading level="h2" class="text-center">
+      </HeadingText>
+      <HeadingText level="h2" class="text-center">
         {{ t('subTitle') }}
-      </Heading>
+      </HeadingText>
       <p class="text-center">
         {{ t('explanationText') }}
       </p>
@@ -151,20 +150,20 @@ const resendVerificationMail = useMutation({
       </p>
     </template>
     <template #footer>
-      <Button
+      <KeylineButton
           variant="special"
           size="lg"
           type="submit"
           :text="t('submit')"
           autofocus
       />
-      <Button
+      <KeylineButton
           variant="link"
           :text="t('resendVerificationEmail')"
           @click="onResendVerificationMail"
       />
     </template>
-  </Form>
+  </KeylineForm>
 </template>
 
 <style scoped>

@@ -1,24 +1,24 @@
 <script setup>
 
-import Skeleton from "../../../components/Skeleton.vue";
+import LoadingSkeleton from "../../../components/LoadingSkeleton.vue";
 import Heading from "../../../components/Heading.vue";
 import Button from "../../../components/Button.vue";
-import Avatar from "../../../components/Avatar.vue";
 import DataLayoutItem from "../../../components/dataLayout/DataLayoutItem.vue";
 import VerifiedBadge from "../../../components/VerifiedBadge.vue";
-import Box from "../../../components/Box.vue";
 import DataLayout from "../../../components/dataLayout/DataLayout.vue";
 import {reactive, ref, watch} from "vue";
 import {useUserManager} from "../../../composables/userManager.js";
 import {useUserMutation, useGetUserQuery} from "../../../api/user.js";
 import {useRoute} from "vue-router";
-import Modal from "../../../components/Modal.vue";
 import Input from "../../../components/Input.vue";
 import Form from "../../../components/Form.vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import {useToast} from "../../../composables/toast.js";
 import {useI18n} from "vue-i18n";
+import UserAvatar from "../../../components/UserAvatar.vue";
+import BoxContainer from "../../../components/BoxContainer.vue";
+import ModalPopup from "../../../components/ModalPopup.vue";
 
 const { t } = useI18n({
   messages: {
@@ -55,7 +55,7 @@ const userInfoModal = ref(null)
 const route = useRoute()
 const userManager = useUserManager(route.params.vsName)
 
-const { isPending, isError, data, error } = useGetUserQuery(
+const { isPending, isError, data } = useGetUserQuery(
     route.params.vsName,
     (await userManager.getUser()).profile.sub,
 )
@@ -105,7 +105,7 @@ const onFormSubmit = async () => {
 </script>
 
 <template>
-  <Modal ref="userInfoModal">
+  <ModalPopup ref="userInfoModal">
     <Form :title="t('editPersonalInfo')"
           v-if="!isPending && !isError && data"
           @submit="onFormSubmit"
@@ -117,25 +117,25 @@ const onFormSubmit = async () => {
              required
       />
     </Form>
-  </Modal>
+  </ModalPopup>
 
-  <Box>
+  <BoxContainer>
     <div class="flex flex-row items-center gap-4">
-      <Skeleton :dep="data" class="w-12 h-12">
-        <Avatar :username="data.displayName"/>
-      </Skeleton>
+      <LoadingSkeleton :dep="data" class="w-12 h-12">
+        <UserAvatar :username="data.displayName"/>
+      </LoadingSkeleton>
       <div class="flex flex-col gap-1">
-        <Skeleton :dep="data" class="w-42 h-5">
+        <LoadingSkeleton :dep="data" class="w-42 h-5">
           <Heading level="h3">{{ data.displayName }}</Heading>
-        </Skeleton>
-        <Skeleton :dep="data" class="w-32 h-4">
+        </LoadingSkeleton>
+        <LoadingSkeleton :dep="data" class="w-32 h-4">
           <span class="text-sm text-gray-500">@{{ data.username }}</span>
-        </Skeleton>
+        </LoadingSkeleton>
       </div>
     </div>
-  </Box>
+  </BoxContainer>
 
-  <Box>
+  <BoxContainer>
     <DataLayout :title="t('personalInfo')">
       <template #actions>
         <Button
@@ -147,19 +147,19 @@ const onFormSubmit = async () => {
       </template>
 
       <DataLayoutItem :title="t('username')">
-        <Skeleton :dep="data" class="w-32 h-4">
+        <LoadingSkeleton :dep="data" class="w-32 h-4">
           {{data.username}}
-        </Skeleton>
+        </LoadingSkeleton>
       </DataLayoutItem>
       <DataLayoutItem :title="t('displayName')">
-        <Skeleton :dep="data" class="w-32 h-4">
+        <LoadingSkeleton :dep="data" class="w-32 h-4">
           {{data.displayName}}
-        </Skeleton>
+        </LoadingSkeleton>
       </DataLayoutItem>
     </DataLayout>
-  </Box>
+  </BoxContainer>
 
-  <Box>
+  <BoxContainer>
     <DataLayout :title="t('emailAddresses')">
       <template #actions>
         <Button
@@ -171,7 +171,7 @@ const onFormSubmit = async () => {
       </template>
 
       <DataLayoutItem :title="t('primaryEmail')">
-        <Skeleton :dep="data" class="w-32 h-4">
+        <LoadingSkeleton :dep="data" class="w-32 h-4">
             <span class="text-sm">
               {{data.primaryEmail}}
             </span>
@@ -180,10 +180,10 @@ const onFormSubmit = async () => {
               :anti-tooltip="t('emailNotVerified')"
               :verified="data.emailVerified"
           />
-        </Skeleton>
+        </LoadingSkeleton>
       </DataLayoutItem>
     </DataLayout>
-  </Box>
+  </BoxContainer>
 </template>
 
 <style scoped>

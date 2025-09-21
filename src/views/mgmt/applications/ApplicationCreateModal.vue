@@ -2,7 +2,6 @@
 
 import Form from "../../../components/Form.vue";
 import RadioButton from "../../../components/radio/RadioButton.vue";
-import Modal from "../../../components/Modal.vue";
 import ListInput from "../../../components/ListInput.vue";
 import FormGroup from "../../../components/FormGroup.vue";
 import RadioButtonGroup from "../../../components/radio/RadioButtonGroup.vue";
@@ -16,6 +15,7 @@ import {useToast} from "../../../composables/toast.js";
 import Heading from "../../../components/Heading.vue";
 import Button from "../../../components/Button.vue";
 import SpecialText from "../../../components/SpecialText.vue";
+import ModalPopup from "../../../components/ModalPopup.vue";
 
 const route = useRoute()
 const toast = useToast()
@@ -83,7 +83,7 @@ defineExpose({
 </script>
 
 <template>
-  <Modal ref="addAppModal" title="Add application">
+  <ModalPopup ref="addAppModal" title="Add application">
     <Form
         title="Add application"
         @submit="createApplication"
@@ -138,7 +138,7 @@ defineExpose({
       </SpecialText>
       <Button text="I have stored the secret" @click="addAppModal.close()"/>
     </div>
-  </Modal>
+  </ModalPopup>
 </template>
 
 <style scoped>

@@ -4,18 +4,16 @@ import Form from "../components/Form.vue";
 import {useI18n} from "vue-i18n";
 import Heading from "../components/Heading.vue";
 import Button from "../components/Button.vue";
-import {markRaw, reactive, ref} from "vue";
+import {reactive, ref} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import Input from "../components/Input.vue";
 import {useRoute} from "vue-router";
-import {useMutation, useQuery, useQueryClient} from "@tanstack/vue-query";
-import Spinner from "../components/Spinner.vue";
+import {useMutation, useQuery} from "@tanstack/vue-query";
 
 const route = useRoute()
-const queryClient = useQueryClient()
 
-const { isPending, isError, isFetching, data, error } = useQuery({
+const { isPending, isError, data, error } = useQuery({
   queryKey: ['virtualServersPublicInfo', route.params.virtualServer],
   queryFn: async () => await fetch(`http://127.0.0.1:8081/api/virtual-servers/${route.params.virtualServer}/public-info`).then(
       (response) => response.json(),
@@ -122,7 +120,7 @@ const onFormSubmit = async () => {
 
 <template>
   <div v-if="isPending" class="flex flex-row justify-center items-center">
-    <Spinner/>
+    <LoadingSpinner/>
   </div>
   <div v-else-if="isError">
     {{ t('anErrorHappened') }}

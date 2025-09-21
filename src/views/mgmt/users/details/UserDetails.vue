@@ -2,15 +2,15 @@
 
 import PageLayout from "../../../../components/PageLayout.vue";
 import PageHeader from "../../../../components/PageHeader.vue";
-import Tabs from "../../../../components/tabs/Tabs.vue";
-import Tab from "../../../../components/tabs/Tab.vue";
 import ModelMetadata from "../../../../components/ModelMetadata.vue";
 import {useRoute} from "vue-router";
 import {useGetUserQuery} from "../../../../api/user.js";
+import TabLayout from "../../../../components/tabs/TabLayout.vue";
+import TabPage from "../../../../components/tabs/TabPage.vue";
 
 const route = useRoute()
 
-const { isPending, isError, data, error } = useGetUserQuery(
+const {data } = useGetUserQuery(
     route.params.vsName,
     route.params.userId,
 )
@@ -25,11 +25,11 @@ const { isPending, isError, data, error } = useGetUserQuery(
       />
     </template>
 
-    <Tabs>
-      <Tab title="General">
+    <TabLayout>
+      <TabPage title="General">
         TODO: general tab
-      </Tab>
-    </Tabs>
+      </TabPage>
+    </TabLayout>
 
     <template #footer>
       <ModelMetadata

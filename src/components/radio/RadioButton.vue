@@ -1,6 +1,6 @@
 <script setup>
 
-import {inject, onMounted, ref, useId} from "vue";
+import {inject, onMounted, useId} from "vue";
 
 const id = useId()
 
@@ -33,7 +33,7 @@ onMounted(() => {
 </script>
 
 <template>
-
+  <slot/>
 </template>
 
 <style scoped>

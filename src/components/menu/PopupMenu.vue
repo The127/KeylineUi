@@ -1,9 +1,9 @@
 <script setup>
 
 import {computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch, provide} from "vue";
-import Button from "../Button.vue";
 import {computePosition, flip, offset, shift} from "@floating-ui/dom";
 import {useRoute} from "vue-router";
+import KeylineButton from "../KeylineButton.vue";
 
 const id = useId()
 const route = useRoute()
@@ -157,7 +157,7 @@ onBeforeUnmount(() => window.removeEventListener("click", handleClickOutside));
           name="activator-content"
           :attrs="activatorAttrs"
       >
-        <Button
+        <KeylineButton
             text="Open"
             v-bind="activatorAttrs"
         />

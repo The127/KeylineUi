@@ -1,8 +1,6 @@
 <script setup>
 
-import {useListApplicationQuery} from "../../../api/applications.js";
 import DataTableCell from "../../../components/dataTable/DataTableCell.vue";
-import Button from "../../../components/Button.vue";
 import PageLayout from "../../../components/PageLayout.vue";
 import PageHeader from "../../../components/PageHeader.vue";
 import DataTable from "../../../components/dataTable/DataTable.vue";

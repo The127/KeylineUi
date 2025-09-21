@@ -5,7 +5,7 @@ const routes = [
     {
         path: '/debug',
         name: 'debug',
-        component:  () => import('../views/Debug.vue'),
+        component:  () => import('../views/DebugView.vue'),
     },
     {
         path: '/debugRedirectTarget',
@@ -15,7 +15,7 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component:  () => import('../views/Login.vue'),
+        component:  () => import('../views/LoginView.vue'),
         meta: {
             layout: "login-layout",
         },
@@ -47,7 +47,7 @@ const routes = [
     {
         path: "/mgmt/:vsName",
         name: 'mgmt',
-        component: () => import('../views/mgmt/Management.vue'),
+        component: () => import('../views/mgmt/ManagementBaseView.vue'),
         meta: {
             layout: "main-layout",
             requiresAuth: true,
@@ -77,7 +77,7 @@ const routes = [
             {
                 path: '',
                 name: 'mgmt-dashboard',
-                component: () => import('../views/mgmt/Dashboard.vue'),
+                component: () => import('../views/mgmt/DashboardView.vue'),
             },
             {
                 path: 'applications',
@@ -89,7 +89,7 @@ const routes = [
                     {
                         path: '',
                         name: 'mgmt-applications',
-                        component: () => import('../views/mgmt/applications/Applications.vue'),
+                        component: () => import('../views/mgmt/applications/ApplicationsOverview.vue'),
                     },
                     {
                         path: 'applications/:appId',
@@ -111,7 +111,7 @@ const routes = [
                     {
                         path: '',
                         name: 'mgmt-admin',
-                        component: () => import('../views/mgmt/administration/Administration.vue'),
+                        component: () => import('../views/mgmt/administration/AdministrationView.vue'),
                     },
                 ],
             },
@@ -125,7 +125,7 @@ const routes = [
                   {
                       path: '',
                       name: 'mgmt-roles',
-                      component: () => import('../views/mgmt/roles/Roles.vue'),
+                      component: () => import('../views/mgmt/roles/RolesOverview.vue'),
                   },
                   {
                       path: 'roles/:roleId',
@@ -147,7 +147,7 @@ const routes = [
                     {
                         path: '',
                         name: 'mgmt-groups',
-                        component: () => import('../views/mgmt/groups/Groups.vue'),
+                        component: () => import('../views/mgmt/groups/GroupsOverview.vue'),
                     }
                 ]
             },
@@ -161,7 +161,7 @@ const routes = [
                     {
                         path: '',
                         name: 'mgmt-users',
-                        component: () => import('../views/mgmt/users/Users.vue'),
+                        component: () => import('../views/mgmt/users/UsersOverview.vue'),
                     },
                     {
                         path: 'users/:userId',
@@ -176,7 +176,7 @@ const routes = [
             {
                 path: 'profile',
                 name: 'mgmt-profile',
-                component: () => import('../views/mgmt/profile/Profile.vue'),
+                component: () => import('../views/mgmt/profile/ProfileView.vue'),
                 meta: {
                     breadcrumbFn: async () => "Profile",
                 },
