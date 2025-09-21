@@ -2,6 +2,7 @@
 
 import Button from "../components/Button.vue";
 import {useToast} from "../composables/toast.js";
+import {ref} from "vue";
 
 const toast = useToast()
 
@@ -9,9 +10,14 @@ const demoButton = () => {
   toast.success("Hello World")
 }
 
+const VITE_API_URL = ref(window.__ENV__?.VITE_API_URL || 'default')
+
 </script>
 
 <template>
+  <p>
+    {{ VITE_API_URL }}
+  </p>
   <div class="flex flex-row gap-3">
     <div class="flex flex-col gap-3 w-64 p-3">
       <Button variant="primary" size="lg" text="Start Login Flow" @click="demoButton"/>
