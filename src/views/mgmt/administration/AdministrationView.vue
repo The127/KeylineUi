@@ -8,6 +8,7 @@ import {useRoute} from "vue-router";
 import {useGetVirtualServerQuery} from "../../../api/virtualServers.js";
 import TabLayout from "../../../components/tabs/TabLayout.vue";
 import TabPage from "../../../components/tabs/TabPage.vue";
+import TemplatesTab from "./TemplatesTab.vue";
 
 const route = useRoute()
 
@@ -34,7 +35,7 @@ const { data } = useGetVirtualServerQuery(
         TODO: email tab
       </TabPage>
       <TabPage title="Templates">
-        TODO: templates tab
+        <TemplatesTab/>
       </TabPage>
     </TabLayout>
 

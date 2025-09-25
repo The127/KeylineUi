@@ -36,10 +36,7 @@ const navigateToRoleDetails = (role) => {
       enable-search
       autofocus
       title="Roles"
-      :query-fn="(pagination) => {
-        console.log('trying')
-        return useListRolesQuery(route.params.vsName, pagination)
-      }"
+      :query-fn="(pagination) => useListRolesQuery(route.params.vsName, pagination)"
       :on-click="navigateToRoleDetails"
     >
       <template #columns>
