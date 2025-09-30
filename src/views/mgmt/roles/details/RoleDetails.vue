@@ -31,8 +31,8 @@ const { data } = useGetRoleQuery(
       <TabPage title="General">
         <GeneralTab :data="data"/>
       </TabPage>
-      <TabPage title="Security">
-        TODO: security tab
+      <TabPage title="Users">
+        TODO: user tab
       </TabPage>
     </TabLayout>
 
