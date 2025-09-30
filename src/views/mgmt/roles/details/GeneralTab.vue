@@ -21,11 +21,16 @@ defineProps({
           {{ data.name }}
         </LoadingSkeleton>
       </DataLayoutItem>
-      <DataLayoutItem title="Description">
+      <DataLayoutItem title="Description"  full-row>
         <LoadingSkeleton :dep="data" class="w-24 h-4">
           {{ data.description }}
         </LoadingSkeleton>
       </DataLayoutItem>
+    </DataLayout>
+  </BoxContainer>
+
+  <BoxContainer>
+    <DataLayout title="Security">
       <DataLayoutItem title="Require MFA">
         <LoadingSkeleton :dep="data" class="w-24 h-4">
           {{ data.requireMfa }}
