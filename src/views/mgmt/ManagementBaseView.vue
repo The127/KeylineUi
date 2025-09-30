@@ -11,6 +11,7 @@ import {ConfigApiUrl} from "../../config.js";
 import PopupMenu from "../../components/menu/PopupMenu.vue";
 import UserAvatar from "../../components/UserAvatar.vue";
 import BreadcrumbNavigation from "../../components/BreadcrumbNavigation.vue";
+import SideMenu from "../../components/sideMenu/SideMenu.vue";
 
 const route = useRoute()
 const mgr = useUserManager(route.params.vsName)
@@ -30,35 +31,8 @@ const onLogout = async () => {
 
 <template>
   <div class="flex flex-row">
-    <div class="w-64 bg-slate-200 p-5">
-      <ol class="list-none">
-        <li>
-          <RouterLink :to="{name: 'mgmt-admin'}">
-            Administration
-          </RouterLink>
-        </li>
-        <li>
-          <RouterLink :to="{name: 'mgmt-applications'}">
-            Applications
-          </RouterLink>
-        </li>
-        <li>
-          <RouterLink :to="{name: 'mgmt-roles'}">
-            Roles
-          </RouterLink>
-        </li>
-        <li>
-          <RouterLink :to="{name: 'mgmt-groups'}">
-            Groups
-          </RouterLink>
-        </li>
-        <li>
-          <RouterLink :to="{name: 'mgmt-users'}">
-            Users
-          </RouterLink>
-        </li>
-      </ol>
-    </div>
+    <SideMenu/>
+
     <div class="flex-1">
       <div class="flex flex-col h-screen overflow-hidden">
         <div class="flex flex-row gap-3 justify-between bg-emerald-600 p-5 shadow-xl">
