@@ -7,6 +7,7 @@ import PageHeader from "../../../../components/PageHeader.vue";
 import ModelMetadata from "../../../../components/ModelMetadata.vue";
 import TabLayout from "../../../../components/tabs/TabLayout.vue";
 import TabPage from "../../../../components/tabs/TabPage.vue";
+import GeneralTab from "./GeneralTab.vue";
 
 const route = useRoute()
 
@@ -28,14 +29,12 @@ const { data } = useGetRoleQuery(
 
     <TabLayout>
       <TabPage title="General">
-        TODO: general tab
+        <GeneralTab :data="data"/>
       </TabPage>
       <TabPage title="Security">
         TODO: security tab
       </TabPage>
     </TabLayout>
-
-    {{ data }}
 
     <template #footer>
       <ModelMetadata
