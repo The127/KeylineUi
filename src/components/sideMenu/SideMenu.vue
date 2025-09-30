@@ -1,36 +1,17 @@
 <script setup>
 
+import SideMenuItem from "./SideMenuItem.vue";
 </script>
 
 <template>
 
   <div class="w-64 bg-slate-200 p-5">
     <ol class="list-none">
-      <li>
-        <RouterLink :to="{name: 'mgmt-admin'}">
-          Administration
-        </RouterLink>
-      </li>
-      <li>
-        <RouterLink :to="{name: 'mgmt-applications'}">
-          Applications
-        </RouterLink>
-      </li>
-      <li>
-        <RouterLink :to="{name: 'mgmt-roles'}">
-          Roles
-        </RouterLink>
-      </li>
-      <li>
-        <RouterLink :to="{name: 'mgmt-groups'}">
-          Groups
-        </RouterLink>
-      </li>
-      <li>
-        <RouterLink :to="{name: 'mgmt-users'}">
-          Users
-        </RouterLink>
-      </li>
+      <SideMenuItem :to="{name: 'mgmt-admin'}" text="Administration"/>
+      <SideMenuItem :to="{name: 'mgmt-applications'}" text="Applications"/>
+      <SideMenuItem :to="{name: 'mgmt-roles'}" text="Roles"/>
+      <SideMenuItem :to="{name: 'mgmt-groups'}" text="Groups"/>
+      <SideMenuItem :to="{name: 'mgmt-users'}" text="Users"/>
     </ol>
   </div>
 </template>
