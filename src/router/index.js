@@ -113,6 +113,14 @@ const routes = [
                         name: 'mgmt-admin',
                         component: () => import('../views/mgmt/administration/AdministrationView.vue'),
                     },
+                    {
+                        path: 'templates/:templateType',
+                        name: 'mgmt-template-details',
+                        component: () => import('../views/mgmt/administration/templates/TemplateDetail.vue'),
+                        meta: {
+                            breadcrumbFn: async () => "Details",
+                        },
+                    },
                 ],
             },
             {
