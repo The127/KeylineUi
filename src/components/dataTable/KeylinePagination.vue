@@ -45,10 +45,15 @@ const pagesAfter = computed(() => {
     >
       <ChevronLeft class="h-4 w-4"/>
     </PaginationButton>
-    <Ellipsis
+
+    <PaginationButton
         v-if="page > 3"
-        class="h-4 w-4"
-    />
+        :disabled="true"
+    >
+      <Ellipsis
+          class="h-4 w-4"
+      />
+    </PaginationButton>
 
     <template v-if="pagesBefore > 0">
       <PaginationButton
@@ -74,10 +79,15 @@ const pagesAfter = computed(() => {
       </PaginationButton>
     </template>
 
-    <Ellipsis
+    <PaginationButton
         v-if="page + 2 < totalPages"
-        class="h-4 w-4"
-    />
+        :disabled="true"
+    >
+      <Ellipsis
+          class="h-4 w-4"
+      />
+    </PaginationButton>
+
     <PaginationButton
         :disabled="page === totalPages"
         @click="emit('pageChange', page + 1)"
