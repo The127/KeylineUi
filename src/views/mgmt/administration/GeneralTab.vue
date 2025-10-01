@@ -42,6 +42,26 @@ defineProps({
           />
         </LoadingSkeleton>
       </DataLayoutItem>
+      <DataLayoutItem title="Require 2FA">
+        <LoadingSkeleton :dep="data" class="w-32 Self Registrationh-4">
+          {{ data.require2Fa ? 'Required' : 'Not required' }}
+          <VerifiedBadge
+              anti-tooltip="not required"
+              tooltip="required"
+              :verified="data.require2Fa"
+          />
+        </LoadingSkeleton>
+      </DataLayoutItem>
+      <DataLayoutItem title="Require Email Verification">
+        <LoadingSkeleton :dep="data" class="w-32 h-4">
+          {{ data.requireEmailVerfication ? 'Required' : 'Not required' }}
+          <VerifiedBadge
+              anti-tooltip="not required"
+              tooltip="required"
+              :verified="data.requireEmailVerfication"
+          />
+        </LoadingSkeleton>
+      </DataLayoutItem>
     </DataLayout>
   </BoxContainer>
 </template>
