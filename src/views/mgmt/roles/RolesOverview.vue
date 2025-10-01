@@ -33,11 +33,12 @@ const navigateToRoleDetails = (role) => {
     </template>
 
     <DataTable
-      enable-search
-      autofocus
-      title="Roles"
-      :query-fn="(pagination) => useListRolesQuery(route.params.vsName, pagination)"
-      :on-click="navigateToRoleDetails"
+        table-key="01K6G57GGR791SM57P28R8SAYG"
+        enable-search
+        autofocus
+        title="Roles"
+        :query-fn="(pagination) => useListRolesQuery(route.params.vsName, pagination)"
+        :on-click="navigateToRoleDetails"
     >
       <template #columns>
         <DataTableColumn title="Name" field="name" enable-order/>

@@ -34,6 +34,7 @@ const onNavigateToUserDetails = async (user) => {
     </template>
 
     <DataTable
+        table-key="01K6G5KSWMEC0ANZQ83CA8T6W1"
         enable-search
         autofocus
         title="Users"
