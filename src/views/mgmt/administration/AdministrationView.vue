@@ -29,7 +29,7 @@ const { data } = useGetVirtualServerQuery(
 
     <TabLayout>
       <TabPage title="General">
-        <GeneralTab/>
+        <GeneralTab :data="data"/>
       </TabPage>
       <TabPage title="Email">
         TODO: email tab

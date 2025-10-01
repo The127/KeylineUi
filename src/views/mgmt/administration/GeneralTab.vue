@@ -1,18 +1,16 @@
 <script setup>
 
-import {useGetVirtualServerQuery} from "../../../api/virtualServers.js";
-import {useRoute} from "vue-router";
 import DataLayout from "../../../components/dataLayout/DataLayout.vue";
 import DataLayoutItem from "../../../components/dataLayout/DataLayoutItem.vue";
 import VerifiedBadge from "../../../components/VerifiedBadge.vue";
 import LoadingSkeleton from "../../../components/LoadingSkeleton.vue";
 import BoxContainer from "../../../components/BoxContainer.vue";
 
-const route = useRoute()
-
-const { data } = useGetVirtualServerQuery(
-    route.params.vsName,
-)
+defineProps({
+  data: {
+    required: true,
+  },
+})
 
 </script>
 
