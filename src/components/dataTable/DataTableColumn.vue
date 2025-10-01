@@ -1,6 +1,6 @@
 <script setup>
 
-import {inject, onMounted, ref} from "vue";
+import {inject, nextTick, onMounted, ref} from "vue";
 import {ChevronUp, ChevronDown, Minus} from "lucide-vue-next";
 
 const props = defineProps({
@@ -26,19 +26,23 @@ const direction = ref(null)
 
 const tableManager = inject('tableManager')
 
-onMounted(() => {
+onMounted(async () => {
   tableManager.register({
     field: props.field,
     title: props.title,
     resetOrder: () => {
       direction.value = null
     },
+    setOrder: (dir) => {
+      direction.value = dir
+    },
+    setInitialOrder: () => {
+      if (props.initialOrder && props.enableOrder) {
+        direction.value = props.initialOrder
+        tableManager.orderBy(props.field, props.initialOrder, true)
+      }
+    },
   })
-
-  if (props.initialOrder && props.enableOrder) {
-    direction.value = props.initialOrder
-    tableManager.orderBy(props.field, props.initialOrder)
-  }
 })
 
 const toggleOrder = () => {

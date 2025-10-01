@@ -1,16 +1,21 @@
 <script setup>
 
-import {provide, ref} from "vue";
+import {nextTick, onMounted, provide, ref, watch} from "vue";
 import LoadingSkeleton from "../LoadingSkeleton.vue";
 import PageSizeSelector from "./PageSizeSelector.vue";
 import KeylineInput from "../KeylineInput.vue";
 import HeadingText from "../HeadingText.vue";
 import BoxContainer from "../BoxContainer.vue";
 import KeylinePagination from "./KeylinePagination.vue";
+import {useTableState} from "../../composables/tableState.js";
 
 const props = defineProps({
   queryFn: {
     required: true,
+  },
+  tableKey: {
+    type: String,
+    default: null,
   },
   idSelector: {
     type: Function,
@@ -43,6 +48,49 @@ const orderBy = ref(null)
 const orderDirection = ref(null)
 const search = ref('')
 
+const tableState = useTableState(props.tableKey, {
+  page: 1,
+  pageSize: 10,
+  orderBy: null,
+  orderDirection: null,
+  search: '',
+})
+
+const doOrder = (field, direction, initial) => {
+  if (initial) {
+    if (tableState.value.orderBy) {
+      return
+    }
+  }
+
+  orderBy.value = field
+  orderDirection.value = direction
+  page.value = 1
+
+  for (let i = 0; i < columns.value.length; i++) {
+    if (columns.value[i].field !== field) {
+      columns.value[i].resetOrder()
+    }
+  }
+}
+
+onMounted(async () => {
+  page.value = tableState.value.page
+  pageSize.value = tableState.value.pageSize
+  search.value = tableState.value.search
+  orderBy.value = tableState.value.orderBy
+  orderDirection.value = tableState.value.orderDirection
+
+  await nextTick()
+  if (orderBy.value) {
+    doOrder(orderBy.value, orderDirection.value, false)
+  } else {
+    for (let i = 0; i < columns.value.length; i++) {
+      columns.value[i].setInitialOrder()
+    }
+  }
+})
+
 const {data, isPending, isFetching, } = props.queryFn({
   page: page,
   pageSize: pageSize,
@@ -63,18 +111,12 @@ provide('tableManager', {
     }
 
     columns.value.push(column)
-  },
-  orderBy: (field, direction) => {
-    orderBy.value = field
-    orderDirection.value = direction
-    page.value = 1
 
-    for (let i = 0; i < columns.value.length; i++) {
-      if (columns.value[i].field !== field) {
-        columns.value[i].resetOrder()
-      }
+    if(column.field === tableState.value.orderBy){
+      column.setOrder(tableState.value.orderDirection)
     }
   },
+  orderBy: doOrder,
 })
 
 function getSkeletonWidth(rowIndex, cellIndex) {
@@ -85,6 +127,14 @@ function getSkeletonWidth(rowIndex, cellIndex) {
   const width = min + (seed % (max - min))
   return width + '%'
 }
+
+watch([page, pageSize, orderBy, orderDirection, search], () => {
+  tableState.value.pageSize = pageSize.value
+  tableState.value.orderBy = orderBy.value
+  tableState.value.orderDirection = orderDirection.value
+  tableState.value.search = search.value
+  tableState.value.page = page.value
+})
 
 </script>
 
