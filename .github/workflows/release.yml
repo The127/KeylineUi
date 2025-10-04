@@ -1,0 +1,28 @@
+name: Build & Publish Container
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repo
+      - uses: actions/checkout@v3
+
+      # 2. Log in to GHCR
+      - uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }}
+
+      # 3. Build the container image
+      - run: |
+          docker build -f Containerfile -t ghcr.io/the127/keyline-ui:${{ github.ref_name }} .
+
+      # 4. Push the container image
+      - run: |
+          docker push ghcr.io/the127/keyline-ui:${{ github.ref_name }}
