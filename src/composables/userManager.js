@@ -5,7 +5,7 @@ let mgr = null;
 
 export function useUserManager(virtualServer = null) {
     const oidcBaseUrl = ConfigApiUrl()
-    const adminUiBaseUrl = "http://localhost:5173"
+    const adminUiBaseUrl = ConfigHost()
 
     if (!virtualServer) {
         console.error("Can only use `useUserManager` inside a route with a `virtualServer` meta property.")
