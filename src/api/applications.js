@@ -1,5 +1,6 @@
 import {apiFetch, applyQueryOps} from "./index.js";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/vue-query";
+import {ConfigApiUrl} from "../config.js";
 
 export const useListApplicationQuery = (vsName, queryOps) => useQuery({
     queryKey: ['applications', vsName, queryOps],
@@ -8,7 +9,7 @@ export const useListApplicationQuery = (vsName, queryOps) => useQuery({
 
 export const listApplicationQueryFn = async (vsName, queryOps) => {
     const url = new URL(
-        `http://127.0.0.1:8081/api/virtual-servers/${vsName}/applications`
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/applications`
     )
 
     applyQueryOps(url, queryOps)
@@ -23,7 +24,7 @@ export const useGetApplicationQuery = (vsName, applicationId) => useQuery({
 
 export const getApplicationQueryFn = async (vsName, applicationId) => {
     return await apiFetch(
-        `http://127.0.0.1:8081/api/virtual-servers/${vsName}/applications/${applicationId}`
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/applications/${applicationId}`
     )
 }
 
@@ -39,7 +40,7 @@ export const useCreateApplicationMutation = (vsName) => {
 
 export const createApplicationMutation = async (vsName, data) => {
     return await apiFetch(
-        `http://127.0.0.1:8081/api/virtual-servers/${vsName}/applications`,
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/applications`,
     {
             method: 'POST',
             body: JSON.stringify(data),

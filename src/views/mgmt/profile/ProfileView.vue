@@ -13,6 +13,7 @@ import GeneralTab from "./GeneralTab.vue";
 import TabLayout from "../../../components/tabs/TabLayout.vue";
 import TabPage from "../../../components/tabs/TabPage.vue";
 import BoxContainer from "../../../components/BoxContainer.vue";
+import {ConfigApiUrl} from "../../../config.js";
 
 const route = useRoute()
 const userManager = useUserManager(route.params.vsName)
@@ -21,7 +22,7 @@ const { data } = useQuery({
   queryKey: ['profile'],
   queryFn: async () => {
     const user = await userManager.getUser()
-    const response = await fetch(`http://127.0.0.1:8081/api/virtual-servers/${route.params.vsName}/users/${user.profile.sub}`)
+    const response = await fetch(ConfigApiUrl() + `/api/virtual-servers/${route.params.vsName}/users/${user.profile.sub}`)
     return response.json()
   }
 })
