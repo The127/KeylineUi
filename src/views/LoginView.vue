@@ -7,6 +7,7 @@ import EmailVerification from "../components/login/EmailVerification.vue";
 import TemporaryPasswordReset from "../components/login/TemporaryPasswordReset.vue";
 import {useI18n} from "vue-i18n";
 import LoadingSpinner from "../components/LoadingSpinner.vue";
+import {ConfigApiUrl} from "../config.js";
 
 const { t } = useI18n({
   messages: {
@@ -34,7 +35,7 @@ class AuthError extends Error {}
 const { isPending, isError, data, error } = useQuery({
   queryKey: ['login', route.query.token],
   queryFn: async () => {
-    const response = await fetch(`http://127.0.0.1:8081/logins/${route.query.token}`)
+    const response = await fetch(`${ConfigApiUrl()}/logins/${route.query.token}`)
 
     if (response.status === 401) {
       throw new AuthError()
@@ -56,7 +57,7 @@ const finishLogin = () => {
   const form = document.createElement('form');
 
   form.method = 'POST';
-  form.action = `http://127.0.0.1:8081/logins/${route.query.token}/finish-login`;
+  form.action = `${ConfigApiUrl()}/logins/${route.query.token}/finish-login`;
   form.style = 'display: none';
 
   const tokenInput = document.createElement('input');

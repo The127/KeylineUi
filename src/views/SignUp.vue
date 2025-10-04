@@ -16,7 +16,7 @@ const route = useRoute()
 
 const { isPending, isError, data, error } = useQuery({
   queryKey: ['virtualServersPublicInfo', route.params.virtualServer],
-  queryFn: async () => await fetch(`http://127.0.0.1:8081/api/virtual-servers/${route.params.virtualServer}/public-info`).then(
+  queryFn: async () => await fetch(`${ConfigApiUrl()}/api/virtual-servers/${route.params.virtualServer}/public-info`).then(
       (response) => response.json(),
   ).catch((e) => {
     console.log('error', e)
@@ -24,7 +24,7 @@ const { isPending, isError, data, error } = useQuery({
 })
 
 const register = useMutation({
-  mutationFn: async (data) => await fetch(`http://127.0.0.1:8081/api/virtual-servers/${route.params.virtualServer}/users/register`,{
+  mutationFn: async (data) => await fetch(`${ConfigApiUrl()}/api/virtual-servers/${route.params.virtualServer}/users/register`,{
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
