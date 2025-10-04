@@ -8,6 +8,7 @@ import {useMutation} from "@tanstack/vue-query";
 import HeadingText from "../HeadingText.vue";
 import KeylineButton from "../KeylineButton.vue";
 import KeylineForm from "../KeylineForm.vue";
+import {ConfigApiUrl} from "../../config.js";
 
 const { t } = useI18n({
   messages: {
@@ -77,7 +78,7 @@ const onFormSubmit = async () => {
 
 const resetTemporaryPassword = useMutation({
   mutationFn: async (data) => {
-    const response = await fetch(`http://127.0.0.1:8081/logins/${props.token}/reset-temporary-password`, {
+    const response = await fetch(`${ConfigApiUrl()}/logins/${props.token}/reset-temporary-password`, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
