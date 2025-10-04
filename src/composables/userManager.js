@@ -1,5 +1,5 @@
 import {UserManager} from "oidc-client";
-import {ConfigApiUrl} from "../config.js";
+import {ConfigApiUrl, ConfigHost} from "../config.js";
 
 let mgr = null;
 
