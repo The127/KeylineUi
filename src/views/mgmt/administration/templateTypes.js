@@ -2,7 +2,7 @@ export const templateTypes = [
     {
         type: "email_verification",
         title: "Email Verification",
-        subtitle: "Send when an email verification is requested.",
+        subtitle: "Sent when an email verification is requested.",
     },
 ]
 

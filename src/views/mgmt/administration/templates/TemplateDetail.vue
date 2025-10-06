@@ -22,6 +22,7 @@ const {data} = useGetTemplateQuery(
     <template #header>
       <PageHeader
           :title="getTemplateInfo(route.params.templateType).title"
+          :subtitle="getTemplateInfo(route.params.templateType).subtitle"
       />
     </template>
 
