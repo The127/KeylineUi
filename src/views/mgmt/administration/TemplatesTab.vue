@@ -3,16 +3,9 @@
 import {useRoute} from "vue-router";
 import GridLayout from "../../../components/GridLayout.vue";
 import DashboardItem from "../../../components/DashboardItem.vue";
+import {templateTypes} from "./templateTypes.js";
 
 const route = useRoute()
-
-const templateTypes = [
-  {
-    type: "email_verification",
-    title: "Email Verification",
-    subtitle: "Send when an email verification is requested.",
-  },
-]
 
 </script>
 

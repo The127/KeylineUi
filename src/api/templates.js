@@ -16,3 +16,12 @@ export const listTemplatesQueryFn = async(vsName, queryOps) => {
 
     return await apiFetch(url.toString())
 }
+
+export const useGetTemplateQuery = (vsName, templateType) => useQuery({
+    queryKey: ['template', vsName, templateType],
+    queryFn: () => getTemplateQueryFn(vsName, templateType)
+})
+
+export const getTemplateQueryFn = async(vsName, templateType) => {
+    return await apiFetch(ConfigApiUrl() + `/api/virtual-servers/${vsName}/templates/${templateType}`)
+}
