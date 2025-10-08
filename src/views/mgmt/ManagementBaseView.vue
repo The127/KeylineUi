@@ -38,6 +38,7 @@ const onLogout = async () => {
         <div class="flex flex-row gap-3 justify-between bg-slate-200 border-b border-b-slate-300 p-5">
           <RouterLink :to="{name: 'mgmt-dashboard'}" class="flex flex-row gap-2 items-center">
             <KeylineIcon class="w-12 h-12 "/>
+            <span class="text-xl">Keyline</span>
           </RouterLink>
           <div>
             <KeylineInput
