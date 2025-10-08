@@ -69,6 +69,11 @@ const onDeleteApplication = () => {
                 {{ data.type === 'public' ? 'Public' : 'Confidential' }}
               </LoadingSkeleton>
             </DataLayoutItem>
+            <DataLayoutItem title="Namespace">
+              <LoadingSkeleton :dep="data" class="w-32 h-4">
+                {{ data.systemApplication ? 'System' : 'User' }}
+              </LoadingSkeleton>
+            </DataLayoutItem>
           </DataLayout>
         </BoxContainer>
 
