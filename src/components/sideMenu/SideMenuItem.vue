@@ -13,8 +13,11 @@ defineProps({
 </script>
 
 <template>
-  <RouterLink :to="to"  class="px-3 py-2 bg-slate-100 border border-slate-300" activeClass="bg-slate-300">
-    <span >
+  <RouterLink :to="to"
+              class="px-3 py-2 bg-slate-100 border border-slate-300"
+              activeClass="bg-slate-300 border-slate-400"
+  >
+    <span>
       {{ text }}
     </span>
   </RouterLink>
