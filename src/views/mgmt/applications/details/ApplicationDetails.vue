@@ -14,11 +14,12 @@ import TabLayout from "../../../../components/tabs/TabLayout.vue";
 import TabPage from "../../../../components/tabs/TabPage.vue";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton.vue";
 import BoxContainer from "../../../../components/BoxContainer.vue";
+import NoContent from "../../../../components/NoContent.vue";
 
 const route = useRoute()
 const popupService = usePopup()
 
-const { data } = useGetApplicationQuery(
+const {data} = useGetApplicationQuery(
     route.params.vsName,
     route.params.appId,
 )
@@ -75,9 +76,20 @@ const onDeleteApplication = () => {
           <DataLayout title="Redirect URIs">
             <DataLayoutItem title="Login Redirect URIs" full-row>
               <LoadingSkeleton :dep="data" class="w-32 h-4">
-                <span v-for="uri in data.redirectUris" :key="uri">
-                  {{ uri }}
-                </span>
+                <NoContent :cond="data.redirectUris.length == 0">
+                  <span v-for="uri in data.redirectUris" :key="uri">
+                    {{ uri }}
+                  </span>
+                </NoContent>
+              </LoadingSkeleton>
+            </DataLayoutItem>
+            <DataLayoutItem title="Post-Logout Redirect URIs" full-row>
+              <LoadingSkeleton :dep="data" class="w-32 h-4">
+                <NoContent :cond="data.postLogoutRedirectUris.length == 0">
+                  <span v-for="uri in data.postLogoutRedirectUris" :key="uri">
+                    {{ uri }}
+                  </span>
+                </NoContent>
               </LoadingSkeleton>
             </DataLayoutItem>
           </DataLayout>
