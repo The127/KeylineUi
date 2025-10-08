@@ -43,11 +43,11 @@ const onEditPassword = () => {
     </template>
 
     <TabLayout>
-      <TabPage title="General">
+      <TabPage title="General" name="general">
         <GeneralTab/>
       </TabPage>
 
-      <TabPage title="Security">
+      <TabPage title="Security" name="security">
         <BoxContainer>
           <DataLayout title="Password">
             <template #actions>

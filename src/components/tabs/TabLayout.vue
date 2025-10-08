@@ -1,22 +1,19 @@
 <script setup>
 
-import {ref, provide} from "vue";
+import {ref, provide, onMounted, nextTick} from "vue";
+import {useRoute} from "vue-router";
 
 const tabs = ref([])
+const route = useRoute()
 
 const register = (tab) => {
   for (let t of tabs.value) {
-    if (t.title === tab.title) {
+    if (t.name === tab.name) {
       return
     }
   }
 
   tabs.value.push(tab)
-
-  if (tabs.value.length === 1) {
-    select(tab)
-    tab.active = true
-  }
 }
 
 provide('tabManager', {
@@ -25,7 +22,7 @@ provide('tabManager', {
 
 const select = (tab) => {
   for (let t of tabs.value) {
-    if (t.title === tab.title) {
+    if (t.name === tab.name) {
       t.setActive(true)
       t.active = true
     }else{
@@ -34,6 +31,21 @@ const select = (tab) => {
     }
   }
 }
+
+onMounted(async () => {
+  await nextTick()
+
+  if (route.query.tab) {
+    for (const tab of tabs.value) {
+      if (tab.name === route.query.tab) {
+        select(tab)
+        return
+      }
+    }
+  }
+
+  select(tabs.value[0])
+})
 
 </script>
 

@@ -51,7 +51,7 @@ const onDeleteApplication = () => {
     </template>
 
     <TabLayout>
-      <TabPage title="General">
+      <TabPage title="General" name="general">
         <BoxContainer>
           <DataLayout title="Information">
             <DataLayoutItem title="Name">
@@ -96,7 +96,7 @@ const onDeleteApplication = () => {
         </BoxContainer>
       </TabPage>
 
-      <TabPage title="Roles">
+      <TabPage title="Roles" name="roles">
         TODO: role tab
       </TabPage>
     </TabLayout>

@@ -13,7 +13,7 @@ import SecurityTab from "./SecurityTab.vue";
 
 const route = useRoute()
 
-const { data } = useGetVirtualServerQuery(
+const {data} = useGetVirtualServerQuery(
     route.params.vsName,
 )
 
@@ -29,16 +29,16 @@ const { data } = useGetVirtualServerQuery(
     </template>
 
     <TabLayout>
-      <TabPage title="General">
+      <TabPage title="General" name="general">
         <GeneralTab :data="data"/>
       </TabPage>
-      <TabPage title="Email">
+      <TabPage title="Email" name="email">
         TODO: email tab
       </TabPage>
-      <TabPage title="Security">
+      <TabPage title="Security" name="security">
         <SecurityTab :data="data"/>
       </TabPage>
-      <TabPage title="Templates">
+      <TabPage title="Templates" name="templates">
         <TemplatesTab/>
       </TabPage>
     </TabLayout>

@@ -26,7 +26,7 @@ const {data } = useGetUserQuery(
     </template>
 
     <TabLayout>
-      <TabPage title="General">
+      <TabPage title="General" name="general">
         TODO: general tab
       </TabPage>
     </TabLayout>
