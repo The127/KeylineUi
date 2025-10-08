@@ -33,7 +33,7 @@ const navigateToRoleDetails = (role) => {
     </template>
 
     <DataTable
-        table-key="01K6G57GGR791SM57P28R8SAYG"
+        table-key="54d2137c-6a8b-48d7-9fe7-1481825abacd"
         enable-search
         autofocus
         title="Roles"

@@ -52,6 +52,7 @@ const onAddApplication = () => {
     </template>
 
     <DataTable
+        table-key="74f7dc16-867c-4f6a-99fd-87b772d128ae"
         enable-search
         autofocus
         title="Applications"
