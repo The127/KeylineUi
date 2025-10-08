@@ -19,7 +19,7 @@ export function useUserManager(virtualServer = null) {
             client_id: "admin-ui",
             redirect_uri: `${adminUiBaseUrl}/mgmt/${virtualServer}/auth`,
             response_type: "code",
-            scope: "oidc profile email",
+            scope: "openid profile email",
             automaticSilentRenew: true,
         })
     }
