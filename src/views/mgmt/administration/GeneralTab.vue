@@ -44,21 +44,21 @@ defineProps({
       </DataLayoutItem>
       <DataLayoutItem title="Require 2FA">
         <LoadingSkeleton :dep="data" class="w-32 Self Registrationh-4">
-          {{ data.require2Fa ? 'Required' : 'Not required' }}
+          {{ data.require2fa ? 'Required' : 'Not required' }}
           <VerifiedBadge
               anti-tooltip="not required"
               tooltip="required"
-              :verified="data.require2Fa"
+              :verified="data.require2fa"
           />
         </LoadingSkeleton>
       </DataLayoutItem>
       <DataLayoutItem title="Require Email Verification">
         <LoadingSkeleton :dep="data" class="w-32 h-4">
-          {{ data.requireEmailVerfication ? 'Required' : 'Not required' }}
+          {{ data.requireEmailVerification ? 'Required' : 'Not required' }}
           <VerifiedBadge
               anti-tooltip="not required"
               tooltip="required"
-              :verified="data.requireEmailVerfication"
+              :verified="data.requireEmailVerification"
           />
         </LoadingSkeleton>
       </DataLayoutItem>
