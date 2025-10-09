@@ -47,3 +47,23 @@ export const createApplicationMutation = async (vsName, data) => {
         }
     )
 }
+
+export const usePatchApplicationMutation = (vsName, applicationId) => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (data) => patchApplicationFn(vsName, applicationId, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['applications', applicationId])
+        }
+    })
+}
+
+export const patchApplicationFn = async (vsName, applicationId, data) => {
+    return await apiFetch(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/applications/${applicationId}`,
+        {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+        }
+    )
+}

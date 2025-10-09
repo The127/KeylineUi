@@ -15,9 +15,14 @@ import TabPage from "../../../../components/tabs/TabPage.vue";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton.vue";
 import BoxContainer from "../../../../components/BoxContainer.vue";
 import NoContent from "../../../../components/NoContent.vue";
+import InfoEditModal from "./InfoEditModal.vue";
+import {ref} from "vue";
+import KeylineButton from "../../../../components/KeylineButton.vue";
 
 const route = useRoute()
 const popupService = usePopup()
+
+const infoEditModalEl = ref(null)
 
 const {data} = useGetApplicationQuery(
     route.params.vsName,
@@ -35,9 +40,15 @@ const onDeleteApplication = () => {
   })
 }
 
+const onEditInfo = () => {
+  infoEditModalEl.value.open()
+}
+
 </script>
 
 <template>
+  <InfoEditModal v-if="data" ref="infoEditModalEl" :data="data"/>
+
   <PageLayout>
     <template #header>
       <PageHeader
@@ -54,6 +65,14 @@ const onDeleteApplication = () => {
       <TabPage title="General" name="general">
         <BoxContainer>
           <DataLayout title="Information">
+            <template #actions>
+              <KeylineButton
+                  @click="onEditInfo"
+                  text="Edit"
+                  variant="secondary"
+                  size="sm"
+              />
+            </template>
             <DataLayoutItem title="Name">
               <LoadingSkeleton :dep="data" class="w-32 h-4">
                 {{ data.name }}
