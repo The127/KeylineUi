@@ -24,7 +24,6 @@ const tabManager = inject('tabManager')
 const setActive = (value) => {
   active.value = value
   if(value) {
-    console.log("active", props.name)
     router.replace({ query: { ...route.query, tab: props.name, } })
   }
 }

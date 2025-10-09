@@ -54,7 +54,6 @@ const onFocus = () => {
 }
 
 const focus = () => {
-  console.log(el)
   el.value.focus()
 }
 

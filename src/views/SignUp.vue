@@ -20,7 +20,7 @@ const { isPending, isError, data, error } = useQuery({
   queryFn: async () => await fetch(`${ConfigApiUrl()}/api/virtual-servers/${route.params.virtualServer}/public-info`).then(
       (response) => response.json(),
   ).catch((e) => {
-    console.log('error', e)
+    console.error('error', e)
   })
 })
 

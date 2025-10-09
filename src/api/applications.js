@@ -67,3 +67,19 @@ export const patchApplicationFn = async (vsName, applicationId, data) => {
         }
     )
 }
+
+export const useDeleteApplicationMutation = (vsName) => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (applicationId) => deleteApplicationFn(vsName, applicationId),
+    })
+}
+
+export const deleteApplicationFn = async (vsName, applicationId) => {
+    return await apiFetch(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/applications/${applicationId}`,
+        {
+            method: 'DELETE',
+        }
+    )
+}

@@ -3,8 +3,8 @@
 import PageLayout from "../../../../components/PageLayout.vue";
 import PageHeader from "../../../../components/PageHeader.vue";
 import ModelMetadata from "../../../../components/ModelMetadata.vue";
-import {useGetApplicationQuery} from "../../../../api/applications.js";
-import {useRoute} from "vue-router";
+import {useDeleteApplicationMutation, useGetApplicationQuery} from "../../../../api/applications.js";
+import {useRoute, useRouter} from "vue-router";
 import DotMenu from "../../../../components/DotMenu.vue";
 import MenuItem from "../../../../components/menu/MenuItem.vue";
 import {usePopup} from "../../../../composables/popup.js";
@@ -16,11 +16,14 @@ import LoadingSkeleton from "../../../../components/LoadingSkeleton.vue";
 import BoxContainer from "../../../../components/BoxContainer.vue";
 import NoContent from "../../../../components/NoContent.vue";
 import InfoEditModal from "./InfoEditModal.vue";
-import {ref} from "vue";
+import {ref, toValue} from "vue";
 import KeylineButton from "../../../../components/KeylineButton.vue";
+import {useToast} from "../../../../composables/toast.js";
 
 const route = useRoute()
+const router = useRouter()
 const popupService = usePopup()
+const toast = useToast()
 
 const infoEditModalEl = ref(null)
 
@@ -29,13 +32,23 @@ const {data} = useGetApplicationQuery(
     route.params.appId,
 )
 
+const deleteApplication = useDeleteApplicationMutation(
+    route.params.vsName,
+)
+
 const onDeleteApplication = () => {
-  console.log(popupService)
   popupService.confirm({
     title: 'Delete application',
     message: 'Are you sure you want to delete this application?',
     onConfirm: async () => {
-      console.log('confirmed')
+      try{
+        await deleteApplication.mutateAsync(toValue(data).id)
+        router.push({name: 'mgmt-applications'})
+        toast.success("Application deleted")
+      } catch(e) {
+        console.error(e)
+        toast.error("Could not delete application")
+      }
     },
   })
 }
