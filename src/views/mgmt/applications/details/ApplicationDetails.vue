@@ -41,11 +41,11 @@ const onDeleteApplication = () => {
     title: 'Delete application',
     message: 'Are you sure you want to delete this application?',
     onConfirm: async () => {
-      try{
+      try {
         await deleteApplication.mutateAsync(toValue(data).id)
         router.push({name: 'mgmt-applications'})
         toast.success("Application deleted")
-      } catch(e) {
+      } catch (e) {
         console.error(e)
         toast.error("Could not delete application")
       }

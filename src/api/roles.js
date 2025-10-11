@@ -27,3 +27,18 @@ export const getRoleQueryFn = async(vsName, roleId) => {
         ConfigApiUrl() + `/api/virtual-servers/${vsName}/roles/${roleId}`
     )
 }
+
+export const useListUsersInRoleQuey = (vsName, roleId, queryOps) => useQuery({
+    queryKey: ['users-in-role', vsName, roleId],
+    queryFn: () => listUsersInRoleQueryFn(vsName, roleId, queryOps),
+})
+
+export const listUsersInRoleQueryFn = async(vsName, roleId, queryOps) => {
+    const url = new URL(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/roles/${roleId}/users`
+    )
+
+    applyQueryOps(url, queryOps)
+
+    return await apiFetch(url.toString())
+}
