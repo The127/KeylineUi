@@ -14,7 +14,9 @@ export const listApplicationQueryFn = async (vsName, queryOps) => {
 
     applyQueryOps(url, queryOps)
 
-    return await apiFetch(url.toString())
+    return await apiFetch(url.toString(), {
+        vsName: vsName,
+    })
 }
 
 export const useGetApplicationQuery = (vsName, applicationId) => useQuery({
@@ -24,7 +26,10 @@ export const useGetApplicationQuery = (vsName, applicationId) => useQuery({
 
 export const getApplicationQueryFn = async (vsName, applicationId) => {
     return await apiFetch(
-        ConfigApiUrl() + `/api/virtual-servers/${vsName}/applications/${applicationId}`
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/applications/${applicationId}`,
+        {
+            vsName: vsName,
+        }
     )
 }
 
@@ -44,6 +49,7 @@ export const createApplicationMutation = async (vsName, data) => {
     {
             method: 'POST',
             body: JSON.stringify(data),
+            vsName: vsName,
         }
     )
 }
@@ -64,6 +70,7 @@ export const patchApplicationFn = async (vsName, applicationId, data) => {
         {
             method: 'PATCH',
             body: JSON.stringify(data),
+            vsName: vsName,
         }
     )
 }
@@ -80,6 +87,7 @@ export const deleteApplicationFn = async (vsName, applicationId) => {
         ConfigApiUrl() + `/api/virtual-servers/${vsName}/applications/${applicationId}`,
         {
             method: 'DELETE',
+            vsName: vsName,
         }
     )
 }

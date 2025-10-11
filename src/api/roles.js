@@ -14,7 +14,9 @@ export const listRolesQueryFn = async(vsName, queryOps) => {
 
     applyQueryOps(url, queryOps)
 
-    return await apiFetch(url.toString())
+    return await apiFetch(url.toString(), {
+        vsName: vsName,
+    })
 }
 
 export const useGetRoleQuery = (vsName, roleId) => useQuery({
@@ -24,7 +26,10 @@ export const useGetRoleQuery = (vsName, roleId) => useQuery({
 
 export const getRoleQueryFn = async(vsName, roleId) => {
     return await apiFetch(
-        ConfigApiUrl() + `/api/virtual-servers/${vsName}/roles/${roleId}`
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/roles/${roleId}`,
+        {
+            vsName: vsName,
+        }
     )
 }
 
@@ -40,5 +45,7 @@ export const listUsersInRoleQueryFn = async(vsName, roleId, queryOps) => {
 
     applyQueryOps(url, queryOps)
 
-    return await apiFetch(url.toString())
+    return await apiFetch(url.toString(), {
+        vsName: vsName,
+    })
 }

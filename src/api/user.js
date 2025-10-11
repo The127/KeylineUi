@@ -9,7 +9,9 @@ export const useGetUserQuery = (vsName, userId) => useQuery({
 
 export const getUserQueryFn = async (vsName, userId) => {
     return await apiFetch(
-        ConfigApiUrl() + `/api/virtual-servers/${vsName}/users/${userId}`
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/users/${userId}`, {
+            vsName: vsName,
+        }
     )
 }
 
@@ -26,9 +28,10 @@ export const useUserMutation = (vsName, userId) => {
 export const userMutationFn = async (vsName, userId, data) => {
     return await apiFetch(
         ConfigApiUrl() + `/api/virtual-servers/${vsName}/users/${userId}`,
-    {
+        {
             method: 'PATCH',
             body: JSON.stringify(data),
+            vsName: vsName,
         }
     )
 }
@@ -45,5 +48,7 @@ export const listUsersQueryFn = async (vsName, queryOps) => {
 
     applyQueryOps(url, queryOps)
 
-    return await apiFetch(url.toString())
+    return await apiFetch(url.toString(), {
+        vsName: vsName,
+    })
 }

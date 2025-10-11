@@ -14,7 +14,9 @@ export const listTemplatesQueryFn = async(vsName, queryOps) => {
 
     applyQueryOps(url, queryOps)
 
-    return await apiFetch(url.toString())
+    return await apiFetch(url.toString(), {
+        vsName: vsName,
+    })
 }
 
 export const useGetTemplateQuery = (vsName, templateType) => useQuery({
@@ -23,5 +25,7 @@ export const useGetTemplateQuery = (vsName, templateType) => useQuery({
 })
 
 export const getTemplateQueryFn = async(vsName, templateType) => {
-    return await apiFetch(ConfigApiUrl() + `/api/virtual-servers/${vsName}/templates/${templateType}`)
+    return await apiFetch(ConfigApiUrl() + `/api/virtual-servers/${vsName}/templates/${templateType}`, {
+        vsName: vsName,
+    })
 }

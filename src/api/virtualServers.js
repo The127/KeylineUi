@@ -9,6 +9,8 @@ export const useGetVirtualServerQuery = (vsName) => useQuery({
 
 export const getVirtualServerQueryFn = async (vsName) => {
     return await apiFetch(
-        ConfigApiUrl() + `/api/virtual-servers/${vsName}`
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}`, {
+            vsName: vsName,
+        }
     )
 }

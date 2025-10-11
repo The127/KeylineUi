@@ -1,18 +1,34 @@
 import {toValue} from "vue";
+import {useUserManager} from "../composables/userManager.js";
 
 export async function apiFetch(url, options = {}) {
     const opts = { ...options }
     const method = (opts.method || "GET").toUpperCase()
+
+    var bearerToken = null
+    if (opts.vsName) {
+        console.log("a")
+        const userMgr = useUserManager(opts.vsName)
+        const user = await userMgr.getUser()
+        bearerToken = "Bearer " + user.access_token
+        console.log(bearerToken)
+    }
+
+    opts.headers = {
+        ...(opts.headers || {}),
+    }
 
     // Add JSON body + header only for write methods
     if (opts.body && ["POST", "PUT", "PATCH"].includes(method)) {
         if (typeof opts.body === "object") {
             opts.body = JSON.stringify(opts.body)
         }
-        opts.headers = {
-            ...(opts.headers || {}),
-            "Content-Type": "application/json",
-        }
+
+        opts.headers["Content-Type"] = "application/json"
+    }
+
+    if (bearerToken) {
+        opts.headers["Authorization"] = bearerToken
     }
 
     const response = await fetch(url, opts)
