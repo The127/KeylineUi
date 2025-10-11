@@ -3,7 +3,11 @@
 import PageLayout from "../../../../components/PageLayout.vue";
 import PageHeader from "../../../../components/PageHeader.vue";
 import ModelMetadata from "../../../../components/ModelMetadata.vue";
-import {useDeleteApplicationMutation, useGetApplicationQuery} from "../../../../api/applications.js";
+import {
+  useDeleteApplicationMutation,
+  useGetApplicationQuery,
+  useListRolesInApplicationQuery
+} from "../../../../api/applications.js";
 import {useRoute, useRouter} from "vue-router";
 import DotMenu from "../../../../components/DotMenu.vue";
 import MenuItem from "../../../../components/menu/MenuItem.vue";
@@ -19,6 +23,10 @@ import InfoEditModal from "./InfoEditModal.vue";
 import {ref, toValue} from "vue";
 import KeylineButton from "../../../../components/KeylineButton.vue";
 import {useToast} from "../../../../composables/toast.js";
+import DataTable from "../../../../components/dataTable/DataTable.vue";
+import DataTableCell from "../../../../components/dataTable/DataTableCell.vue";
+import DataTableColumn from "../../../../components/dataTable/DataTableColumn.vue";
+import {useListUsersQuery} from "../../../../api/user.js";
 
 const route = useRoute()
 const router = useRouter()
@@ -134,7 +142,22 @@ const onEditInfo = () => {
       </TabPage>
 
       <TabPage title="Roles" name="roles">
-        TODO: role tab
+        <DataTable
+            enable-search
+            autofocus
+            title="Users"
+            :queryFn="(pagination) => useListRolesInApplicationQuery(route.params.vsName, route.params.appId, pagination)"
+        >
+          <template #columns>
+            <DataTableColumn title="Name" field="name"/>
+          </template>
+
+          <template #row="{ item: role }">
+            <DataTableCell>
+              {{ role.name }}
+            </DataTableCell>
+          </template>
+        </DataTable>
       </TabPage>
     </TabLayout>
 

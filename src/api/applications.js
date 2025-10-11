@@ -91,3 +91,20 @@ export const deleteApplicationFn = async (vsName, applicationId) => {
         }
     )
 }
+
+export const useListRolesInApplicationQuery = (vsName, applicationId, queryOps) => useQuery({
+    queryKey: ['app-roles', vsName, applicationId, queryOps],
+    queryFn: () => listRolesInApplicationFn(vsName, applicationId, queryOps),
+})
+
+export const listRolesInApplicationFn = async (vsName, applicationId, queryOps) => {
+    const url = new URL(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/applications/${applicationId}/roles`
+    )
+
+    applyQueryOps(url, queryOps)
+
+    return await apiFetch(url.toString(), {
+        vsName: vsName,
+    })
+}
