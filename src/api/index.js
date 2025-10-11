@@ -7,11 +7,9 @@ export async function apiFetch(url, options = {}) {
 
     var bearerToken = null
     if (opts.vsName) {
-        console.log("a")
         const userMgr = useUserManager(opts.vsName)
         const user = await userMgr.getUser()
         bearerToken = "Bearer " + user.access_token
-        console.log(bearerToken)
     }
 
     opts.headers = {
