@@ -7,6 +7,7 @@ import DataTable from "../../../components/dataTable/DataTable.vue";
 import DataTableColumn from "../../../components/dataTable/DataTableColumn.vue";
 import {useListUsersQuery} from "../../../api/user.js";
 import {useRoute, useRouter} from "vue-router";
+import {User, Bot} from "lucide-vue-next"
 
 const route = useRoute()
 const router = useRouter()
@@ -45,17 +46,26 @@ const onNavigateToUserDetails = async (user) => {
         <DataTableColumn title="Username" field="username" enable-order initial-order="asc"/>
         <DataTableColumn title="Display Name" field="display_name" enable-order/>
         <DataTableColumn title="Email" field="primary_email" enable-order/>
+        <DataTableColumn title="Type" field="service_user" enable-order/>
       </template>
 
-      <template #row="{ item: app }">
+      <template #row="{ item: user }">
         <DataTableCell>
-          {{ app.username }}
+          {{ user.username }}
         </DataTableCell>
         <DataTableCell>
-          {{ app.displayName }}
+          {{ user.displayName }}
         </DataTableCell>
         <DataTableCell>
-          {{ app.primaryEmail }}
+          {{ user.primaryEmail }}
+        </DataTableCell>
+        <DataTableCell>
+          <span v-if="user.isServiceUser" title="Service-User">
+            <Bot/>
+          </span>
+          <span v-else title="User">
+            <User/>
+          </span>
         </DataTableCell>
       </template>
     </DataTable>
