@@ -7,7 +7,7 @@ import {useRoute} from "vue-router";
 import {computedAsync} from "@vueuse/core";
 import MenuItem from "../../components/menu/MenuItem.vue";
 import MenuDivider from "../../components/menu/MenuDivider.vue";
-import {ConfigApiUrl} from "../../config.js";
+import {ConfigApiUrl, ConfigHost} from "../../config.js";
 import PopupMenu from "../../components/menu/PopupMenu.vue";
 import UserAvatar from "../../components/UserAvatar.vue";
 import BreadcrumbNavigation from "../../components/BreadcrumbNavigation.vue";
@@ -23,7 +23,7 @@ const userName = computedAsync(async () => {
 
 const onLogout = async () => {
   await mgr.signoutRedirect({
-    post_logout_redirect_uri: `${ConfigApiUrl()}/mgmt/${route.params.vsName}/logout`
+    post_logout_redirect_uri: `${ConfigHost()}/mgmt/${route.params.vsName}/logout`
   })
 }
 
