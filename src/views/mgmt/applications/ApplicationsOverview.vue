@@ -62,6 +62,7 @@ const onAddApplication = () => {
       <template #columns>
         <DataTableColumn title="Name" field="name" enable-order initial-order="asc"/>
         <DataTableColumn title="Display Name" field="display_name" enable-order/>
+        <DataTableColumn title="Namespace" field="system_application" enable-order/>
       </template>
 
       <template #row="{ item: app }">
@@ -70,6 +71,9 @@ const onAddApplication = () => {
         </DataTableCell>
         <DataTableCell>
           {{ app.displayName }}
+        </DataTableCell>
+        <DataTableCell>
+          {{ app.systemApplication ? 'System' : 'User' }}
         </DataTableCell>
       </template>
     </DataTable>
