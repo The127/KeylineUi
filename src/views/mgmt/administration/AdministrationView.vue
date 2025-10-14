@@ -10,6 +10,7 @@ import TabLayout from "../../../components/tabs/TabLayout.vue";
 import TabPage from "../../../components/tabs/TabPage.vue";
 import TemplatesTab from "./TemplatesTab.vue";
 import SecurityTab from "./SecurityTab.vue";
+import AuditTab from "./AuditTab.vue";
 
 const route = useRoute()
 
@@ -40,6 +41,9 @@ const {data} = useGetVirtualServerQuery(
       </TabPage>
       <TabPage title="Templates" name="templates">
         <TemplatesTab/>
+      </TabPage>
+      <TabPage title="Audit" name="audit">
+        <AuditTab/>
       </TabPage>
     </TabLayout>
 
