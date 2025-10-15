@@ -6,7 +6,7 @@ import ModelMetadata from "../../../../components/ModelMetadata.vue";
 import {
   useDeleteApplicationMutation,
   useGetApplicationQuery,
-  useListRolesInApplicationQuery
+  useListRolesInApplicationQuery, usePatchApplicationMutation
 } from "../../../../api/applications.js";
 import {useRoute, useRouter} from "vue-router";
 import DotMenu from "../../../../components/DotMenu.vue";
@@ -20,18 +20,21 @@ import LoadingSkeleton from "../../../../components/LoadingSkeleton.vue";
 import BoxContainer from "../../../../components/BoxContainer.vue";
 import NoContent from "../../../../components/NoContent.vue";
 import InfoEditModal from "./InfoEditModal.vue";
-import {ref, toValue} from "vue";
+import {computed, ref, toValue} from "vue";
 import KeylineButton from "../../../../components/KeylineButton.vue";
 import {useToast} from "../../../../composables/toast.js";
 import DataTable from "../../../../components/dataTable/DataTable.vue";
 import DataTableCell from "../../../../components/dataTable/DataTableCell.vue";
 import DataTableColumn from "../../../../components/dataTable/DataTableColumn.vue";
 import {useListUsersQuery} from "../../../../api/user.js";
+import CodeEditor from "simple-code-editor";
+import {useDark} from "@vueuse/core";
 
 const route = useRoute()
 const router = useRouter()
 const popupService = usePopup()
 const toast = useToast()
+const isDark = useDark()
 
 const infoEditModalEl = ref(null)
 
@@ -63,6 +66,33 @@ const onDeleteApplication = () => {
 
 const onEditInfo = () => {
   infoEditModalEl.value.open()
+}
+
+const patchApp = usePatchApplicationMutation(route.params.vsName, route.params.appId)
+
+const editingScript = ref(false)
+const claimsMappingScript = ref("")
+
+const editorTheme = computed(() => {
+  return isDark.value ? "github-dark" : "github"
+})
+
+const onEditScript = () => {
+  claimsMappingScript.value = data.value.customClaimsMappingScript ?? ""
+  editingScript.value = true
+}
+
+const onCancelEdit = () => {
+  editingScript.value = false
+}
+
+const onSaveScript = async () => {
+  await patchApp.mutateAsync({customClaimsMappingScript: claimsMappingScript.value})
+  editingScript.value = false
+}
+
+const onClearScript = async () => {
+  await patchApp.mutateAsync({customClaimsMappingScript: ""})
 }
 
 </script>
@@ -136,6 +166,51 @@ const onEditInfo = () => {
                   </span>
                 </NoContent>
               </LoadingSkeleton>
+            </DataLayoutItem>
+          </DataLayout>
+        </BoxContainer>
+      </TabPage>
+
+      <TabPage title="Claims Mapping" name="claimsMapping">
+        <BoxContainer>
+          <DataLayout title="Custom Claims Mapping">
+            <DataLayoutItem title="Explanation" full-row>
+              Keyline allows users to configure the claims mapping per application via the script shown below.
+              It is executed everytime an access token is generated for the application.
+              The script must return a json object containing the desired claims.
+            </DataLayoutItem>
+
+            <DataLayoutItem title="Script" full-row>
+              <LoadingSkeleton :dep="data">
+                <div class="flex flex-col gap-3 w-full">
+                  <CodeEditor  v-if="editingScript" width="100%" :theme="editorTheme" v-model="claimsMappingScript"/>
+                  <template v-else>
+                    <NoContent :cond="!data.customClaimsMappingScript" message="No claims mapping script configured.">
+                      <CodeEditor v-if="data.customClaimsMappingScript" width="100%" :theme="editorTheme" v-model="data.customClaimsMappingScript" read-only/>
+                    </NoContent>
+                  </template>
+                  <div class="flex flex-row gap-3">
+                    <template v-if="editingScript">
+                      <KeylineButton text="Save" @click="onSaveScript"/>
+                      <KeylineButton variant="secondary" text="Cancel" @click="onCancelEdit"/>
+                    </template>
+                    <template v-else>
+                      <KeylineButton text="Edit" @click="onEditScript"/>
+                      <KeylineButton variant="danger" text="Clear" @click="onClearScript"/>
+                    </template>
+                  </div>
+                </div>
+              </LoadingSkeleton>
+            </DataLayoutItem>
+
+            <DataLayoutItem title="Available variables" full-row>
+              <div class="flex flex-col gap-3">
+                <span>The following variables are available in custom claims mapping scripts:</span>
+                <div class="flex flex-col gap-1">
+                  <span>roles - an array of strings containing the global roles of the user</span>
+                  <span>applicationRoles - an array of strings containing the applicatoin roles of the user</span>
+                </div>
+              </div>
             </DataLayoutItem>
           </DataLayout>
         </BoxContainer>

@@ -65,6 +65,7 @@ export const usePatchApplicationMutation = (vsName, applicationId) => {
 }
 
 export const patchApplicationFn = async (vsName, applicationId, data) => {
+    console.log("patching")
     return await apiFetch(
         ConfigApiUrl() + `/api/virtual-servers/${vsName}/applications/${applicationId}`,
         {

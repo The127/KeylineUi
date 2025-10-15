@@ -35,12 +35,18 @@ importers:
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
+      highlight.js:
+        specifier: ^11.11.1
+        version: 11.11.1
       lucide-vue-next:
         specifier: ^0.541.0
         version: 0.541.0(vue@3.5.18)
       oidc-client:
         specifier: ^1.11.5
         version: 1.11.5
+      simple-code-editor:
+        specifier: ^2.1.0
+        version: 2.1.0
       tailwindcss:
         specifier: ^4.1.12
         version: 4.1.12
@@ -1022,6 +1028,10 @@ packages:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
 
+  highlight.js@11.11.1:
+    resolution: {integrity: sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==}
+    engines: {node: '>=12.0.0'}
+
   ignore@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
@@ -1337,6 +1347,9 @@ packages:
   shebang-regex@3.0.0:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
+
+  simple-code-editor@2.1.0:
+    resolution: {integrity: sha512-mQ0bNhkOKgRFyoDF54zwuhWt8Wcj+T0sciCvyD3qJnNMOv01x4guRhq8ksUDUGUmAm3vPOWvkhP+YwKja0yh2g==}
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -2313,6 +2326,8 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
+  highlight.js@11.11.1: {}
+
   ignore@5.3.2: {}
 
   import-fresh@3.3.1:
@@ -2623,6 +2638,10 @@ snapshots:
       shebang-regex: 3.0.0
 
   shebang-regex@3.0.0: {}
+
+  simple-code-editor@2.1.0:
+    dependencies:
+      highlight.js: 11.11.1
 
   source-map-js@1.2.1: {}
 
