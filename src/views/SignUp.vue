@@ -45,7 +45,7 @@ const { t } = useI18n({
       password: 'Password',
       dontHaveAnAccount: 'Don\'t have an account?',
       register: 'Sign Up',
-      passwordRequirements: 'Password must be at least 8 characters long.',
+      passwordRequirements: 'TODO: we have to load this info from the server.',
       anErrorHappened: 'An error happened',
       registrationCompleted: 'Registration completed',
       youCanNowLogin: 'You can now login with your username and password.',
@@ -60,7 +60,7 @@ const { t } = useI18n({
       password: 'Passwort',
       dontHaveAnAccount: 'Noch kein Konto?',
       register: 'Registrieren',
-      passwordRequirements: 'Passwort muss mindestens 8 Zeichen lang sein.',
+      passwordRequirements: 'TODO: we have to load this info from the server.',
       anErrorHappened: 'Ein Fehler ist aufgetreten',
       registrationCompleted: 'Registrierung abgeschlossen',
       youCanNowLogin: 'Sie können sich nun mit Ihrem Benutzernamen und Passwort anmelden.',
@@ -75,7 +75,7 @@ const { t } = useI18n({
       password: 'Adgangskode',
       dontHaveAnAccount: 'Har du ikke en konto?',
       register: 'Registrer',
-      passwordRequirements: 'Din adgangskode skal indeholde mindst 8 tegn.',
+      passwordRequirements: 'TODO: we have to load this info from the server.',
       anErrorHappened: 'Der skete en fejl',
       registrationCompleted: 'Registrering gennemført',
       youCanNowLogin: 'Du kan nu logge ind med dit brugernavn og adgangskode.',
@@ -169,7 +169,6 @@ const onFormSubmit = async () => {
         :label="t('password')"
         required
         :helper-text="t('passwordRequirements')"
-        minlength="8"
     />
     <template #footer>
       <KeylineButton variant="special" size="lg" type="submit" :text="t('submit')"/>
