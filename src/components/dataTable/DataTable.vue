@@ -199,7 +199,7 @@ watch([page, pageSize, orderBy, orderDirection, search], () => {
             <slot name="row" :item="item" :search="search"/>
           </tr>
         </template>
-        <tr v-if="!!data && data.items.length === 0">
+        <tr v-if="!!data || data?.items === null || data?.items?.length === 0">
           <td :colspan="columns.length" class="px-5 py-3 text-center">
             No data&hellip;
           </td>
@@ -237,7 +237,7 @@ watch([page, pageSize, orderBy, orderDirection, search], () => {
             <div class="flex justify-between items-center flex-wrap gap-5">
               <div class="flex flex-row gap-5 items-center">
                 <span class="text-sm text-slate-500">
-                  Showing <span class="text-slate-900">{{ data.items.length }}</span> out of <span class="text-slate-900">{{ data.pagination.totalItems }}</span> entries
+                  Showing <span class="text-slate-900">{{ data?.items?.length ?? 0 }}</span> out of <span class="text-slate-900">{{ data.pagination.totalItems }}</span> entries
                 </span>
                 <PageSizeSelector v-model="pageSize"/>
               </div>
