@@ -64,8 +64,10 @@ const onLogout = async () => {
           </div>
         </div>
 
-        <BreadcrumbNavigation/>
-        <router-view />
+        <div class="overflow-y-scroll h-full">
+          <BreadcrumbNavigation/>
+          <router-view />
+        </div>
       </div>
     </div>
   </div>
