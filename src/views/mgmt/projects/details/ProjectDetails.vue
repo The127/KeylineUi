@@ -9,6 +9,8 @@ import BoxContainer from "../../../../components/BoxContainer.vue";
 import DataLayout from "../../../../components/dataLayout/DataLayout.vue";
 import DataLayoutItem from "../../../../components/dataLayout/DataLayoutItem.vue";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton.vue";
+import TabLayout from "../../../../components/tabs/TabLayout.vue";
+import TabPage from "../../../../components/tabs/TabPage.vue";
 
 const route = useRoute()
 
@@ -28,25 +30,29 @@ const {data} = useGetProjectQuery(
       />
     </template>
 
-    <BoxContainer>
-      <DataLayout title="Information">
-        <DataLayoutItem title="Name">
-          <LoadingSkeleton :dep="data" class="w-32 h4">
-            {{ data.name }}
-          </LoadingSkeleton>
-        </DataLayoutItem>
-        <DataLayoutItem title="Slug">
-          <LoadingSkeleton :dep="data" class="w-32 h4">
-            {{ data.slug }}
-          </LoadingSkeleton>
-        </DataLayoutItem>
-        <DataLayoutItem title="Description" full-row>
-          <LoadingSkeleton :dep="data" class="w-full h4">
-            {{ data.description }}
-          </LoadingSkeleton>
-        </DataLayoutItem>
-      </DataLayout>
-    </BoxContainer>
+    <TabLayout>
+      <TabPage title="General" name="general">
+        <BoxContainer>
+          <DataLayout title="Information">
+            <DataLayoutItem title="Name">
+              <LoadingSkeleton :dep="data" class="w-32 h4">
+                {{ data.name }}
+              </LoadingSkeleton>
+            </DataLayoutItem>
+            <DataLayoutItem title="Slug">
+              <LoadingSkeleton :dep="data" class="w-32 h4">
+                {{ data.slug }}
+              </LoadingSkeleton>
+            </DataLayoutItem>
+            <DataLayoutItem title="Description" full-row>
+              <LoadingSkeleton :dep="data" class="w-full h4">
+                {{ data.description }}
+              </LoadingSkeleton>
+            </DataLayoutItem>
+          </DataLayout>
+        </BoxContainer>
+      </TabPage>
+    </TabLayout>
 
     <template #footer>
       <ModelMetadata
