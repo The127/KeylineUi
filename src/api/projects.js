@@ -18,3 +18,17 @@ export const listProjectsQueryFn = async (vsName, queryOps) => {
         vsName: vsName,
     })
 }
+
+export const useGetProjectQuery = (vsName, projectSlug) => useQuery({
+    queryKey: ['projects', vsName, projectSlug],
+    queryFn: () => getProjectQueryFn(vsName, projectSlug),
+})
+
+export const getProjectQueryFn = async (vsName, projectSlug) => {
+    return await apiFetch(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/projects/${projectSlug}`,
+        {
+            vsName: vsName,
+        }
+    )
+}

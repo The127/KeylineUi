@@ -1,6 +1,6 @@
 <script setup>
 
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import PageLayout from "../../../components/PageLayout.vue";
 import PageHeader from "../../../components/PageHeader.vue";
 import DataTable from "../../../components/dataTable/DataTable.vue";
@@ -9,6 +9,17 @@ import DataTableColumn from "../../../components/dataTable/DataTableColumn.vue";
 import DataTableCell from "../../../components/dataTable/DataTableCell.vue";
 
 const route = useRoute()
+const router = useRouter()
+
+const onNavigateToProjectDetails = async (project) => {
+  await router.push({
+    name: 'mgmt-project-details',
+    params: {
+      vsName: route.params.vsName,
+      projectSlug: project.slug,
+    }
+  })
+}
 
 </script>
 
@@ -27,6 +38,7 @@ const route = useRoute()
         autofocus
         title="Projects"
         :query-fn="(pagination) => useListProjectsQuery(route.params.vsName, pagination)"
+        :on-click="onNavigateToProjectDetails"
     >
       <template #columns>
         <DataTableColumn title="Slug" field="slug"/>

@@ -92,8 +92,8 @@ const routes = [
                         component: () => import('../views/mgmt/projects/ProjectsOverview.vue'),
                     },
                     {
-                        path: 'projects/:appId',
-                        name: 'mgmt-projects-details',
+                        path: 'projects/:projectSlug',
+                        name: 'mgmt-project-details',
                         component: () => import('../views/mgmt/projects/details/ProjectDetails.vue'),
                         meta: {
                             breadcrumbFn: async () => "Details",
