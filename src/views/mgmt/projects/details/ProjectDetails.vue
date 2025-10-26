@@ -92,7 +92,7 @@ const {data} = useGetProjectQuery(
             enable-search
             autofocus
             title="Resource Servers"
-            :query-fn="(pagination) => useListResourceServersQuery(route.params.vsname, route.params.projectSlug, queryOps)"
+            :query-fn="(pagination) => useListResourceServersQuery(route.params.vsName, route.params.projectSlug, queryOps)"
         >
           <template #columns>
             <DataTableColumn title="Name" field="name" enable-order initial-order="asc"/>
