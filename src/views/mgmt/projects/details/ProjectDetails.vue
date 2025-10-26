@@ -52,6 +52,10 @@ const {data} = useGetProjectQuery(
           </DataLayout>
         </BoxContainer>
       </TabPage>
+      
+      <TabPage title="Applications" name="application">
+        TODO
+      </TabPage>
     </TabLayout>
 
     <template #footer>
