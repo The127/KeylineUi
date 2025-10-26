@@ -42,14 +42,9 @@ const { t } = useI18n({
           :to="{ name: 'mgmt-admin' }"
       />
       <DashboardItem
-          title="Applications"
-          subtitle="Manage your applications"
-          :to="{ name: 'mgmt-applications' }"
-      />
-      <DashboardItem
-          title="Roles"
-          subtitle="Manage global roles"
-          :to="{ name: 'mgmt-roles' }"
+          title="Projects"
+          subtitle="Manage your projects"
+          :to="{ name: 'mgmt-projects' }"
       />
       <DashboardItem
           title="Groups"

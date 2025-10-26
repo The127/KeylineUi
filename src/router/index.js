@@ -80,21 +80,21 @@ const routes = [
                 component: () => import('../views/mgmt/DashboardView.vue'),
             },
             {
-                path: 'applications',
-                name: 'mgmt-applications-root',
+                path: 'projects',
+                name: 'mgmt-projects-root',
                 meta: {
-                    breadcrumbFn: () => "Applications",
+                    breadcrumbFn: () => "Projects",
                 },
                 children: [
                     {
                         path: '',
-                        name: 'mgmt-applications',
-                        component: () => import('../views/mgmt/applications/ApplicationsOverview.vue'),
+                        name: 'mgmt-projects',
+                        component: () => import('../views/mgmt/projects/ProjectsOverview.vue'),
                     },
                     {
-                        path: 'applications/:appId',
-                        name: 'mgmt-application-details',
-                        component: () => import('../views/mgmt/applications/details/ApplicationDetails.vue'),
+                        path: 'projects/:appId',
+                        name: 'mgmt-projects-details',
+                        component: () => import('../views/mgmt/projects/details/ProjectDetails.vue'),
                         meta: {
                             breadcrumbFn: async () => "Details",
                         },
@@ -122,28 +122,6 @@ const routes = [
                         },
                     },
                 ],
-            },
-            {
-              path: 'roles',
-              name: 'mgmt-roles-root',
-              meta: {
-                  breadcrumbFn: async () => "Roles",
-              },
-              children: [
-                  {
-                      path: '',
-                      name: 'mgmt-roles',
-                      component: () => import('../views/mgmt/roles/RolesOverview.vue'),
-                  },
-                  {
-                      path: 'roles/:roleId',
-                      name: 'mgmt-role-details',
-                      component: () => import('../views/mgmt/roles/details/RoleDetails.vue'),
-                      meta: {
-                          breadcrumbFn: async () => "Details",
-                      },
-                  },
-              ]
             },
             {
                 path: 'groups',
