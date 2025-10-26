@@ -24,7 +24,7 @@ const {data} = useGetProjectQuery(
     <template #header>
       <PageHeader
           :title="data?.name"
-          subtitle="Manage project configuration and settings"
+          subtitle="Manage project resources, configuration and settings"
       />
     </template>
 

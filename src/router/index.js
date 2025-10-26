@@ -92,7 +92,7 @@ const routes = [
                         component: () => import('../views/mgmt/projects/ProjectsOverview.vue'),
                     },
                     {
-                        path: 'projects/:projectSlug',
+                        path: ':projectSlug',
                         name: 'mgmt-project-details',
                         component: () => import('../views/mgmt/projects/details/ProjectDetails.vue'),
                         meta: {
