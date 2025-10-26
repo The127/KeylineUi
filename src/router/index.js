@@ -106,7 +106,8 @@ const routes = [
                             {
                                 path: 'applications',
                                 meta: {
-                                    breadcrumbFn: async () => "Applications"
+                                    breadcrumbFn: async () => "Applications",
+                                    breadcumbNoLink: true,
                                 },
                                 children: [
                                     {

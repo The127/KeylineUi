@@ -19,7 +19,7 @@ watchEffect(async () => {
 
       // resolve path with current params
       let to = null;
-      if (item.name) {
+      if (item.name && !item.meta.breadcrumbNoLink) {
         to = router.resolve({
           name: item.name,
           params: route.params,
@@ -39,7 +39,7 @@ watchEffect(async () => {
   <nav aria-label="Breadcrumb" class="px-10 pt-5">
     <ol class="flex items-center">
       <li v-for="(crumb, index) in breadcrumbs" :key="index" class="flex items-center">
-        <span v-if="index === breadcrumbs.length - 1">
+        <span v-if="index === breadcrumbs.length - 1 || !crumb.to">
           {{ crumb.label }}
         </span>
         <RouterLink v-else :to="crumb.to">
