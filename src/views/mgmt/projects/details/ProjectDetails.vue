@@ -16,6 +16,7 @@ import DataTableColumn from "../../../../components/dataTable/DataTableColumn.vu
 import DataTableCell from "../../../../components/dataTable/DataTableCell.vue";
 import {useListResourceServersQuery} from "../../../../api/resourceServers.js";
 import {useListRolesQuery} from "../../../../api/roles.js";
+import {useListApplicationQuery} from "../../../../api/applications.js";
 
 const router = useRouter()
 const route = useRoute()
@@ -126,7 +127,7 @@ const onNavigateToApplication = async (app) => {
             table-key="e8247fec-cd98-4447-9bcf-89211558abac"
             enable-search
             autofocus
-            title="Users"
+            title="Roles"
             :queryFn="(pagination) => useListRolesQuery(route.params.vsName, route.params.projectSlug, pagination)"
         >
           <template #columns>
