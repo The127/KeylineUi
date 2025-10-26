@@ -1,21 +1,21 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import {useUserManager} from "../composables/userManager.js";
 
 const routes = [
     {
         path: '/debug',
         name: 'debug',
-        component:  () => import('../views/DebugView.vue'),
+        component: () => import('../views/DebugView.vue'),
     },
     {
         path: '/debugRedirectTarget',
         name: 'debugRedirectTarget',
-        component:  () => import('../views/DebugRedirectTarget.vue'),
+        component: () => import('../views/DebugRedirectTarget.vue'),
     },
     {
         path: '/login',
         name: 'login',
-        component:  () => import('../views/LoginView.vue'),
+        component: () => import('../views/LoginView.vue'),
         meta: {
             layout: "login-layout",
         },
@@ -23,7 +23,7 @@ const routes = [
     {
         path: '/:virtualServer/signup',
         name: 'signup',
-        component:  () => import('../views/SignUp.vue'),
+        component: () => import('../views/SignUp.vue'),
         meta: {
             layout: "login-layout",
         },
@@ -31,7 +31,7 @@ const routes = [
     {
         path: '/:virtualServer/email-verified',
         name: 'email-verified',
-        component:  () => import('../views/EmailVerified.vue'),
+        component: () => import('../views/EmailVerified.vue'),
         meta: {
             layout: "login-layout",
         },
@@ -93,11 +93,33 @@ const routes = [
                     },
                     {
                         path: ':projectSlug',
-                        name: 'mgmt-project-details',
-                        component: () => import('../views/mgmt/projects/details/ProjectDetails.vue'),
+                        name: 'mgmt-project-details-root',
                         meta: {
                             breadcrumbFn: async () => "Details",
                         },
+                        children: [
+                            {
+                                path: '',
+                                name: 'mgmt-project-details',
+                                component: () => import('../views/mgmt/projects/details/ProjectDetails.vue'),
+                            },
+                            {
+                                path: 'applications',
+                                meta: {
+                                    breadcrumbFn: async () => "Applications"
+                                },
+                                children: [
+                                    {
+                                        path: ':appId',
+                                        name: 'mgmt-application-details',
+                                        component: () => import('../views/mgmt/projects/details/applications/ApplicationDetails.vue'),
+                                        meta: {
+                                            breadcrumbFn: async () => "Details"
+                                        }
+                                    },
+                                ],
+                            }
+                        ],
                     },
                 ],
             },

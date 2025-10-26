@@ -2,7 +2,7 @@
 
 import PageLayout from "../../../../components/PageLayout.vue";
 import PageHeader from "../../../../components/PageHeader.vue";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {useGetProjectQuery} from "../../../../api/projects.js";
 import ModelMetadata from "../../../../components/ModelMetadata.vue";
 import BoxContainer from "../../../../components/BoxContainer.vue";
@@ -17,12 +17,26 @@ import DataTableColumn from "../../../../components/dataTable/DataTableColumn.vu
 import DataTableCell from "../../../../components/dataTable/DataTableCell.vue";
 import {useListResourceServersQuery} from "../../../../api/resourceServers.js";
 
+const router = useRouter()
 const route = useRoute()
 
 const {data} = useGetProjectQuery(
     route.params.vsName,
     route.params.projectSlug,
 )
+
+const onNavigateToApplication = async (app) => {
+  await router.push(
+      {
+        name: 'mgmt-application-details',
+        params: {
+          vsName: route.params.vsName,
+          projectSlug: route.params.projectSlug,
+          appId: app.id,
+        },
+      },
+  )
+}
 
 </script>
 
@@ -65,6 +79,7 @@ const {data} = useGetProjectQuery(
             autofocus
             title="Applications"
             :queryFn="(pagination) => useListApplicationQuery(route.params.vsName, route.params.projectSlug, pagination)"
+            :on-click="onNavigateToApplication"
         >
           <template #columns>
             <DataTableColumn title="Name" field="name" enable-order initial-order="asc"/>

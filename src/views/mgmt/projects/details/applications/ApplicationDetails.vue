@@ -1,34 +1,34 @@
 <script setup>
 
-import PageLayout from "../../../../components/PageLayout.vue";
-import PageHeader from "../../../../components/PageHeader.vue";
-import ModelMetadata from "../../../../components/ModelMetadata.vue";
-import {
-  useDeleteApplicationMutation,
-  useGetApplicationQuery,
-  useListRolesInApplicationQuery, usePatchApplicationMutation
-} from "../../../../api/applications.js";
-import {useRoute, useRouter} from "vue-router";
-import DotMenu from "../../../../components/DotMenu.vue";
-import MenuItem from "../../../../components/menu/MenuItem.vue";
-import {usePopup} from "../../../../composables/popup.js";
-import DataLayout from "../../../../components/dataLayout/DataLayout.vue";
-import DataLayoutItem from "../../../../components/dataLayout/DataLayoutItem.vue";
-import TabLayout from "../../../../components/tabs/TabLayout.vue";
-import TabPage from "../../../../components/tabs/TabPage.vue";
-import LoadingSkeleton from "../../../../components/LoadingSkeleton.vue";
-import BoxContainer from "../../../../components/BoxContainer.vue";
-import NoContent from "../../../../components/NoContent.vue";
-import InfoEditModal from "./InfoEditModal.vue";
-import {computed, ref, toValue} from "vue";
-import KeylineButton from "../../../../components/KeylineButton.vue";
-import {useToast} from "../../../../composables/toast.js";
-import DataTable from "../../../../components/dataTable/DataTable.vue";
-import DataTableCell from "../../../../components/dataTable/DataTableCell.vue";
-import DataTableColumn from "../../../../components/dataTable/DataTableColumn.vue";
-import {useListUsersQuery} from "../../../../api/user.js";
+
 import CodeEditor from "simple-code-editor";
 import {useDark} from "@vueuse/core";
+import InfoEditModal from "./InfoEditModal.vue";
+import PageLayout from "../../../../../components/PageLayout.vue";
+import PageHeader from "../../../../../components/PageHeader.vue";
+import DotMenu from "../../../../../components/DotMenu.vue";
+import MenuItem from "../../../../../components/menu/MenuItem.vue";
+import TabLayout from "../../../../../components/tabs/TabLayout.vue";
+import TabPage from "../../../../../components/tabs/TabPage.vue";
+import BoxContainer from "../../../../../components/BoxContainer.vue";
+import DataLayout from "../../../../../components/dataLayout/DataLayout.vue";
+import KeylineButton from "../../../../../components/KeylineButton.vue";
+import DataLayoutItem from "../../../../../components/dataLayout/DataLayoutItem.vue";
+import LoadingSkeleton from "../../../../../components/LoadingSkeleton.vue";
+import NoContent from "../../../../../components/NoContent.vue";
+import DataTable from "../../../../../components/dataTable/DataTable.vue";
+import DataTableColumn from "../../../../../components/dataTable/DataTableColumn.vue";
+import DataTableCell from "../../../../../components/dataTable/DataTableCell.vue";
+import ModelMetadata from "../../../../../components/ModelMetadata.vue";
+import {computed, ref, toValue} from "vue";
+import {
+  useDeleteApplicationMutation,
+  useGetApplicationQuery, useListRolesInApplicationQuery,
+  usePatchApplicationMutation
+} from "../../../../../api/applications.js";
+import {useToast} from "../../../../../composables/toast.js";
+import {useRoute, useRouter} from "vue-router";
+import {usePopup} from "../../../../../composables/popup.js";
 
 const route = useRoute()
 const router = useRouter()
@@ -40,11 +40,13 @@ const infoEditModalEl = ref(null)
 
 const {data} = useGetApplicationQuery(
     route.params.vsName,
+    route.params.projectSlug,
     route.params.appId,
 )
 
 const deleteApplication = useDeleteApplicationMutation(
     route.params.vsName,
+    route.params.projectSlug,
 )
 
 const onDeleteApplication = () => {
@@ -54,7 +56,7 @@ const onDeleteApplication = () => {
     onConfirm: async () => {
       try {
         await deleteApplication.mutateAsync(toValue(data).id)
-        router.push({name: 'mgmt-applications'})
+        await router.push({name: 'mgmt-applications'})
         toast.success("Application deleted")
       } catch (e) {
         console.error(e)
@@ -68,7 +70,7 @@ const onEditInfo = () => {
   infoEditModalEl.value.open()
 }
 
-const patchApp = usePatchApplicationMutation(route.params.vsName, route.params.appId)
+const patchApp = usePatchApplicationMutation(route.params.vsName, route.params.projectSlug, route.params.appId)
 
 const editingScript = ref(false)
 const claimsMappingScript = ref("")
