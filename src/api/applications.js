@@ -3,7 +3,7 @@ import {useMutation, useQuery, useQueryClient} from "@tanstack/vue-query";
 import {ConfigApiUrl} from "../config.js";
 
 export const useListApplicationQuery = (vsName, projectSlug, queryOps) => useQuery({
-    queryKey: ['applications', vsName, queryOps],
+    queryKey: ['applications', vsName, projectSlug, queryOps],
     queryFn: () => listApplicationQueryFn(vsName, projectSlug, queryOps),
 })
 
@@ -20,7 +20,7 @@ export const listApplicationQueryFn = async (vsName, projectSlug, queryOps) => {
 }
 
 export const useGetApplicationQuery = (vsName, projectSlug, applicationId) => useQuery({
-    queryKey: ['application', vsName, applicationId],
+    queryKey: ['application', vsName, projectSlug, applicationId],
     queryFn: () => getApplicationQueryFn(vsName, projectSlug, applicationId),
 })
 
@@ -94,7 +94,7 @@ export const deleteApplicationFn = async (vsName, projectSlug, applicationId) =>
 }
 
 export const useListRolesInApplicationQuery = (vsName, projectSlug, applicationId, queryOps) => useQuery({
-    queryKey: ['app-roles', vsName, applicationId, queryOps],
+    queryKey: ['app-roles', vsName, projectSlug, applicationId, queryOps],
     queryFn: () => listRolesInApplicationFn(vsName, projectSlug, applicationId, queryOps),
 })
 

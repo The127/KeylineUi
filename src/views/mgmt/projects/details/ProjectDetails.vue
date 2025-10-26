@@ -15,6 +15,7 @@ import DataTable from "../../../../components/dataTable/DataTable.vue";
 import {useListApplicationQuery} from "../../../../api/applications.js";
 import DataTableColumn from "../../../../components/dataTable/DataTableColumn.vue";
 import DataTableCell from "../../../../components/dataTable/DataTableCell.vue";
+import {useListResourceServersQuery} from "../../../../api/resourceServers.js";
 
 const route = useRoute()
 
@@ -56,13 +57,14 @@ const {data} = useGetProjectQuery(
           </DataLayout>
         </BoxContainer>
       </TabPage>
-      
+
       <TabPage title="Applications" name="application">
         <DataTable
-          enable-search
-          autofocus
-          title="Applications"
-          :queryFn="(pagination) => useListApplicationQuery(route.params.vsName, route.params.projectSlug, pagination)"
+            table-key="42f42cdc-9b3c-4eab-a7a1-15d31f21187e"
+            enable-search
+            autofocus
+            title="Applications"
+            :queryFn="(pagination) => useListApplicationQuery(route.params.vsName, route.params.projectSlug, pagination)"
         >
           <template #columns>
             <DataTableColumn title="Name" field="name" enable-order initial-order="asc"/>
@@ -79,6 +81,26 @@ const {data} = useGetProjectQuery(
             </DataTableCell>
             <DataTableCell>
               {{ app.systemApplication ? 'System' : 'User' }}
+            </DataTableCell>
+          </template>
+        </DataTable>
+      </TabPage>
+
+      <TabPage title="Resource Servers" name="resource-servers">
+        <DataTable
+            table-key="5664ab9f-b638-45b7-8548-813d4bf2c949"
+            enable-search
+            autofocus
+            title="Resource Servers"
+            :query-fn="(pagination) => useListResourceServersQuery(route.params.vsname, route.params.projectSlug, queryOps)"
+        >
+          <template #columns>
+            <DataTableColumn title="Name" field="name" enable-order initial-order="asc"/>
+          </template>
+
+          <template #row="{ item: resourceServer }">
+            <DataTableCell>
+              {{ resourceServer.name }}
             </DataTableCell>
           </template>
         </DataTable>
