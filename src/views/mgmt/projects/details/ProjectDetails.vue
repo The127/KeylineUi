@@ -12,10 +12,10 @@ import LoadingSkeleton from "../../../../components/LoadingSkeleton.vue";
 import TabLayout from "../../../../components/tabs/TabLayout.vue";
 import TabPage from "../../../../components/tabs/TabPage.vue";
 import DataTable from "../../../../components/dataTable/DataTable.vue";
-import {useListApplicationQuery} from "../../../../api/applications.js";
 import DataTableColumn from "../../../../components/dataTable/DataTableColumn.vue";
 import DataTableCell from "../../../../components/dataTable/DataTableCell.vue";
 import {useListResourceServersQuery} from "../../../../api/resourceServers.js";
+import {useListRolesQuery} from "../../../../api/roles.js";
 
 const router = useRouter()
 const route = useRoute()
@@ -116,6 +116,26 @@ const onNavigateToApplication = async (app) => {
           <template #row="{ item: resourceServer }">
             <DataTableCell>
               {{ resourceServer.name }}
+            </DataTableCell>
+          </template>
+        </DataTable>
+      </TabPage>
+
+      <TabPage title="Roles" name="roles">
+        <DataTable
+            table-key="e8247fec-cd98-4447-9bcf-89211558abac"
+            enable-search
+            autofocus
+            title="Users"
+            :queryFn="(pagination) => useListRolesQuery(route.params.vsName, route.params.projectSlug, pagination)"
+        >
+          <template #columns>
+            <DataTableColumn title="Name" field="name"/>
+          </template>
+
+          <template #row="{ item: role }">
+            <DataTableCell>
+              {{ role.name }}
             </DataTableCell>
           </template>
         </DataTable>

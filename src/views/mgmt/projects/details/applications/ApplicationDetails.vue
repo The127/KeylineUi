@@ -16,14 +16,11 @@ import KeylineButton from "../../../../../components/KeylineButton.vue";
 import DataLayoutItem from "../../../../../components/dataLayout/DataLayoutItem.vue";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton.vue";
 import NoContent from "../../../../../components/NoContent.vue";
-import DataTable from "../../../../../components/dataTable/DataTable.vue";
-import DataTableColumn from "../../../../../components/dataTable/DataTableColumn.vue";
-import DataTableCell from "../../../../../components/dataTable/DataTableCell.vue";
 import ModelMetadata from "../../../../../components/ModelMetadata.vue";
 import {computed, ref, toValue} from "vue";
 import {
   useDeleteApplicationMutation,
-  useGetApplicationQuery, useListRolesInApplicationQuery,
+  useGetApplicationQuery,
   usePatchApplicationMutation
 } from "../../../../../api/applications.js";
 import {useToast} from "../../../../../composables/toast.js";
@@ -216,25 +213,6 @@ const onClearScript = async () => {
             </DataLayoutItem>
           </DataLayout>
         </BoxContainer>
-      </TabPage>
-
-      <TabPage title="Roles" name="roles">
-        <DataTable
-            enable-search
-            autofocus
-            title="Users"
-            :queryFn="(pagination) => useListRolesInApplicationQuery(route.params.vsName, route.params.appId, pagination)"
-        >
-          <template #columns>
-            <DataTableColumn title="Name" field="name"/>
-          </template>
-
-          <template #row="{ item: role }">
-            <DataTableCell>
-              {{ role.name }}
-            </DataTableCell>
-          </template>
-        </DataTable>
       </TabPage>
     </TabLayout>
 

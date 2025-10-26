@@ -77,7 +77,6 @@ export const patchApplicationFn = async (vsName, projectSlug, applicationId, dat
 }
 
 export const useDeleteApplicationMutation = (vsName, projectSlug) => {
-    const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (applicationId) => deleteApplicationFn(vsName, projectSlug, applicationId),
     })
@@ -91,21 +90,4 @@ export const deleteApplicationFn = async (vsName, projectSlug, applicationId) =>
             vsName: vsName,
         }
     )
-}
-
-export const useListRolesInApplicationQuery = (vsName, projectSlug, applicationId, queryOps) => useQuery({
-    queryKey: ['app-roles', vsName, projectSlug, applicationId, queryOps],
-    queryFn: () => listRolesInApplicationFn(vsName, projectSlug, applicationId, queryOps),
-})
-
-export const listRolesInApplicationFn = async (vsName, projectSlug, applicationId, queryOps) => {
-    const url = new URL(
-        ConfigApiUrl() + `/api/virtual-servers/${vsName}/projects/${projectSlug}/applications/${applicationId}/roles`
-    )
-
-    applyQueryOps(url, queryOps)
-
-    return await apiFetch(url.toString(), {
-        vsName: vsName,
-    })
 }
