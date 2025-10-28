@@ -19,6 +19,7 @@ import {useListRolesQuery} from "../../../../api/roles.js";
 import {useListApplicationQuery} from "../../../../api/applications.js";
 import GridLayout from "../../../../components/GridLayout.vue";
 import DashboardItem from "../../../../components/DashboardItem.vue";
+import HeadingText from "../../../../components/HeadingText.vue";
 
 const route = useRoute()
 
@@ -57,6 +58,10 @@ const {data} = useGetProjectQuery(
         </DataLayoutItem>
       </DataLayout>
     </BoxContainer>
+
+    <HeadingText level="h2">
+      Resources in this project
+    </HeadingText>
 
     <GridLayout>
       <DashboardItem
