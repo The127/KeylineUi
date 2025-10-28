@@ -7,6 +7,10 @@ import DataTable from "../../../components/dataTable/DataTable.vue";
 import {useListProjectsQuery} from "../../../api/projects.js";
 import DataTableColumn from "../../../components/dataTable/DataTableColumn.vue";
 import DataTableCell from "../../../components/dataTable/DataTableCell.vue";
+import {Plus} from "lucide-vue-next";
+import KeylineButton from "../../../components/KeylineButton.vue";
+import ProjectCreateModal from "./ProjectCreateModal.vue";
+import {ref} from "vue";
 
 const route = useRoute()
 const router = useRouter()
@@ -21,15 +25,28 @@ const onNavigateToProjectDetails = async (project) => {
   })
 }
 
+const addProjectModal = ref(null)
+
+const onProjectAdd = () => {
+  addProjectModal.value.open()
+}
+
 </script>
 
 <template>
+  <ProjectCreateModal ref="addProjectModal"/>
   <PageLayout>
     <template #header>
       <PageHeader
           title="Projects"
           subtitle="Manage projects"
-      />
+      >
+        <KeylineButton text="Add" @click="onProjectAdd">
+          <template #adornment>
+            <Plus/>
+          </template>
+        </KeylineButton>
+      </PageHeader>
     </template>
 
     <DataTable
