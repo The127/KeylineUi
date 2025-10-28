@@ -59,27 +59,29 @@ const {data} = useGetProjectQuery(
       </DataLayout>
     </BoxContainer>
 
-    <HeadingText level="h2">
-      Resources in this project
-    </HeadingText>
+    <div class="flex flex-col gap-3">
+      <HeadingText level="h2">
+        Resources in this project
+      </HeadingText>
 
-    <GridLayout>
-      <DashboardItem
-          title="Applications"
-          subtitle="Manage this projects applications"
-          :to="{name: 'mgmt-applications-overview'}"
-      />
-      <DashboardItem
-          title="ResourceServers"
-          subtitle="Manage this projects resource servers"
-          :to="{name: 'mgmt-resource-servers-overview'}"
-      />
-      <DashboardItem
-          title="Roles"
-          subtitle="Manage this projects roles"
-          :to="{name: 'mgmt-roles-overview'}"
-      />
-    </GridLayout>
+      <GridLayout>
+        <DashboardItem
+            title="Applications"
+            subtitle="Manage this projects applications"
+            :to="{name: 'mgmt-applications-overview'}"
+        />
+        <DashboardItem
+            title="ResourceServers"
+            subtitle="Manage this projects resource servers"
+            :to="{name: 'mgmt-resource-servers-overview'}"
+        />
+        <DashboardItem
+            title="Roles"
+            subtitle="Manage this projects roles"
+            :to="{name: 'mgmt-roles-overview'}"
+        />
+      </GridLayout>
+    </div>
 
     <template #footer>
       <ModelMetadata
