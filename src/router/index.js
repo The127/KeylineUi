@@ -105,21 +105,42 @@ const routes = [
                             },
                             {
                                 path: 'applications',
+                                name: 'mgmt-applications-overview-root',
                                 meta: {
                                     breadcrumbFn: async () => "Applications",
-                                    breadcumbNoLink: true,
                                 },
                                 children: [
                                     {
+                                        path: '',
+                                        name: 'mgmt-applications-overview',
+                                        component: () => import('../views/mgmt/projects/details/applications/ApplicationOverview.vue'),
+                                    },
+                                    {
                                         path: ':appId',
                                         name: 'mgmt-application-details',
-                                        component: () => import('../views/mgmt/projects/details/applications/ApplicationDetails.vue'),
+                                        component: () => import('../views/mgmt/projects/details/applications/details/ApplicationDetails.vue'),
                                         meta: {
                                             breadcrumbFn: async () => "Details"
                                         }
                                     },
                                 ],
-                            }
+                            },
+                            {
+                                path: 'roles',
+                                name: 'mgmt-roles-overview',
+                                component: () => import('../views/mgmt/projects/details/roles/RolesOverview.vue'),
+                                meta: {
+                                    breadcrumbFn: async () => "Roles",
+                                },
+                            },
+                            {
+                                path: 'resource-servers',
+                                name: 'mgmt-resource-servers-overview',
+                                component: () => import('../views/mgmt/projects/details/resourceServers/ResourceServersOverview.vue'),
+                                meta: {
+                                    breadcrumbFn: async () => "Resource Servers",
+                                },
+                            },
                         ],
                     },
                 ],

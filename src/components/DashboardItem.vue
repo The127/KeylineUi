@@ -33,6 +33,7 @@ defineProps({
     <span v-if="subtitle" class="text-sm text-slate-600">
       {{ subtitle }}
     </span>
+    <slot/>
   </BoxContainer>
 </template>
 

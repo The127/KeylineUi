@@ -4,28 +4,28 @@
 import CodeEditor from "simple-code-editor";
 import {useDark} from "@vueuse/core";
 import InfoEditModal from "./InfoEditModal.vue";
-import PageLayout from "../../../../../components/PageLayout.vue";
-import PageHeader from "../../../../../components/PageHeader.vue";
-import DotMenu from "../../../../../components/DotMenu.vue";
-import MenuItem from "../../../../../components/menu/MenuItem.vue";
-import TabLayout from "../../../../../components/tabs/TabLayout.vue";
-import TabPage from "../../../../../components/tabs/TabPage.vue";
-import BoxContainer from "../../../../../components/BoxContainer.vue";
-import DataLayout from "../../../../../components/dataLayout/DataLayout.vue";
-import KeylineButton from "../../../../../components/KeylineButton.vue";
-import DataLayoutItem from "../../../../../components/dataLayout/DataLayoutItem.vue";
-import LoadingSkeleton from "../../../../../components/LoadingSkeleton.vue";
-import NoContent from "../../../../../components/NoContent.vue";
-import ModelMetadata from "../../../../../components/ModelMetadata.vue";
+import PageLayout from "../../../../../../components/PageLayout.vue";
+import PageHeader from "../../../../../../components/PageHeader.vue";
+import DotMenu from "../../../../../../components/DotMenu.vue";
+import MenuItem from "../../../../../../components/menu/MenuItem.vue";
+import TabLayout from "../../../../../../components/tabs/TabLayout.vue";
+import TabPage from "../../../../../../components/tabs/TabPage.vue";
+import BoxContainer from "../../../../../../components/BoxContainer.vue";
+import DataLayout from "../../../../../../components/dataLayout/DataLayout.vue";
+import KeylineButton from "../../../../../../components/KeylineButton.vue";
+import DataLayoutItem from "../../../../../../components/dataLayout/DataLayoutItem.vue";
+import LoadingSkeleton from "../../../../../../components/LoadingSkeleton.vue";
+import NoContent from "../../../../../../components/NoContent.vue";
+import ModelMetadata from "../../../../../../components/ModelMetadata.vue";
 import {computed, ref, toValue} from "vue";
 import {
   useDeleteApplicationMutation,
   useGetApplicationQuery,
   usePatchApplicationMutation
-} from "../../../../../api/applications.js";
-import {useToast} from "../../../../../composables/toast.js";
+} from "../../../../../../api/applications.js";
+import {useToast} from "../../../../../../composables/toast.js";
 import {useRoute, useRouter} from "vue-router";
-import {usePopup} from "../../../../../composables/popup.js";
+import {usePopup} from "../../../../../../composables/popup.js";
 
 const route = useRoute()
 const router = useRouter()

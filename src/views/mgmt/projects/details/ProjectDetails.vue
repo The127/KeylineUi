@@ -17,27 +17,15 @@ import DataTableCell from "../../../../components/dataTable/DataTableCell.vue";
 import {useListResourceServersQuery} from "../../../../api/resourceServers.js";
 import {useListRolesQuery} from "../../../../api/roles.js";
 import {useListApplicationQuery} from "../../../../api/applications.js";
+import GridLayout from "../../../../components/GridLayout.vue";
+import DashboardItem from "../../../../components/DashboardItem.vue";
 
-const router = useRouter()
 const route = useRoute()
 
 const {data} = useGetProjectQuery(
     route.params.vsName,
     route.params.projectSlug,
 )
-
-const onNavigateToApplication = async (app) => {
-  await router.push(
-      {
-        name: 'mgmt-application-details',
-        params: {
-          vsName: route.params.vsName,
-          projectSlug: route.params.projectSlug,
-          appId: app.id,
-        },
-      },
-  )
-}
 
 </script>
 
@@ -50,98 +38,43 @@ const onNavigateToApplication = async (app) => {
       />
     </template>
 
-    <TabLayout>
-      <TabPage title="General" name="general">
-        <BoxContainer>
-          <DataLayout title="Information">
-            <DataLayoutItem title="Name">
-              <LoadingSkeleton :dep="data" class="w-32 h4">
-                {{ data.name }}
-              </LoadingSkeleton>
-            </DataLayoutItem>
-            <DataLayoutItem title="Slug">
-              <LoadingSkeleton :dep="data" class="w-32 h4">
-                {{ data.slug }}
-              </LoadingSkeleton>
-            </DataLayoutItem>
-            <DataLayoutItem title="Description" full-row>
-              <LoadingSkeleton :dep="data" class="w-full h4">
-                {{ data.description }}
-              </LoadingSkeleton>
-            </DataLayoutItem>
-          </DataLayout>
-        </BoxContainer>
-      </TabPage>
+    <BoxContainer>
+      <DataLayout title="Information">
+        <DataLayoutItem title="Name">
+          <LoadingSkeleton :dep="data" class="w-32 h4">
+            {{ data.name }}
+          </LoadingSkeleton>
+        </DataLayoutItem>
+        <DataLayoutItem title="Slug">
+          <LoadingSkeleton :dep="data" class="w-32 h4">
+            {{ data.slug }}
+          </LoadingSkeleton>
+        </DataLayoutItem>
+        <DataLayoutItem title="Description" full-row>
+          <LoadingSkeleton :dep="data" class="w-full h4">
+            {{ data.description }}
+          </LoadingSkeleton>
+        </DataLayoutItem>
+      </DataLayout>
+    </BoxContainer>
 
-      <TabPage title="Applications" name="application">
-        <DataTable
-            table-key="42f42cdc-9b3c-4eab-a7a1-15d31f21187e"
-            enable-search
-            autofocus
-            title="Applications"
-            :queryFn="(pagination) => useListApplicationQuery(route.params.vsName, route.params.projectSlug, pagination)"
-            :on-click="onNavigateToApplication"
-        >
-          <template #columns>
-            <DataTableColumn title="Name" field="name" enable-order initial-order="asc"/>
-            <DataTableColumn title="Display Name" field="display_name" enable-order/>
-            <DataTableColumn title="Namespace" field="system_application" enable-order/>
-          </template>
-
-          <template #row="{ item: app }">
-            <DataTableCell>
-              {{ app.name }}
-            </DataTableCell>
-            <DataTableCell>
-              {{ app.displayName }}
-            </DataTableCell>
-            <DataTableCell>
-              {{ app.systemApplication ? 'System' : 'User' }}
-            </DataTableCell>
-          </template>
-        </DataTable>
-      </TabPage>
-
-      <TabPage title="Resource Servers" name="resource-servers">
-        <DataTable
-            table-key="5664ab9f-b638-45b7-8548-813d4bf2c949"
-            enable-search
-            autofocus
-            title="Resource Servers"
-            :query-fn="(pagination) => useListResourceServersQuery(route.params.vsName, route.params.projectSlug, queryOps)"
-        >
-          <template #columns>
-            <DataTableColumn title="Name" field="name" enable-order initial-order="asc"/>
-          </template>
-
-          <template #row="{ item: resourceServer }">
-            <DataTableCell>
-              {{ resourceServer.name }}
-            </DataTableCell>
-          </template>
-        </DataTable>
-      </TabPage>
-
-      <TabPage title="Roles" name="roles">
-        <DataTable
-            table-key="e8247fec-cd98-4447-9bcf-89211558abac"
-            enable-search
-            autofocus
-            title="Roles"
-            :queryFn="(pagination) => useListRolesQuery(route.params.vsName, route.params.projectSlug, pagination)"
-        >
-          <template #columns>
-            <DataTableColumn title="Name" field="name"/>
-          </template>
-
-          <template #row="{ item: role }">
-            <DataTableCell>
-              {{ role.name }}
-            </DataTableCell>
-          </template>
-        </DataTable>
-      </TabPage>
-    </TabLayout>
+    <GridLayout>
+      <DashboardItem
+          title="Applications"
+          subtitle="Manage this projects applications"
+          :to="{name: 'mgmt-applications-overview'}"
+      />
+      <DashboardItem
+          title="ResourceServers"
+          subtitle="Manage this projects resource servers"
+          :to="{name: 'mgmt-resource-servers-overview'}"
+      />
+      <DashboardItem
+          title="Roles"
+          subtitle="Manage this projects roles"
+          :to="{name: 'mgmt-roles-overview'}"
+      />
+    </GridLayout>
 
     <template #footer>
       <ModelMetadata
