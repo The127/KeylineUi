@@ -7,10 +7,15 @@ import DataTable from "../../../../../components/dataTable/DataTable.vue";
 import DataTableColumn from "../../../../../components/dataTable/DataTableColumn.vue";
 import DataTableCell from "../../../../../components/dataTable/DataTableCell.vue";
 import {useRoute, useRouter} from "vue-router";
+import {ref} from "vue";
+import ApplicationCreateModal from "./ApplicationCreateModal.vue";
+import {Plus} from "lucide-vue-next";
+import KeylineButton from "../../../../../components/KeylineButton.vue";
 
 const route = useRoute()
-
 const router = useRouter()
+
+const addAppModal = ref(null)
 
 const onNavigateToApplication = async (app) => {
   await router.push(
@@ -25,15 +30,27 @@ const onNavigateToApplication = async (app) => {
   )
 }
 
+const onAddApplication = () => {
+  addAppModal.value.open()
+}
+
 </script>
 
 <template>
+  <ApplicationCreateModal ref="addAppModal"/>
+
   <PageLayout>
     <template #header>
       <PageHeader
           title="Applications"
           subtitle="Manage applications"
-      />
+      >
+        <KeylineButton text="Add" @click="onAddApplication">
+          <template #adornment>
+            <Plus/>
+          </template>
+        </KeylineButton>
+      </PageHeader>
     </template>
 
 

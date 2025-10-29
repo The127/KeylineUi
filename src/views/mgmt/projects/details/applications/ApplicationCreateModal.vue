@@ -1,21 +1,21 @@
 <script setup>
 
-import KeylineForm from "../../../components/KeylineForm.vue";
-import RadioButton from "../../../components/radio/RadioButton.vue";
-import ListInput from "../../../components/ListInput.vue";
-import FormGroup from "../../../components/FormGroup.vue";
-import RadioButtonGroup from "../../../components/radio/RadioButtonGroup.vue";
-import KeylineInput from "../../../components/KeylineInput.vue";
+import KeylineForm from "../../../../../components/KeylineForm.vue";
+import RadioButton from "../../../../../components/radio/RadioButton.vue";
+import ListInput from "../../../../../components/ListInput.vue";
+import FormGroup from "../../../../../components/FormGroup.vue";
+import RadioButtonGroup from "../../../../../components/radio/RadioButtonGroup.vue";
+import KeylineInput from "../../../../../components/KeylineInput.vue";
 import {defineExpose, reactive, ref} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
-import {useCreateApplicationMutation} from "../../../api/applications.js";
+import {useCreateApplicationMutation} from "../../../../../api/applications.js";
 import {useRoute} from "vue-router";
-import {useToast} from "../../../composables/toast.js";
-import SpecialText from "../../../components/SpecialText.vue";
-import ModalPopup from "../../../components/ModalPopup.vue";
-import HeadingText from "../../../components/HeadingText.vue";
-import KeylineButton from "../../../components/KeylineButton.vue";
+import {useToast} from "../../../../../composables/toast.js";
+import SpecialText from "../../../../../components/SpecialText.vue";
+import ModalPopup from "../../../../../components/ModalPopup.vue";
+import HeadingText from "../../../../../components/HeadingText.vue";
+import KeylineButton from "../../../../../components/KeylineButton.vue";
 
 const route = useRoute()
 const toast = useToast()
@@ -51,7 +51,10 @@ const open = () => {
   addAppModal.value.open()
 }
 
-const createApplicationMutation = useCreateApplicationMutation(route.params.vsName)
+const createApplicationMutation = useCreateApplicationMutation(
+    route.params.vsName,
+    route.params.projectSlug,
+)
 
 const createApplication = async () => {
   try{
