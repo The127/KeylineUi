@@ -6,18 +6,31 @@ import {useListRolesQuery} from "../../../../../api/roles.js";
 import DataTable from "../../../../../components/dataTable/DataTable.vue";
 import DataTableColumn from "../../../../../components/dataTable/DataTableColumn.vue";
 import DataTableCell from "../../../../../components/dataTable/DataTableCell.vue";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {Plus} from "lucide-vue-next";
 import KeylineButton from "../../../../../components/KeylineButton.vue";
 import {ref} from "vue";
 import RoleCreateModal from "./RoleCreateModal.vue";
 
 const route = useRoute()
+const router = useRouter()
 
 const addRoleModal = ref(null)
 
 const onAddRole = () => {
   addRoleModal.value.open()
+}
+
+const onNavigateToRole = async (role) => {
+  await router.push({
+        name: 'mgmt-role-details',
+        params: {
+          vsName: route.params.vsName,
+          projectSlug: route.params.projectSlug,
+          roleId: role.id,
+        }
+      },
+  )
 }
 
 </script>
@@ -45,6 +58,7 @@ const onAddRole = () => {
         autofocus
         title="Roles"
         :queryFn="(pagination) => useListRolesQuery(route.params.vsName, route.params.projectSlug, pagination)"
+        :on-click="onNavigateToRole"
     >
       <template #columns>
         <DataTableColumn title="Name" field="name"/>

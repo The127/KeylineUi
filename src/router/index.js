@@ -127,11 +127,25 @@ const routes = [
                             },
                             {
                                 path: 'roles',
-                                name: 'mgmt-roles-overview',
-                                component: () => import('../views/mgmt/projects/details/roles/RolesOverview.vue'),
+                                name: 'mgmt-roles-overview-root',
                                 meta: {
                                     breadcrumbFn: async () => "Roles",
                                 },
+                                children: [
+                                    {
+                                        path: '',
+                                        name: 'mgmt-roles-overview',
+                                        component: () => import('../views/mgmt/projects/details/roles/RolesOverview.vue'),
+                                    },
+                                    {
+                                        path: ':roleId',
+                                        name: 'mgmt-role-details',
+                                        component: () => import('../views/mgmt/projects/details/roles/details/RoleDetails.vue'),
+                                        meta: {
+                                            breadcrumbFn: async () => "Details",
+                                        },
+                                    }
+                                ],
                             },
                             {
                                 path: 'resource-servers',

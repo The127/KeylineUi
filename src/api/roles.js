@@ -39,3 +39,17 @@ export const createRoleFn = async (vsName, projectSlug, data) => {
         }
     )
 }
+
+export const useGetRoleQuery = (vsName, projectSlug, roleId) => useQuery({
+    queryKey: ['roles', vsName, projectSlug, roleId],
+    queryFn: () => getRoleQueryFn(vsName, projectSlug, roleId),
+})
+
+export const getRoleQueryFn = async (vsName, projectSlug, roleId) => {
+    return await apiFetch(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/projects/${projectSlug}/roles/${roleId}`,
+        {
+            vsName: vsName,
+        }
+    )
+}
