@@ -7,18 +7,36 @@ import DataTable from "../../../../../components/dataTable/DataTable.vue";
 import DataTableColumn from "../../../../../components/dataTable/DataTableColumn.vue";
 import DataTableCell from "../../../../../components/dataTable/DataTableCell.vue";
 import {useRoute} from "vue-router";
+import {Plus} from "lucide-vue-next";
+import KeylineButton from "../../../../../components/KeylineButton.vue";
+import {ref} from "vue";
+import RoleCreateModal from "./RoleCreateModal.vue";
 
 const route = useRoute()
+
+const addRoleModal = ref(null)
+
+const onAddRole = () => {
+  addRoleModal.value.open()
+}
 
 </script>
 
 <template>
+  <RoleCreateModal ref="addRoleModal"/>
+
   <PageLayout>
     <template #header>
       <PageHeader
           title="Roles"
           subtitle="Manage roles"
-      />
+      >
+        <KeylineButton text="Add" @click="onAddRole">
+          <template #adornment>
+            <Plus/>
+          </template>
+        </KeylineButton>
+      </PageHeader>
     </template>
 
     <DataTable

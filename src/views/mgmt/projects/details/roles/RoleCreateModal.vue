@@ -2,18 +2,18 @@
 
 import {useRoute} from "vue-router";
 import {useToast} from "../../../../../composables/toast.js";
+import {reactive, ref} from "vue";
 import useVuelidate from "@vuelidate/core";
-import {useCreateResourceServerMutation} from "../../../../../api/resourceServers.js";
+import {useCreateRoleMutation} from "../../../../../api/roles.js";
 import ModalPopup from "../../../../../components/ModalPopup.vue";
 import KeylineForm from "../../../../../components/KeylineForm.vue";
 import KeylineInput from "../../../../../components/KeylineInput.vue";
-import {reactive, ref} from "vue";
 import {required} from "@vuelidate/validators";
 
 const route = useRoute()
 const toast = useToast()
 
-const addResourceServerModal = ref(null)
+const addRoleModal = ref(null)
 
 const formModel = reactive({
   name: '',
@@ -30,27 +30,27 @@ const open = () => {
 
   v$.value.$reset()
 
-  addResourceServerModal.value.open()
+  addRoleModal.value.open()
 }
 
-const createResourceServerMutation = useCreateResourceServerMutation(
+const createRoleMutation = useCreateRoleMutation(
     route.params.vsName,
     route.params.projectSlug,
 )
 
-const createResourceServer = async () => {
-  try {
-    const _ = await createResourceServerMutation.mutateAsync({
+const createRole = async () => {
+  try{
+    const _ = await createRoleMutation.mutateAsync({
       name: formModel.name,
     })
 
-    toast.success('Resource server created')
-  } catch (e) {
+    toast.success('Role created')
+  }catch (e) {
     console.error(e)
-    toast.error('Failed to create resource server')
+    toast.error('Failed to create role')
   }
 
-  addResourceServerModal.value.close()
+  addRoleModal.value.close()
 }
 
 defineExpose({
@@ -60,19 +60,19 @@ defineExpose({
 </script>
 
 <template>
-  <ModalPopup ref="addResourceServerModal" title="Add resource server">
+  <ModalPopup ref="addRoleModal" title="Add role">
     <KeylineForm
-        title="Add resource server"
-        @submit="createResourceServer"
-        :vuelidate="v$"
-        submit-text="Create resource server"
+      title="Add role"
+      @submit="createRole"
+      :vuelidate="v$"
+      submit-text="Create role"
     >
       <KeylineInput
-          label="Name"
-          v-model="v$.name.$model"
-          :vuelidate="v$.name"
-          required
-          helper-text="The name of the resource server."
+        label="Name"
+        v-model="v$.name.$model"
+        :vuelidate="v$.name"
+        required
+        helper-text="The name of the role. Must be unique."
       />
     </KeylineForm>
   </ModalPopup>
