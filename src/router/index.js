@@ -149,11 +149,25 @@ const routes = [
                             },
                             {
                                 path: 'resource-servers',
-                                name: 'mgmt-resource-servers-overview',
-                                component: () => import('../views/mgmt/projects/details/resourceServers/ResourceServersOverview.vue'),
+                                name: 'mgmt-resource-servers-overview-root',
                                 meta: {
                                     breadcrumbFn: async () => "Resource Servers",
                                 },
+                                children: [
+                                    {
+                                        path: '',
+                                        name: 'mgmt-resource-servers-overview',
+                                        component: () => import('../views/mgmt/projects/details/resourceServers/ResourceServersOverview.vue'),
+                                    },
+                                    {
+                                        path: ':resourceServerId',
+                                        name: 'mgmt-resource-server-details',
+                                        component: () => import('../views/mgmt/projects/details/resourceServers/details/ResourceServerDetails.vue'),
+                                        meta: {
+                                            breadcrumbFn: async () => "Details",
+                                        },
+                                    }
+                                ],
                             },
                         ],
                     },

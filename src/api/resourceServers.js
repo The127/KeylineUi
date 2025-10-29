@@ -39,3 +39,17 @@ export const createResourceServerFn = async (vsName, projectSlug, data) => {
         }
     )
 }
+
+export const useGetResourceServerQuery = (vsName, projectSlug, resourceServerId) => useQuery({
+    queryKey: ['resource-servers', vsName, projectSlug, resourceServerId],
+    queryFn: () => getResourceServerQueryFn(vsName, projectSlug, resourceServerId),
+})
+
+export const getResourceServerQueryFn = async (vsName, projectSlug, resourceServerId) => {
+    return await apiFetch(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/projects/${projectSlug}/resource-servers/${resourceServerId}`,
+        {
+            vsName: vsName,
+        }
+    )
+}

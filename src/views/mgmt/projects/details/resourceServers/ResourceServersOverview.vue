@@ -13,11 +13,24 @@ import {Plus} from "lucide-vue-next";
 import KeylineButton from "../../../../../components/KeylineButton.vue";
 
 const route = useRoute()
+const router = useRouter()
 
 const addResourceServerModal = ref(null)
 
 const onAddResourceServer = () => {
   addResourceServerModal.value.open()
+}
+
+const onNavigateToResourceServer = async (resourceServer) => {
+  await router.push({
+        name: 'mgmt-resource-server-details',
+        params: {
+          vsName: route.params.vsName,
+          projectSlug: route.params.projectSlug,
+          resourceServerId: resourceServer.id,
+        },
+      },
+  )
 }
 
 </script>
@@ -45,6 +58,7 @@ const onAddResourceServer = () => {
         autofocus
         title="Resource Servers"
         :query-fn="(pagination) => useListResourceServersQuery(route.params.vsName, route.params.projectSlug, pagination)"
+        :on-click="onNavigateToResourceServer"
     >
       <template #columns>
         <DataTableColumn title="Name" field="name" enable-order initial-order="asc"/>
