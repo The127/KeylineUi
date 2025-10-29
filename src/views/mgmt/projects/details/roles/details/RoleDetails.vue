@@ -36,6 +36,11 @@ const { data } = useGetRoleQuery(
             {{ data.name }}
           </LoadingSkeleton>
         </DataLayoutItem>
+        <DataLayoutItem title="Description" full-row>
+          <LoadingSkeleton :dep="data" class="w-32 h-4">
+            {{ data.description }}
+          </LoadingSkeleton>
+        </DataLayoutItem>
       </DataLayout>
     </BoxContainer>
 
