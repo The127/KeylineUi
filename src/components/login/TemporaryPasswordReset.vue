@@ -9,6 +9,7 @@ import HeadingText from "../HeadingText.vue";
 import KeylineButton from "../KeylineButton.vue";
 import KeylineForm from "../KeylineForm.vue";
 import {ConfigApiUrl} from "../../config.js";
+import KeylineInput from "../KeylineInput.vue";
 
 const { t } = useI18n({
   messages: {
@@ -120,7 +121,7 @@ const resetTemporaryPassword = useMutation({
         {{ loginError }}
       </p>
     </template>
-    <Key
+    <KeylineInput
         v-model="v$.newPassword.$model"
         :vuelidate="v$.newPassword"
         :label="t('newPassword')"

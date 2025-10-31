@@ -8,8 +8,10 @@ import TemporaryPasswordReset from "../components/login/TemporaryPasswordReset.v
 import {useI18n} from "vue-i18n";
 import LoadingSpinner from "../components/LoadingSpinner.vue";
 import {ConfigApiUrl} from "../config.js";
+import OnboardTotp from "../components/login/OnboardTotp.vue";
+import VerifyTotp from "../components/login/VerifyTotp.vue";
 
-const { t } = useI18n({
+const {t} = useI18n({
   messages: {
     en: {
       anErrorHappened: 'An error happened',
@@ -30,9 +32,10 @@ const { t } = useI18n({
 const route = useRoute()
 const queryClient = useQueryClient()
 
-class AuthError extends Error {}
+class AuthError extends Error {
+}
 
-const { isPending, isError, data, error } = useQuery({
+const {isPending, isError, data, error} = useQuery({
   queryKey: ['login', route.query.token],
   queryFn: async () => {
     const response = await fetch(`${ConfigApiUrl()}/logins/${route.query.token}`)
@@ -41,7 +44,7 @@ const { isPending, isError, data, error } = useQuery({
       throw new AuthError()
     }
 
-    if(response.status >= 400) {
+    if (response.status >= 400) {
       throw new Error(response.statusText)
     }
 
@@ -72,14 +75,14 @@ const finishLogin = () => {
 }
 
 const onNext = () => {
-  queryClient.invalidateQueries({ queryKey: ['login', route.query.token]})
+  queryClient.invalidateQueries({queryKey: ['login', route.query.token]})
 }
 
 </script>
 
 <template>
   <div v-if="isPending" class="flex flex-row justify-center items-center">
-      <LoadingSpinner/>
+    <LoadingSpinner/>
   </div>
   <div v-else-if="isError">
     <div v-if="error instanceof AuthError">
@@ -107,6 +110,18 @@ const onNext = () => {
         v-else-if="data.step === 'emailVerification'"
         :token="route.query.token"
         :data="data"
+        @next="onNext"
+    />
+    <OnboardTotp
+        v-else-if="data.step === 'onboardTotp'"
+        :token="route.query.token"
+        :data="data"
+        @next="onNext"
+    />
+    <VerifyTotp
+        v-else-if="data.step === 'verifyTotp'"
+        :data="data"
+        :token="route.query.token"
         @next="onNext"
     />
     <div
