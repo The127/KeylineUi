@@ -11,8 +11,10 @@ import HeadingText from "../HeadingText.vue";
 import KeylineButton from "../KeylineButton.vue";
 import KeylineForm from "../KeylineForm.vue";
 import {ConfigApiUrl} from "../../config.js";
+import {apiFetch} from "../../api/index.js";
+import {log} from "qrcode/lib/core/galois-field.js";
 
-const { t } = useI18n({
+const {t} = useI18n({
   messages: {
     en: {
       title: 'Sign in to {appName}',
@@ -77,8 +79,8 @@ const formModel = reactive({
 })
 
 const formRules = {
-  username: { required, },
-  password: { required, },
+  username: {required,},
+  password: {required,},
 }
 
 const v$ = useVuelidate(formRules, formModel)
@@ -86,22 +88,23 @@ const v$ = useVuelidate(formRules, formModel)
 const loginError = ref(null)
 
 const onFormSubmit = async () => {
-  try{
+  try {
     await verifyPassword.mutateAsync({
       username: formModel.username,
       password: formModel.password,
     })
-  }catch(e){
+  } catch (e) {
     if (e instanceof AuthError) {
       loginError.value = t('usernameOrPasswordWrong')
-    }else{
+    } else {
       loginError.value = t('anErrorHappened')
       console.error(e)
     }
   }
 }
 
-class AuthError extends Error {}
+class AuthError extends Error {
+}
 
 const verifyPassword = useMutation({
   mutationFn: async (data) => {
@@ -127,6 +130,43 @@ const verifyPassword = useMutation({
   },
 })
 
+const onSignInWithPasskey = async () => {
+  const loginInfo = await apiFetch(ConfigApiUrl() + `/logins/${props.token}/passkey/start`, {
+    method: 'POST',
+  });
+
+  const credential = await navigator.credentials.get({
+    mediation: "required",
+    publicKey: {
+      challenge: Uint8Array.fromBase64(loginInfo.challenge),
+    }
+  });
+
+  try {
+    await apiFetch(`${ConfigApiUrl()}/logins/${props.token}/passkey/finish`, {
+      method: "POST",
+      body: JSON.stringify({
+        id: loginInfo.id,
+        rawId: btoa(String.fromCharCode(...new Uint8Array(credential.rawId))),
+        response: {
+          authenticatorData: btoa(String.fromCharCode(...new Uint8Array(credential.response.authenticatorData))),
+          clientDataJSON: btoa(String.fromCharCode(...new Uint8Array(credential.response.clientDataJSON))),
+          signature: btoa(String.fromCharCode(...new Uint8Array(credential.response.signature))),
+          userHandle: credential.response.userHandle
+              ? btoa(String.fromCharCode(...new Uint8Array(credential.response.userHandle)))
+              : null,
+        },
+        type: credential.type,
+      }),
+      headers: {"Content-Type": "application/json"},
+    });
+
+    emit('next')
+  }catch(e){
+    console.error(e)
+  }
+}
+
 </script>
 
 <template>
@@ -138,10 +178,10 @@ const verifyPassword = useMutation({
   >
     <template #header>
       <HeadingText class="text-center">
-        {{ t('title', { appName: data.applicationDisplayName }) }}
+        {{ t('title', {appName: data.applicationDisplayName}) }}
       </HeadingText>
       <HeadingText level="h2" class="text-center">
-        {{ t('subtitle', { tenantName: data.virtualServerDisplayName}) }}
+        {{ t('subtitle', {tenantName: data.virtualServerDisplayName}) }}
       </HeadingText>
       <p class="text-center text-red-700" v-if="loginError">
         {{ loginError }}
@@ -180,9 +220,11 @@ const verifyPassword = useMutation({
       <HorizontalDivider :text="t('or')"/>
       <div v-if="data.signupEnabled" class="flex flex-row flex-wrap items-center justify-center gap-1">
         <span>{{ t('dontHaveAnAccount') }}</span>
-        <RouterLink :to="{name: 'signup', params: {virtualServer: data.virtualServerName}, query: { token: token, },}">{{ t('register') }}</RouterLink>
+        <RouterLink :to="{name: 'signup', params: {virtualServer: data.virtualServerName}, query: { token: token, },}">
+          {{ t('register') }}
+        </RouterLink>
       </div>
-      <KeylineButton variant="link" :text="t('signInWithPasskey')"></KeylineButton>
+      <KeylineButton variant="link" :text="t('signInWithPasskey')" @click="onSignInWithPasskey"/>
     </template>
   </KeylineForm>
 </template>
