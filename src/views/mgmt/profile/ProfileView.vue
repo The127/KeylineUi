@@ -6,14 +6,12 @@ import {useQuery} from "@tanstack/vue-query";
 import {useRoute} from "vue-router";
 import {useUserManager} from "../../../composables/userManager.js";
 import ModelMetadata from "../../../components/ModelMetadata.vue";
-import KeylineButton from "../../../components/KeylineButton.vue";
-import DataLayout from "../../../components/dataLayout/DataLayout.vue";
-import DataLayoutItem from "../../../components/dataLayout/DataLayoutItem.vue";
 import GeneralTab from "./GeneralTab.vue";
 import TabLayout from "../../../components/tabs/TabLayout.vue";
 import TabPage from "../../../components/tabs/TabPage.vue";
-import BoxContainer from "../../../components/BoxContainer.vue";
 import {ConfigApiUrl} from "../../../config.js";
+import SecurityTab from "./SecurityTab.vue";
+import {apiFetch} from "../../../api/index.js";
 
 const route = useRoute()
 const userManager = useUserManager(route.params.vsName)
@@ -22,14 +20,12 @@ const { data } = useQuery({
   queryKey: ['profile'],
   queryFn: async () => {
     const user = await userManager.getUser()
-    const response = await fetch(ConfigApiUrl() + `/api/virtual-servers/${route.params.vsName}/users/${user.profile.sub}`)
-    return response.json()
+    return await apiFetch(ConfigApiUrl() + `/api/virtual-servers/${route.params.vsName}/users/${user.profile.sub}`, {
+      vsName: route.params.vsName,
+    })
   }
 })
 
-const onEditPassword = () => {
-  alert('Password')
-}
 
 </script>
 
@@ -48,48 +44,7 @@ const onEditPassword = () => {
       </TabPage>
 
       <TabPage title="Security" name="security">
-        <BoxContainer>
-          <DataLayout title="Password">
-            <template #actions>
-              <KeylineButton
-                  @click="onEditPassword"
-                  text="Edit"
-                  variant="secondary"
-                  size="sm"
-              />
-            </template>
-
-            <DataLayoutItem title="Temporary">
-              false
-            </DataLayoutItem>
-          </DataLayout>
-        </BoxContainer>
-
-        <BoxContainer>
-          <DataLayout title="2 Factor Authentication">
-            <template #actions>
-              <KeylineButton
-                  @click="onEditPassword"
-                  text="Add"
-                  variant="secondary"
-                  size="sm"
-              />
-            </template>
-          </DataLayout>
-        </BoxContainer>
-
-        <BoxContainer>
-          <DataLayout title="Passkeys">
-            <template #actions>
-              <KeylineButton
-                  @click="onEditPassword"
-                  text="Add"
-                  variant="secondary"
-                  size="sm"
-              />
-            </template>
-          </DataLayout>
-        </BoxContainer>
+        <SecurityTab />
       </TabPage>
     </TabLayout>
 
