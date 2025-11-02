@@ -37,8 +37,20 @@ const enrollPasskey = async () => {
       pubKeyCredParams: [
         {
           type: "public-key",
-          alg: -7,
-        }
+          alg: -8, // Ed25519 (COSE calls this EdDSA and marks it as deprecated, but it seems to be what authenticators use for Ed25519)
+        },
+        {
+          type: "public-key",
+          alg: -7, // ES256 (ECDSA w/ SHA-256)
+        },
+        {
+          type: "public-key",
+          alg: -37, // PS256 (RSASSA-PSS w/ SHA-256)
+        },
+        {
+          type: "public-key",
+          alg: -257, // RS256 (RSASSA-PKCS1-v1_5 using SHA-256)
+        },
       ],
       authenticatorSelection: {
         residentKey: 'preferred',
@@ -54,12 +66,7 @@ const enrollPasskey = async () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         id: enrollInfo.id,
-        rawId: btoa(String.fromCharCode(...new Uint8Array(publicKeyCredential.rawId))),
-        type: publicKeyCredential.type,
-        response: {
-          attestationObject: btoa(String.fromCharCode(...new Uint8Array(publicKeyCredential.response.attestationObject))),
-          clientDataJSON: btoa(String.fromCharCode(...new Uint8Array(publicKeyCredential.response.clientDataJSON))),
-        }
+        webauthnResponse: publicKeyCredential.toJSON(),
       })
     });
   }catch (e) {

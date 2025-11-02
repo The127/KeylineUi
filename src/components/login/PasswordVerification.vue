@@ -3,7 +3,7 @@
 import KeylineInput from "../KeylineInput.vue";
 import HorizontalDivider from "../HorizontalDivider.vue";
 import {useI18n} from "vue-i18n";
-import {reactive, ref} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import {useMutation} from "@tanstack/vue-query";
@@ -130,41 +130,44 @@ const verifyPassword = useMutation({
   },
 })
 
-const onSignInWithPasskey = async () => {
-  const loginInfo = await apiFetch(ConfigApiUrl() + `/logins/${props.token}/passkey/start`, {
+const passkeyLoginInfoPromise = ref(null);
+
+onMounted(async () => {
+  passkeyLoginInfoPromise.value = apiFetch(ConfigApiUrl() + `/logins/${props.token}/passkey/start`, {
     method: 'POST',
   });
 
-  const credential = await navigator.credentials.get({
-    mediation: "required",
-    publicKey: {
-      challenge: Uint8Array.fromBase64(loginInfo.challenge),
-    }
-  });
+  await passkeyLogin(true);
+})
+
+const passkeyLogin = async (conditionalMediation) => {
+  const loginInfo = await passkeyLoginInfoPromise.value;
 
   try {
+    const credential = await navigator.credentials.get({
+      mediation: conditionalMediation ? "conditional" : "required",
+      publicKey: {
+        challenge: Uint8Array.fromBase64(loginInfo.challenge),
+      }
+    });
+
     await apiFetch(`${ConfigApiUrl()}/logins/${props.token}/passkey/finish`, {
       method: "POST",
       body: JSON.stringify({
         id: loginInfo.id,
-        rawId: btoa(String.fromCharCode(...new Uint8Array(credential.rawId))),
-        response: {
-          authenticatorData: btoa(String.fromCharCode(...new Uint8Array(credential.response.authenticatorData))),
-          clientDataJSON: btoa(String.fromCharCode(...new Uint8Array(credential.response.clientDataJSON))),
-          signature: btoa(String.fromCharCode(...new Uint8Array(credential.response.signature))),
-          userHandle: credential.response.userHandle
-              ? btoa(String.fromCharCode(...new Uint8Array(credential.response.userHandle)))
-              : null,
-        },
-        type: credential.type,
+        webauthnResponse: credential.toJSON(),
       }),
       headers: {"Content-Type": "application/json"},
     });
 
-    emit('next')
-  }catch(e){
-    console.error(e)
+    emit('next');
+  } catch (e) {
+    console.error(e);
   }
+}
+
+const onSignInWithPasskey = async () => {
+  await passkeyLogin(false);
 }
 
 </script>
@@ -194,6 +197,7 @@ const onSignInWithPasskey = async () => {
         required
         tabindex="1"
         autofocus
+        autocomplete="username webauthn"
     />
     <KeylineInput
         type="password"
