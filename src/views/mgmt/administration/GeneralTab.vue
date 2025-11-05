@@ -76,12 +76,7 @@ const {passwordRules} = useListPasswordRulesQuery(route.params.vsName)
   <BoxContainer>
     <DataLayout title="Password policies">
       <DataLayoutItem title="Rules" full-row>
-        <NoContent :cond="!passwordRules?.items">
-          <template #no-content>
-            <span class="text-slate-600">
-              No password policy rules configured.
-            </span>
-          </template>
+        <NoContent :cond="!passwordRules?.items" message="No password policy rules configured.">
           TODO: show the rules that are configured
         </NoContent>
       </DataLayoutItem>
