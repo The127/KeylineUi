@@ -9,6 +9,7 @@ import HeadingBar from "../../../components/HeadingBar.vue";
 import {useRoute} from "vue-router";
 import {useListPasswordRulesQuery} from "../../../api/passwordRules.js";
 import NoContent from "../../../components/NoContent.vue";
+import KeylineButton from "../../../components/KeylineButton.vue";
 
 const route = useRoute()
 
@@ -19,6 +20,10 @@ defineProps({
 })
 
 const {passwordRules} = useListPasswordRulesQuery(route.params.vsName)
+
+const onEditPasswordPolicies = () => {
+  alert("todo")
+}
 
 </script>
 
@@ -75,6 +80,10 @@ const {passwordRules} = useListPasswordRulesQuery(route.params.vsName)
 
   <BoxContainer>
     <DataLayout title="Password policies">
+      <template #actions>
+        <KeylineButton text="edit" variant="secondary" size="sm" @click="onEditPasswordPolicies"/>
+      </template>
+
       <DataLayoutItem title="Rules" full-row>
         <NoContent :cond="!passwordRules?.items" message="No password policy rules configured.">
           TODO: show the rules that are configured
