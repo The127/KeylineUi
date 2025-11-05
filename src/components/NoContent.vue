@@ -22,9 +22,11 @@ const messageValue = computed(() => {
 </script>
 
 <template>
-  <span v-if="cond" class="text-slate-600">
-    {{ messageValue }}
-  </span>
+  <slot v-if="cond" name="no-content">
+    <span  class="text-slate-600">
+      {{ messageValue }}
+    </span>
+  </slot>
   <slot v-else/>
 </template>
 
