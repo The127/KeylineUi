@@ -5,12 +5,20 @@ import DataLayoutItem from "../../../components/dataLayout/DataLayoutItem.vue";
 import VerifiedBadge from "../../../components/VerifiedBadge.vue";
 import LoadingSkeleton from "../../../components/LoadingSkeleton.vue";
 import BoxContainer from "../../../components/BoxContainer.vue";
+import HeadingBar from "../../../components/HeadingBar.vue";
+import {useRoute} from "vue-router";
+import {useListPasswordRulesQuery} from "../../../api/passwordRules.js";
+import NoContent from "../../../components/NoContent.vue";
+
+const route = useRoute()
 
 defineProps({
   data: {
     required: true,
   },
 })
+
+const {passwordRules} = useListPasswordRulesQuery(route.params.vsName)
 
 </script>
 
@@ -61,6 +69,21 @@ defineProps({
               :verified="data.requireEmailVerification"
           />
         </LoadingSkeleton>
+      </DataLayoutItem>
+    </DataLayout>
+  </BoxContainer>
+
+  <BoxContainer>
+    <DataLayout title="Password policies">
+      <DataLayoutItem title="Rules" full-row>
+        <NoContent :cond="!passwordRules?.items">
+          <template #no-content>
+            <span class="text-slate-600">
+              No password policy rules configured.
+            </span>
+          </template>
+          TODO: show the rules that are configured
+        </NoContent>
       </DataLayoutItem>
     </DataLayout>
   </BoxContainer>
