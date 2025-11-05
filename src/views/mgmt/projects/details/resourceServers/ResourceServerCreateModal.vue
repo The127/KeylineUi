@@ -16,11 +16,13 @@ const toast = useToast()
 const addResourceServerModal = ref(null)
 
 const formModel = reactive({
+  slug: '',
   name: '',
 })
 
 const formRules = {
-  name: {required},
+  slug: {required},
+  name: {},
 }
 
 const v$ = useVuelidate(formRules, formModel)
@@ -41,7 +43,8 @@ const createResourceServerMutation = useCreateResourceServerMutation(
 const createResourceServer = async () => {
   try {
     const _ = await createResourceServerMutation.mutateAsync({
-      name: formModel.name,
+      slug: formModel.slug,
+      name: !!formModel.name ? formModel.name : formModel.slug,
     })
 
     toast.success('Resource server created')
@@ -68,10 +71,16 @@ defineExpose({
         submit-text="Create resource server"
     >
       <KeylineInput
+          label="Slug"
+          v-model="v$.slug.$model"
+          :vuelidate="v$.slug"
+          required
+          helper-text="The slug of the resource server. (Must be unique per project)"
+      />
+      <KeylineInput
           label="Name"
           v-model="v$.name.$model"
           :vuelidate="v$.name"
-          required
           helper-text="The name of the resource server."
       />
     </KeylineForm>

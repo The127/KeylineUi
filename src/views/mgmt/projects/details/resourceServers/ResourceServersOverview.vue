@@ -61,10 +61,14 @@ const onNavigateToResourceServer = async (resourceServer) => {
         :on-click="onNavigateToResourceServer"
     >
       <template #columns>
-        <DataTableColumn title="Name" field="name" enable-order initial-order="asc"/>
+        <DataTableColumn title="Slug" field="slug" enable-order initial-order="asc"/>
+        <DataTableColumn title="Name" field="name" enable-order/>
       </template>
 
       <template #row="{ item: resourceServer }">
+        <DataTableCell>
+          {{ resourceServer.slug }}
+        </DataTableCell>
         <DataTableCell>
           {{ resourceServer.name }}
         </DataTableCell>
