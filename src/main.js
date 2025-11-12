@@ -7,7 +7,6 @@ import router from './router'
 import {i18n} from "./i18n.js";
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import CodeEditor from 'simple-code-editor';
-import hljs from 'highlight.js';
 
 const app = createApp(App);
 app.component('QuillEditor', QuillEditor)
