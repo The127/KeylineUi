@@ -36,7 +36,7 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <nav aria-label="Breadcrumb" class="px-10 pt-5">
+  <nav aria-label="Breadcrumb" class="px-5 pt-5">
     <ol class="flex items-center">
       <li v-for="(crumb, index) in breadcrumbs" :key="index" class="flex items-center">
         <span v-if="index === breadcrumbs.length - 1 || !crumb.to">

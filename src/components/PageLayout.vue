@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="flex flex-col gap-5 px-10 py-5">
+  <div class="flex flex-col gap-5 px-5 py-5">
     <slot name="header"/>
     <slot/>
     <slot name="footer"/>
