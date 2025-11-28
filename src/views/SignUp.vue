@@ -182,6 +182,7 @@ const onFormSubmit = async () => {
       {{ t('youCanNowLogin') }}
     </p>
     <RouterLink
+        class="link"
         v-if="route.query.token"
         :to="{name: 'login', query: { token: route.query.token, },}"
     >

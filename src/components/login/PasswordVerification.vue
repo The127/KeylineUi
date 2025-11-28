@@ -208,7 +208,7 @@ const onSignInWithPasskey = async () => {
         tabindex="2"
     >
       <template #action>
-        <RouterLink :to="{name: 'forgot-password', params: {virtualServer: data.virtualServerName,},}" tabindex="4">
+        <RouterLink class="link" :to="{name: 'forgot-password', params: {virtualServer: data.virtualServerName,},}" tabindex="4">
           {{ t('forgotPassword') }}
         </RouterLink>
       </template>
@@ -224,7 +224,7 @@ const onSignInWithPasskey = async () => {
       <HorizontalDivider :text="t('or')"/>
       <div v-if="data.signupEnabled" class="flex flex-row flex-wrap items-center justify-center gap-1">
         <span>{{ t('dontHaveAnAccount') }}</span>
-        <RouterLink :to="{name: 'signup', params: {virtualServer: data.virtualServerName}, query: { token: token, },}">
+        <RouterLink class="link" :to="{name: 'signup', params: {virtualServer: data.virtualServerName}, query: { token: token, },}">
           {{ t('register') }}
         </RouterLink>
       </div>
