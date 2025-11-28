@@ -35,7 +35,7 @@ const onLogout = async () => {
 
     <div class="flex-1">
       <div class="flex flex-col h-screen overflow-hidden">
-        <div class="mx-5 flex flex-row gap-3 h-20 justify-between items-center border-b border-b-slate-300 py-5">
+        <div class="mx-5 flex flex-row gap-3 h-20 justify-between items-center border-b border-b-slate-200 py-5">
           <div>
             <KeylineInput
                 label="Global search"
