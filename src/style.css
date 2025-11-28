@@ -5,11 +5,9 @@ body {
     @apply text-slate-900;
 }
 
-a {
+.link {
     @apply text-emerald-600 hover:text-emerald-700;
-    @apply underline hover:no-underline;
     @apply cursor-pointer;
-    @apply rounded-sm;
 }
 
 :focus-visible {

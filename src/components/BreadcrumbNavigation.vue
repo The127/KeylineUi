@@ -42,7 +42,7 @@ watchEffect(async () => {
         <span v-if="index === breadcrumbs.length - 1 || !crumb.to">
           {{ crumb.label }}
         </span>
-        <RouterLink v-else :to="crumb.to">
+        <RouterLink v-else :to="crumb.to" class="link">
           {{ crumb.label }}
         </RouterLink>
         <ChevronRight v-if="index < breadcrumbs.length - 1" class="text-gray-500 w-4 h-4"/>
