@@ -30,12 +30,12 @@ const onLogout = async () => {
 </script>
 
 <template>
-  <div class="flex flex-row">
+  <div class="flex flex-row bg-offwhite text-slate-900">
     <SideMenu/>
 
     <div class="flex-1">
       <div class="flex flex-col h-screen overflow-hidden">
-        <div class="flex flex-row gap-3 h-20 justify-between items-center bg-slate-200 border-b border-b-slate-300 p-5">
+        <div class="mx-5 flex flex-row gap-3 h-20 justify-between items-center border-b border-b-slate-300 py-5">
           <div>
             <KeylineInput
                 label="Global search"

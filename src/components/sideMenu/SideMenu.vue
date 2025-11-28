@@ -6,8 +6,8 @@ import KeylineIcon from "../icons/KeylineIcon.vue";
 
 <template>
 
-  <div class="flex flex-col w-64 bg-slate-200 border-r border-r-slate-300">
-    <div class="h-20 px-5 border-b border-b-slate-300 flex flex-row items-center">
+  <div class="flex flex-col w-80 bg-slate-100 border-r border-r-slate-300">
+    <div class="h-20 mx-5 border-b border-b-slate-300 flex flex-row items-center">
       <RouterLink :to="{name: 'mgmt-dashboard'}" class="flex flex-row gap-2 items-center">
         <KeylineIcon class="w-12 h-12 "/>
         <span class="text-xl">Keyline</span>
