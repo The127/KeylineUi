@@ -17,3 +17,39 @@ body {
 .has-error {
     @apply border-red-700 ring-red-700/50;
 }
+
+
+
+.slider {
+    @apply not-dark:bg-slate-100 dark:bg-slate-600;
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+    border-radius: 28px;
+    transition: 0.3s;
+}
+
+.slider:before {
+    @apply not-dark:bg-slate-300 dark:bg-slate-400;
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    @apply not-dark:bg-emerald-600 dark:bg-emerald-800;
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px);
+}
+
+input:focus + .slider {
+    @apply ring-3 ring-emerald-600/50 outline-none border-emerald-600;
+}
