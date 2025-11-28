@@ -13,8 +13,8 @@ import KeylineIcon from "../components/icons/KeylineIcon.vue";
       <span class="flex flex-row flex-wrap items-center gap-1 justify-baseline">
         <KeylineIcon class="w-6 h-6"/>
         <span class="text-slate-500">Powered by</span>
-        <a href="https://github.com/the127/keyline">
-          Keyline
+        <a href="https://github.com/the127/keyline" class="link">
+          keyline
         </a>
       </span>
     </footer>
