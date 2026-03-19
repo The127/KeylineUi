@@ -37,6 +37,22 @@ const routes = [
         },
     },
     {
+        path: '/:virtualServer/activate',
+        name: 'activate',
+        component: () => import('../views/ActivateView.vue'),
+        meta: {
+            layout: "login-layout",
+        },
+    },
+    {
+        path: '/:virtualServer/activate/success',
+        name: 'activate-success',
+        component: () => import('../views/ActivateSuccessView.vue'),
+        meta: {
+            layout: "login-layout",
+        },
+    },
+    {
         path: "/:virtualServer/forgot-password",
         name: 'forgot-password',
         component: () => import('../views/ForgotPassword.vue'),
