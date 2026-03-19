@@ -1,6 +1,6 @@
 <script setup>
 
-import {inject, nextTick, onMounted, ref} from "vue";
+import {inject, onMounted, ref} from "vue";
 import {ChevronUp, ChevronDown, Minus} from "lucide-vue-next";
 
 const props = defineProps({

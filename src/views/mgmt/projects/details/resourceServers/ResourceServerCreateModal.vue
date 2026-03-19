@@ -42,9 +42,9 @@ const createResourceServerMutation = useCreateResourceServerMutation(
 
 const createResourceServer = async () => {
   try {
-    const _ = await createResourceServerMutation.mutateAsync({
+    await createResourceServerMutation.mutateAsync({
       slug: formModel.slug,
-      name: !!formModel.name ? formModel.name : formModel.slug,
+      name: formModel.name ? formModel.name : formModel.slug,
     })
 
     toast.success('Resource server created')

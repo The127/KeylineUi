@@ -5,10 +5,6 @@ import {useGetResourceServerQuery} from "../../../../../../api/resourceServers.j
 import PageLayout from "../../../../../../components/PageLayout.vue";
 import PageHeader from "../../../../../../components/PageHeader.vue";
 import ModelMetadata from "../../../../../../components/ModelMetadata.vue";
-import BoxContainer from "../../../../../../components/BoxContainer.vue";
-import DataLayout from "../../../../../../components/dataLayout/DataLayout.vue";
-import DataLayoutItem from "../../../../../../components/dataLayout/DataLayoutItem.vue";
-import LoadingSkeleton from "../../../../../../components/LoadingSkeleton.vue";
 import TabLayout from "../../../../../../components/tabs/TabLayout.vue";
 import TabPage from "../../../../../../components/tabs/TabPage.vue";
 import GeneralTab from "./GeneralTab.vue";

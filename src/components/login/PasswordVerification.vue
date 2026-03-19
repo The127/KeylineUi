@@ -12,7 +12,6 @@ import KeylineButton from "../KeylineButton.vue";
 import KeylineForm from "../KeylineForm.vue";
 import {ConfigApiUrl} from "../../config.js";
 import {apiFetch} from "../../api/index.js";
-import {log} from "qrcode/lib/core/galois-field.js";
 
 const {t} = useI18n({
   messages: {

@@ -23,7 +23,7 @@ const route = useRoute()
       <DataTableColumn title="Name" field="name" enable-order/>
     </template>
 
-    <template #row="{ item: socpe }">
+    <template #row="{ item: scope }">
       <DataTableCell>
         {{ scope.scope }}
       </DataTableCell>

@@ -5,7 +5,6 @@ import DataLayoutItem from "../../../components/dataLayout/DataLayoutItem.vue";
 import VerifiedBadge from "../../../components/VerifiedBadge.vue";
 import LoadingSkeleton from "../../../components/LoadingSkeleton.vue";
 import BoxContainer from "../../../components/BoxContainer.vue";
-import HeadingBar from "../../../components/HeadingBar.vue";
 import {useRoute} from "vue-router";
 import {useListPasswordRulesQuery} from "../../../api/passwordRules.js";
 import NoContent from "../../../components/NoContent.vue";

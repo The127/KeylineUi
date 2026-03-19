@@ -1,13 +1,12 @@
 <script setup>
 
-import KeylineIcon from "../../components/icons/KeylineIcon.vue";
 import KeylineInput from "../../components/KeylineInput.vue";
 import {useUserManager} from "../../composables/userManager.js";
 import {useRoute} from "vue-router";
 import {computedAsync} from "@vueuse/core";
 import MenuItem from "../../components/menu/MenuItem.vue";
 import MenuDivider from "../../components/menu/MenuDivider.vue";
-import {ConfigApiUrl, ConfigHost} from "../../config.js";
+import {ConfigHost} from "../../config.js";
 import PopupMenu from "../../components/menu/PopupMenu.vue";
 import UserAvatar from "../../components/UserAvatar.vue";
 import BreadcrumbNavigation from "../../components/BreadcrumbNavigation.vue";

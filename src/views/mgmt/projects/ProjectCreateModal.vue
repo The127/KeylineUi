@@ -42,7 +42,7 @@ const createProjectMutation = useCreateProjectMutation(route.params.vsName)
 
 const createProject = async () => {
   try{
-    const createResponse = await createProjectMutation.mutateAsync({
+    await createProjectMutation.mutateAsync({
       name: formModel.name,
       slug: formModel.slug,
       description: '',

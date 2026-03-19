@@ -40,7 +40,7 @@ const createRoleMutation = useCreateRoleMutation(
 
 const createRole = async () => {
   try{
-    const _ = await createRoleMutation.mutateAsync({
+    await createRoleMutation.mutateAsync({
       name: formModel.name,
     })
 

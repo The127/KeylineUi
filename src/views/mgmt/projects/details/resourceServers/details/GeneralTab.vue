@@ -5,7 +5,7 @@ import DataLayout from "../../../../../../components/dataLayout/DataLayout.vue";
 import LoadingSkeleton from "../../../../../../components/LoadingSkeleton.vue";
 import BoxContainer from "../../../../../../components/BoxContainer.vue";
 
-const props = defineProps({
+defineProps({
   data: {
     type: Object,
     required: true,
