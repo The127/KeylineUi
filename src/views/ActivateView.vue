@@ -1,7 +1,7 @@
 <script setup>
 
 import {useI18n} from "vue-i18n";
-import {reactive, ref} from "vue";
+import {reactive} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import HeadingText from "../components/HeadingText.vue";
@@ -9,7 +9,7 @@ import KeylineButton from "../components/KeylineButton.vue";
 import KeylineForm from "../components/KeylineForm.vue";
 import KeylineInput from "../components/KeylineInput.vue";
 import {ConfigApiUrl} from "../config.js";
-import {useRoute, useRouter} from "vue-router";
+import {useRoute} from "vue-router";
 
 const {t} = useI18n({
   messages: {
@@ -42,7 +42,6 @@ const {t} = useI18n({
 })
 
 const route = useRoute()
-const router = useRouter()
 
 const formModel = reactive({
   userCode: route.query.user_code ?? '',
@@ -54,42 +53,21 @@ const formRules = {
 
 const v$ = useVuelidate(formRules, formModel)
 
-const submitError = ref(null)
-const isPending = ref(false)
 
 const onFormSubmit = async () => {
-  submitError.value = null
-  isPending.value = true
+  const form = document.createElement('form')
+  form.method = 'POST'
+  form.action = `${ConfigApiUrl()}/oidc/${route.params.virtualServer}/activate`
+  form.style = 'display: none'
 
-  try {
-    const body = new URLSearchParams({user_code: formModel.userCode})
-    const response = await fetch(
-        `${ConfigApiUrl()}/oidc/${route.params.virtualServer}/activate`,
-        {
-          method: 'POST',
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          body: body.toString(),
-          redirect: 'follow',
-        }
-    )
+  const input = document.createElement('input')
+  input.type = 'hidden'
+  input.name = 'user_code'
+  input.value = formModel.userCode
+  form.appendChild(input)
 
-    if (response.status === 404) {
-      submitError.value = t('invalidCode')
-      return
-    }
-
-    if (!response.ok) {
-      submitError.value = t('anErrorHappened')
-      return
-    }
-
-    const finalUrl = new URL(response.url)
-    await router.push({path: finalUrl.pathname, query: Object.fromEntries(finalUrl.searchParams)})
-  } catch {
-    submitError.value = t('anErrorHappened')
-  } finally {
-    isPending.value = false
-  }
+  document.body.appendChild(form)
+  form.submit()
 }
 
 </script>
@@ -108,9 +86,7 @@ const onFormSubmit = async () => {
       <p class="text-center text-gray-500">
         {{ t('subtitle') }}
       </p>
-      <p class="text-center text-red-700" v-if="submitError">
-        {{ submitError }}
-      </p>
+
     </template>
     <KeylineInput
         v-model="v$.userCode.$model"
@@ -126,7 +102,7 @@ const onFormSubmit = async () => {
           size="lg"
           type="submit"
           :text="t('submit')"
-          :disabled="isPending"
+          :disabled="false"
       />
     </template>
   </KeylineForm>
