@@ -4,14 +4,11 @@
 
 <template>
   <button
-      class="w-7 h-7 border text-sm
-        disabled:text-slate-400 disabled:border-slate-400
-        hover:not-disabled:cursor-pointer hover:not-disabled:underline
-        hover:not-disabled:text-slate-900 hover:not-disabled:bg-slate-100
-        border-slate-500/50
-        text-slate-500
-        first:rounded-l-md last:rounded-r-md not-last:border-r-0
-        flex items-center justify-center"
+      class="w-8 h-8 text-sm rounded-md
+        disabled:text-slate-300 disabled:cursor-default
+        hover:not-disabled:cursor-pointer hover:not-disabled:bg-emerald-50 hover:not-disabled:text-emerald-700
+        text-slate-500 bg-transparent
+        flex items-center justify-center transition-colors"
       v-bind="$attrs"
   >
     <slot/>

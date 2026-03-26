@@ -65,7 +65,7 @@ const pagesAfter = computed(() => {
       </PaginationButton>
     </template>
     <PaginationButton
-      class="bg-slate-50 text-slate-900"
+      class="!bg-emerald-600 !text-white font-medium"
     >
       {{ page }}
     </PaginationButton>
