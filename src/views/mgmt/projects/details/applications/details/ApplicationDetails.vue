@@ -172,43 +172,64 @@ const onClearScript = async () => {
 
       <TabPage title="Claims Mapping" name="claimsMapping">
         <BoxContainer>
-          <DataLayout title="Custom Claims Mapping">
-            <DataLayoutItem title="Explanation" full-row>
-              Keyline allows users to configure the claims mapping per application via the script shown below.
-              It is executed everytime an access token is generated for the application.
-              The script must return a json object containing the desired claims.
-            </DataLayoutItem>
+          <p class="text-sm text-gray-500">
+            Configure a custom JavaScript script that runs every time an access token is generated for this application.
+            The script must return a JSON object containing the desired claims.
+          </p>
+        </BoxContainer>
 
-            <DataLayoutItem title="Script" full-row>
+        <BoxContainer>
+          <DataLayout title="Script">
+            <template #actions>
+              <div class="flex flex-row gap-2">
+                <template v-if="editingScript">
+                  <KeylineButton text="Save" size="sm" @click="onSaveScript"/>
+                  <KeylineButton variant="secondary" text="Cancel" size="sm" @click="onCancelEdit"/>
+                </template>
+                <template v-else>
+                  <KeylineButton text="Edit" size="sm" @click="onEditScript"/>
+                  <KeylineButton variant="danger" text="Clear" size="sm" @click="onClearScript" v-if="data?.customClaimsMappingScript"/>
+                </template>
+              </div>
+            </template>
+
+            <DataLayoutItem full-row>
               <LoadingSkeleton :dep="data">
-                <div class="flex flex-col gap-3 w-full">
-                  <CodeEditor  v-if="editingScript" width="100%" :theme="editorTheme" v-model="claimsMappingScript"/>
+                <div class="w-full">
+                  <CodeEditor v-if="editingScript" width="100%" min-height="200px" border-radius="0.375rem" :theme="editorTheme" v-model="claimsMappingScript" line-nums/>
                   <template v-else>
                     <NoContent :cond="!data.customClaimsMappingScript" message="No claims mapping script configured.">
-                      <CodeEditor v-if="data.customClaimsMappingScript" width="100%" :theme="editorTheme" v-model="data.customClaimsMappingScript" read-only/>
+                      <CodeEditor v-if="data.customClaimsMappingScript" width="100%" min-height="200px" border-radius="0.375rem" :theme="editorTheme" v-model="data.customClaimsMappingScript" read-only line-nums/>
                     </NoContent>
                   </template>
-                  <div class="flex flex-row gap-3">
-                    <template v-if="editingScript">
-                      <KeylineButton text="Save" @click="onSaveScript"/>
-                      <KeylineButton variant="secondary" text="Cancel" @click="onCancelEdit"/>
-                    </template>
-                    <template v-else>
-                      <KeylineButton text="Edit" @click="onEditScript"/>
-                      <KeylineButton variant="danger" text="Clear" @click="onClearScript"/>
-                    </template>
-                  </div>
                 </div>
               </LoadingSkeleton>
             </DataLayoutItem>
+          </DataLayout>
+        </BoxContainer>
 
-            <DataLayoutItem title="Available variables" full-row>
-              <div class="flex flex-col gap-3">
-                <span>The following variables are available in custom claims mapping scripts:</span>
-                <div class="flex flex-col gap-1">
-                  <span>roles - an array of strings containing the global roles of the user</span>
-                  <span>applicationRoles - an array of strings containing the applicatoin roles of the user</span>
-                </div>
+        <BoxContainer>
+          <DataLayout title="Available variables">
+            <DataLayoutItem full-row>
+              <div class="w-full overflow-x-auto">
+                <table class="text-sm w-full">
+                  <thead>
+                    <tr class="text-left text-gray-500 border-b">
+                      <th class="pb-2 pr-4 font-medium">Variable</th>
+                      <th class="pb-2 font-medium">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-b last:border-0">
+                      <td class="py-2 pr-4"><code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">roles</code></td>
+                      <td class="py-2">An array of strings containing the global roles of the user</td>
+                    </tr>
+                    <tr class="border-b last:border-0">
+                      <td class="py-2 pr-4"><code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">applicationRoles</code></td>
+                      <td class="py-2">An array of strings containing the application roles of the user</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </DataLayoutItem>
           </DataLayout>
