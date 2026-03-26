@@ -12,6 +12,7 @@ import {useRoute, useRouter} from "vue-router";
 import {useListGroupsQuery, useCreateGroupMutation} from "../../../api/groups.js";
 import {useFormModal} from "../../../composables/formModal.js";
 import {required} from "@vuelidate/validators";
+import {Plus} from "lucide-vue-next";
 
 const route = useRoute()
 const router = useRouter()
@@ -41,7 +42,11 @@ const onRowClick = (group) => {
   <PageLayout>
     <template #header>
       <PageHeader title="Groups" subtitle="Manage groups">
-        <KeylineButton @click="create.open()" text="Add" variant="primary" size="sm"/>
+        <KeylineButton text="Add" @click="create.open()">
+          <template #adornment>
+            <Plus/>
+          </template>
+        </KeylineButton>
       </PageHeader>
     </template>
 
