@@ -5,15 +5,13 @@ import DataLayout from "../../../../../../components/dataLayout/DataLayout.vue";
 import LoadingSkeleton from "../../../../../../components/LoadingSkeleton.vue";
 import BoxContainer from "../../../../../../components/BoxContainer.vue";
 import KeylineButton from "../../../../../../components/KeylineButton.vue";
-import ModalPopup from "../../../../../../components/ModalPopup.vue";
-import KeylineForm from "../../../../../../components/KeylineForm.vue";
 import KeylineInput from "../../../../../../components/KeylineInput.vue";
+import EditFormModal from "../../../../../../components/EditFormModal.vue";
 import {useRoute} from "vue-router";
 import {usePatchResourceServerMutation} from "../../../../../../api/resourceServers.js";
-import {useToast} from "../../../../../../composables/toast.js";
-import {reactive, ref, watch} from "vue";
+import {useFormModal} from "../../../../../../composables/formModal.js";
 import {required} from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
+import {toRef} from "vue";
 
 const props = defineProps({
   data: {
@@ -23,19 +21,6 @@ const props = defineProps({
 })
 
 const route = useRoute()
-const toast = useToast()
-
-const editModal = ref(null)
-const editForm = reactive({name: '', description: ''})
-const editRules = {name: {required}}
-const editV$ = useVuelidate(editRules, editForm)
-
-watch(() => props.data, (newData) => {
-  if (newData) {
-    editForm.name = newData.name || ''
-    editForm.description = newData.description || ''
-  }
-})
 
 const patchResourceServer = usePatchResourceServerMutation(
     route.params.vsName,
@@ -43,47 +28,26 @@ const patchResourceServer = usePatchResourceServerMutation(
     route.params.resourceServerId,
 )
 
-const onEdit = () => {
-  editV$.value.$reset()
-  editModal.value.open()
-}
-
-const onEditSubmit = async () => {
-  try {
-    await patchResourceServer.mutateAsync({
-      name: editForm.name,
-      description: editForm.description,
-    })
-    toast.success('Resource server updated')
-    editModal.value.close()
-  } catch (e) {
-    toast.error('Failed to update resource server')
-  }
-}
+const edit = useFormModal({
+  fields: {name: '', description: ''},
+  rules: {name: {required}},
+  onSubmit: (form) => patchResourceServer.mutateAsync({name: form.name, description: form.description}),
+  toastMessages: {success: 'Resource server updated', error: 'Failed to update resource server'},
+})
+edit.syncFrom(toRef(props, 'data'))
 
 </script>
 
 <template>
-  <ModalPopup ref="editModal">
-    <KeylineForm title="Edit resource server"
-                 @submit="onEditSubmit"
-                 :vuelidate="editV$"
-    >
-      <KeylineInput label="Name"
-                    v-model="editV$.name.$model"
-                    :vuelidate="editV$.name"
-                    required
-      />
-      <KeylineInput label="Description"
-                    v-model="editForm.description"
-      />
-    </KeylineForm>
-  </ModalPopup>
+  <EditFormModal :ref="(el) => edit.modalRef.value = el" title="Edit resource server" :vuelidate="edit.v$" @submit="edit.submit">
+    <KeylineInput label="Name" v-model="edit.v$.name.$model" :vuelidate="edit.v$.name" required/>
+    <KeylineInput label="Description" v-model="edit.form.description"/>
+  </EditFormModal>
 
   <BoxContainer>
     <DataLayout title="Information">
       <template #actions>
-        <KeylineButton @click="onEdit" text="Edit" variant="secondary" size="sm"/>
+        <KeylineButton @click="edit.open(data)" text="Edit" variant="secondary" size="sm"/>
       </template>
 
       <DataLayoutItem title="Slug">

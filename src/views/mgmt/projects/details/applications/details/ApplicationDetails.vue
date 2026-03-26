@@ -24,12 +24,12 @@ import {
   usePatchApplicationMutation
 } from "../../../../../../api/applications.js";
 import {useToast} from "../../../../../../composables/toast.js";
-import {useRoute, useRouter} from "vue-router";
-import {usePopup} from "../../../../../../composables/popup.js";
+import {useRoute} from "vue-router";
+import {useDeleteConfirm} from "../../../../../../composables/deleteConfirm.js";
+
 
 const route = useRoute()
-const router = useRouter()
-const popupService = usePopup()
+const deleteConfirm = useDeleteConfirm()
 const toast = useToast()
 const isDark = useDark()
 
@@ -47,19 +47,14 @@ const deleteApplication = useDeleteApplicationMutation(
 )
 
 const onDeleteApplication = () => {
-  popupService.confirm({
+  deleteConfirm.confirm({
     title: 'Delete application',
     message: 'Are you sure you want to delete this application?',
-    onConfirm: async () => {
-      try {
-        await deleteApplication.mutateAsync(toValue(data).id)
-        await router.push({name: 'mgmt-applications'})
-        toast.success("Application deleted")
-      } catch (e) {
-        console.error(e)
-        toast.error("Could not delete application")
-      }
-    },
+    mutation: deleteApplication,
+    id: toValue(data).id,
+    navigateTo: {name: 'mgmt-applications-overview', params: {vsName: route.params.vsName, projectSlug: route.params.projectSlug}},
+    successMessage: 'Application deleted',
+    errorMessage: 'Could not delete application',
   })
 }
 

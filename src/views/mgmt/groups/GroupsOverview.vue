@@ -6,46 +6,24 @@ import DataTable from "../../../components/dataTable/DataTable.vue";
 import DataTableColumn from "../../../components/dataTable/DataTableColumn.vue";
 import DataTableCell from "../../../components/dataTable/DataTableCell.vue";
 import KeylineButton from "../../../components/KeylineButton.vue";
-import ModalPopup from "../../../components/ModalPopup.vue";
-import KeylineForm from "../../../components/KeylineForm.vue";
 import KeylineInput from "../../../components/KeylineInput.vue";
+import EditFormModal from "../../../components/EditFormModal.vue";
 import {useRoute, useRouter} from "vue-router";
 import {useListGroupsQuery, useCreateGroupMutation} from "../../../api/groups.js";
-import {useToast} from "../../../composables/toast.js";
-import {reactive, ref} from "vue";
+import {useFormModal} from "../../../composables/formModal.js";
 import {required} from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
 
 const route = useRoute()
 const router = useRouter()
-const toast = useToast()
-
-const createModal = ref(null)
-const createForm = reactive({name: '', description: ''})
-const createRules = {name: {required}}
-const createV$ = useVuelidate(createRules, createForm)
 
 const createGroup = useCreateGroupMutation(route.params.vsName)
 
-const onAdd = () => {
-  createForm.name = ''
-  createForm.description = ''
-  createV$.value.$reset()
-  createModal.value.open()
-}
-
-const onCreateSubmit = async () => {
-  try {
-    await createGroup.mutateAsync({
-      name: createForm.name,
-      description: createForm.description,
-    })
-    toast.success('Group created')
-    createModal.value.close()
-  } catch (e) {
-    toast.error('Failed to create group')
-  }
-}
+const create = useFormModal({
+  fields: {name: '', description: ''},
+  rules: {name: {required}},
+  onSubmit: (form) => createGroup.mutateAsync({name: form.name, description: form.description}),
+  toastMessages: {success: 'Group created', error: 'Failed to create group'},
+})
 
 const onRowClick = (group) => {
   router.push({name: 'mgmt-group-details', params: {vsName: route.params.vsName, groupId: group.id}})
@@ -54,30 +32,16 @@ const onRowClick = (group) => {
 </script>
 
 <template>
-  <ModalPopup ref="createModal">
-    <KeylineForm title="Create group"
-                 @submit="onCreateSubmit"
-                 :vuelidate="createV$"
-    >
-      <KeylineInput label="Name"
-                    v-model="createV$.name.$model"
-                    :vuelidate="createV$.name"
-                    required
-      />
-      <KeylineInput label="Description"
-                    v-model="createForm.description"
-      />
-    </KeylineForm>
-  </ModalPopup>
+  <EditFormModal :ref="(el) => create.modalRef.value = el" title="Create group" :vuelidate="create.v$" @submit="create.submit">
+    <KeylineInput label="Name" v-model="create.v$.name.$model" :vuelidate="create.v$.name" required/>
+    <KeylineInput label="Description" v-model="create.form.description"/>
+  </EditFormModal>
 
   <PageLayout>
     <template #header>
-      <PageHeader
-          title="Groups"
-          subtitle="Manage groups"
-      >
+      <PageHeader title="Groups" subtitle="Manage groups">
         <template #actions>
-          <KeylineButton @click="onAdd" text="Add" variant="primary" size="sm"/>
+          <KeylineButton @click="create.open()" text="Add" variant="primary" size="sm"/>
         </template>
       </PageHeader>
     </template>

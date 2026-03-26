@@ -1,6 +1,6 @@
 <script setup>
 
-import {useRoute, useRouter} from "vue-router";
+import {useRoute} from "vue-router";
 import {useGetRoleQuery, usePatchRoleMutation, useDeleteRoleMutation} from "../../../../../../api/roles.js";
 import PageLayout from "../../../../../../components/PageLayout.vue";
 import PageHeader from "../../../../../../components/PageHeader.vue";
@@ -10,102 +10,53 @@ import DataLayoutItem from "../../../../../../components/dataLayout/DataLayoutIt
 import LoadingSkeleton from "../../../../../../components/LoadingSkeleton.vue";
 import ModelMetadata from "../../../../../../components/ModelMetadata.vue";
 import KeylineButton from "../../../../../../components/KeylineButton.vue";
-import ModalPopup from "../../../../../../components/ModalPopup.vue";
-import KeylineForm from "../../../../../../components/KeylineForm.vue";
 import KeylineInput from "../../../../../../components/KeylineInput.vue";
+import EditFormModal from "../../../../../../components/EditFormModal.vue";
 import DotMenu from "../../../../../../components/DotMenu.vue";
 import MenuItem from "../../../../../../components/menu/MenuItem.vue";
-import {useToast} from "../../../../../../composables/toast.js";
-import {usePopup} from "../../../../../../composables/popup.js";
-import {reactive, ref, watch} from "vue";
+import {useFormModal} from "../../../../../../composables/formModal.js";
+import {useDeleteConfirm} from "../../../../../../composables/deleteConfirm.js";
 import {required} from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
 
 const route = useRoute()
-const router = useRouter()
-const toast = useToast()
-const popupService = usePopup()
+const deleteConfirm = useDeleteConfirm()
 
-const {data} = useGetRoleQuery(
-    route.params.vsName,
-    route.params.projectSlug,
-    route.params.roleId,
-)
-
-const editModal = ref(null)
-const editForm = reactive({name: '', description: ''})
-const editRules = {name: {required}}
-const editV$ = useVuelidate(editRules, editForm)
-
-watch(data, (newData) => {
-  if (newData) {
-    editForm.name = newData.name || ''
-    editForm.description = newData.description || ''
-  }
-})
+const {data} = useGetRoleQuery(route.params.vsName, route.params.projectSlug, route.params.roleId)
 
 const patchRole = usePatchRoleMutation(route.params.vsName, route.params.projectSlug, route.params.roleId)
 const deleteRole = useDeleteRoleMutation(route.params.vsName, route.params.projectSlug)
 
-const onEdit = () => {
-  editV$.value.$reset()
-  editModal.value.open()
-}
-
-const onEditSubmit = async () => {
-  try {
-    await patchRole.mutateAsync({
-      name: editForm.name,
-      description: editForm.description,
-    })
-    toast.success('Role updated')
-    editModal.value.close()
-  } catch (e) {
-    toast.error('Failed to update role')
-  }
-}
+const edit = useFormModal({
+  fields: {name: '', description: ''},
+  rules: {name: {required}},
+  onSubmit: (form) => patchRole.mutateAsync({name: form.name, description: form.description}),
+  toastMessages: {success: 'Role updated', error: 'Failed to update role'},
+})
+edit.syncFrom(data)
 
 const onDelete = () => {
-  popupService.confirm({
+  deleteConfirm.confirm({
     title: 'Delete role',
     message: 'Are you sure you want to delete this role? This action cannot be undone.',
-    onConfirm: async () => {
-      try {
-        await deleteRole.mutateAsync(route.params.roleId)
-        await router.push({name: 'mgmt-roles-overview', params: {vsName: route.params.vsName, projectSlug: route.params.projectSlug}})
-        toast.success('Role deleted')
-      } catch (e) {
-        toast.error('Failed to delete role')
-      }
-    }
+    mutation: deleteRole,
+    id: route.params.roleId,
+    navigateTo: {name: 'mgmt-roles-overview', params: {vsName: route.params.vsName, projectSlug: route.params.projectSlug}},
+    successMessage: 'Role deleted',
+    errorMessage: 'Failed to delete role',
   })
 }
 
 </script>
 
 <template>
-  <ModalPopup ref="editModal">
-    <KeylineForm title="Edit role"
-                 @submit="onEditSubmit"
-                 :vuelidate="editV$"
-    >
-      <KeylineInput label="Name"
-                    v-model="editV$.name.$model"
-                    :vuelidate="editV$.name"
-                    required
-      />
-      <KeylineInput label="Description"
-                    v-model="editForm.description"
-      />
-    </KeylineForm>
-  </ModalPopup>
+  <EditFormModal :ref="(el) => edit.modalRef.value = el" title="Edit role" :vuelidate="edit.v$" @submit="edit.submit">
+    <KeylineInput label="Name" v-model="edit.v$.name.$model" :vuelidate="edit.v$.name" required/>
+    <KeylineInput label="Description" v-model="edit.form.description"/>
+  </EditFormModal>
 
   <PageLayout>
     <template #header>
-      <PageHeader
-          :title="data?.name"
-          subtitle="Manage role configuration and settings"
-      >
+      <PageHeader :title="data?.name" subtitle="Manage role configuration and settings">
         <template #actions>
           <DotMenu>
             <MenuItem variant="danger" text="Delete" @click="onDelete"/>
@@ -117,7 +68,7 @@ const onDelete = () => {
     <BoxContainer>
       <DataLayout title="Information">
         <template #actions>
-          <KeylineButton @click="onEdit" text="Edit" variant="secondary" size="sm"/>
+          <KeylineButton @click="edit.open(data)" text="Edit" variant="secondary" size="sm"/>
         </template>
 
         <DataLayoutItem title="Name">

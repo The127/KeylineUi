@@ -6,13 +6,11 @@ import {useRoute} from "vue-router";
 import DataTableColumn from "../../../../../../components/dataTable/DataTableColumn.vue";
 import DataTableCell from "../../../../../../components/dataTable/DataTableCell.vue";
 import KeylineButton from "../../../../../../components/KeylineButton.vue";
-import {useToast} from "../../../../../../composables/toast.js";
-import {usePopup} from "../../../../../../composables/popup.js";
+import {useDeleteConfirm} from "../../../../../../composables/deleteConfirm.js";
 import {useQueryClient} from "@tanstack/vue-query";
 
 const route = useRoute()
-const toast = useToast()
-const popupService = usePopup()
+const deleteConfirm = useDeleteConfirm()
 const queryClient = useQueryClient()
 
 const deleteScope = useDeleteScopeMutation(
@@ -22,18 +20,13 @@ const deleteScope = useDeleteScopeMutation(
 )
 
 const onDeleteScope = (scope) => {
-  popupService.confirm({
+  deleteConfirm.confirm({
     title: 'Delete scope',
     message: `Are you sure you want to delete scope "${scope.name}"?`,
-    onConfirm: async () => {
-      try {
-        await deleteScope.mutateAsync(scope.id)
-        queryClient.invalidateQueries(['scopes', route.params.vsName, route.params.projectSlug, route.params.resourceServerId])
-        toast.success('Scope deleted')
-      } catch (e) {
-        toast.error('Failed to delete scope')
-      }
-    }
+    mutation: deleteScope,
+    id: scope.id,
+    successMessage: 'Scope deleted',
+    errorMessage: 'Failed to delete scope',
   })
 }
 
