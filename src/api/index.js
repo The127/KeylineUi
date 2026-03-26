@@ -5,31 +5,48 @@ export async function apiFetch(url, options = {}) {
     const opts = { ...options }
     const method = (opts.method || "GET").toUpperCase()
 
-    var bearerToken = null
-    if (opts.vsName) {
-        const userMgr = useUserManager(opts.vsName)
-        const user = await userMgr.getUser()
-        bearerToken = "Bearer " + user.access_token
-    }
+    const userMgr = opts.vsName ? useUserManager(opts.vsName) : null
 
-    opts.headers = {
-        ...(opts.headers || {}),
-    }
+    const buildHeaders = (token) => {
+        const headers = { ...(opts.headers || {}) }
 
-    // Add JSON body + header only for write methods
-    if (opts.body && ["POST", "PUT", "PATCH"].includes(method)) {
-        if (typeof opts.body === "object") {
-            opts.body = JSON.stringify(opts.body)
+        if (opts.body && ["POST", "PUT", "PATCH"].includes(method)) {
+            if (typeof opts.body === "object") {
+                opts.body = JSON.stringify(opts.body)
+            }
+            headers["Content-Type"] = "application/json"
         }
 
-        opts.headers["Content-Type"] = "application/json"
+        if (token) {
+            headers["Authorization"] = "Bearer " + token
+        }
+
+        return headers
     }
 
-    if (bearerToken) {
-        opts.headers["Authorization"] = bearerToken
+    const getToken = async () => {
+        if (!userMgr) return null
+        const user = await userMgr.getUser()
+        return user?.access_token ?? null
     }
 
-    const response = await fetch(url, opts)
+    const doFetch = async (token) => {
+        return await fetch(url, { ...opts, headers: buildHeaders(token) })
+    }
+
+    let token = await getToken()
+    let response = await doFetch(token)
+
+    if (response.status === 401 && userMgr) {
+        try {
+            const user = await userMgr.signinSilent()
+            token = user?.access_token ?? null
+            response = await doFetch(token)
+        } catch {
+            await userMgr.signinRedirect()
+            return
+        }
+    }
 
     if (!response.ok) {
         throw new Error(`API error ${response.status}: ${response.statusText}`)

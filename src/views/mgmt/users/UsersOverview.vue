@@ -47,10 +47,10 @@ const onNavigateToUserDetails = async (user) => {
 
 <template>
   <EditFormModal ref="createModalRef" title="Create user" :vuelidate="create.validation" @submit="create.submit">
-    <KeylineInput label="Username" v-model="create.validation.username.$model" :vuelidate="create.validation.username" required/>
-    <KeylineInput label="Display name" v-model="create.validation.displayName.$model" :vuelidate="create.validation.displayName" required/>
-    <KeylineInput label="Email" type="email" v-model="create.validation.email.$model" :vuelidate="create.validation.email" required/>
-    <KeylineInput label="Temporary password" type="password" v-model="create.form.password"/>
+    <KeylineInput label="Username" v-model="create.validation.username.$model" :vuelidate="create.validation.username" required helper-text="The login name for this user. Must be unique."/>
+    <KeylineInput label="Display name" v-model="create.validation.displayName.$model" :vuelidate="create.validation.displayName" required helper-text="The name shown in the UI."/>
+    <KeylineInput label="Email" type="email" v-model="create.validation.email.$model" :vuelidate="create.validation.email" required helper-text="The user's primary email address."/>
+    <KeylineInput label="Temporary password" type="password" v-model="create.form.password" helper-text="Optional. If set, the user must change it on first login."/>
   </EditFormModal>
 
   <PageLayout>
