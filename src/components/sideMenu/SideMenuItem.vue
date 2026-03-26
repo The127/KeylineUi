@@ -16,14 +16,13 @@ defineProps({
   <RouterLink
       :to="to"
       class="
-        px-3 py-2 rounded-md
-        hover:inset-shadow-xs hover:bg-slate-200
+        px-3 py-2 rounded-md text-slate-600 font-medium text-sm
+        hover:text-slate-900 hover:bg-slate-200/60
+        transition-colors
       "
-      activeClass="bg-offwhite border-slate-400 text-emerald-600 shadow-md"
+      activeClass="!bg-emerald-50 !text-emerald-700 border-l-3 border-emerald-600 !pl-2.5"
   >
-    <span>
-      {{ text }}
-    </span>
+    {{ text }}
   </RouterLink>
 </template>
 
