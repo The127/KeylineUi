@@ -12,9 +12,10 @@ import ModalPopup from "../../../components/ModalPopup.vue";
 import KeylineForm from "../../../components/KeylineForm.vue";
 import {useRoute} from "vue-router";
 import {useListPasswordRulesQuery} from "../../../api/passwordRules.js";
-import {useCreatePwPolicyRuleMutation, useUpdatePwPolicyRuleMutation} from "../../../api/pwPolicies.js";
+import {useCreatePwPolicyRuleMutation, useUpdatePwPolicyRuleMutation, useDeletePwPolicyRuleMutation} from "../../../api/pwPolicies.js";
 import {usePatchVirtualServerMutation} from "../../../api/virtualServers.js";
 import {useFormModal} from "../../../composables/formModal.js";
+import {useDeleteConfirm} from "../../../composables/deleteConfirm.js";
 import {useToast} from "../../../composables/toast.js";
 import NoContent from "../../../components/NoContent.vue";
 import {required} from "@vuelidate/validators";
@@ -22,6 +23,7 @@ import {computed, reactive, ref, toRef} from "vue";
 
 const route = useRoute()
 const toast = useToast()
+const deleteConfirm = useDeleteConfirm()
 
 const props = defineProps({
   data: {
@@ -33,6 +35,7 @@ const {data: passwordRules} = useListPasswordRulesQuery(route.params.vsName)
 const patchVS = usePatchVirtualServerMutation(route.params.vsName)
 const createRule = useCreatePwPolicyRuleMutation(route.params.vsName)
 const updateRule = useUpdatePwPolicyRuleMutation(route.params.vsName)
+const deleteRule = useDeletePwPolicyRuleMutation(route.params.vsName)
 
 const edit = useFormModal({
   fields: {displayName: ''},
@@ -45,26 +48,28 @@ edit.syncFrom(toRef(props, 'data'))
 
 // Password policy rule types with human-readable labels
 const ruleTypes = [
-  {type: 'min_length', label: 'Minimum length', detailKey: 'value', inputType: 'number'},
-  {type: 'max_length', label: 'Maximum length', detailKey: 'value', inputType: 'number'},
-  {type: 'minimum_lowercase', label: 'Minimum lowercase characters', detailKey: 'value', inputType: 'number'},
-  {type: 'minimum_uppercase', label: 'Minimum uppercase characters', detailKey: 'value', inputType: 'number'},
-  {type: 'minimum_numbers', label: 'Minimum numeric characters', detailKey: 'value', inputType: 'number'},
-  {type: 'minimum_special', label: 'Minimum special characters', detailKey: 'value', inputType: 'number'},
+  {type: 'min_length', label: 'Minimum length', detailKey: 'minLength', unit: 'characters'},
+  {type: 'max_length', label: 'Maximum length', detailKey: 'maxLength', unit: 'characters'},
+  {type: 'minimum_lowercase', label: 'Minimum lowercase characters', detailKey: 'minAmount'},
+  {type: 'minimum_uppercase', label: 'Minimum uppercase characters', detailKey: 'minAmount'},
+  {type: 'minimum_numbers', label: 'Minimum numeric characters', detailKey: 'minAmount'},
+  {type: 'minimum_special', label: 'Minimum special characters', detailKey: 'minAmount'},
 ]
 
-const getRuleLabel = (type) => {
-  const found = ruleTypes.find(r => r.type === type)
-  return found ? found.label : type
-}
+const getRuleType = (type) => ruleTypes.find(r => r.type === type)
+
+const getRuleLabel = (type) => getRuleType(type)?.label ?? type
 
 const getRuleValue = (rule) => {
-  try {
-    const details = typeof rule.details === 'string' ? JSON.parse(rule.details) : rule.details
-    return details?.value ?? JSON.stringify(details)
-  } catch {
-    return String(rule.details)
-  }
+  const details = typeof rule.details === 'string' ? JSON.parse(rule.details) : rule.details
+  const rt = getRuleType(rule.type)
+  if (rt) return details?.[rt.detailKey] ?? 0
+  return JSON.stringify(details)
+}
+
+const buildDetails = (type, value) => {
+  const rt = getRuleType(type)
+  return {[rt?.detailKey ?? 'value']: parseInt(value, 10)}
 }
 
 // Available types not yet configured
@@ -90,7 +95,7 @@ const onAddRuleSubmit = async () => {
   try {
     await createRule.mutateAsync({
       ruleType: addRuleForm.type,
-      details: {value: parseInt(addRuleForm.value, 10)},
+      details: buildDetails(addRuleForm.type, addRuleForm.value),
     })
     toast.success('Rule added')
     addRuleModal.value?.close()
@@ -109,11 +114,22 @@ const onEditRule = (rule) => {
   editRuleModal.value?.open()
 }
 
+const onDeleteRule = (rule) => {
+  deleteConfirm.confirm({
+    title: 'Delete password rule',
+    message: `Are you sure you want to delete the "${getRuleLabel(rule.type)}" rule?`,
+    mutation: deleteRule,
+    id: rule.type,
+    successMessage: 'Rule deleted',
+    errorMessage: 'Failed to delete rule',
+  })
+}
+
 const onEditRuleSubmit = async () => {
   try {
     await updateRule.mutateAsync({
       ruleType: editRuleForm.type,
-      details: {value: parseInt(editRuleForm.value, 10)},
+      details: buildDetails(editRuleForm.type, editRuleForm.value),
     })
     toast.success('Rule updated')
     editRuleModal.value?.close()
@@ -206,7 +222,7 @@ const onEditRuleSubmit = async () => {
       <DataLayoutItem title="Rules" full-row>
         <NoContent :cond="!passwordRules?.items?.length" message="No password policy rules configured.">
           <div class="w-full rounded-lg border border-slate-200 dark:border-slate-600 overflow-hidden">
-            <div class="grid grid-cols-[1fr_auto_auto] text-sm">
+            <div class="grid grid-cols-[1fr_8rem_auto] text-sm">
               <div class="px-4 py-2 bg-slate-100 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600 font-medium text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wide">Rule</div>
               <div class="px-4 py-2 bg-slate-100 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600 font-medium text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wide">Value</div>
               <div class="px-4 py-2 bg-slate-100 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600"></div>
@@ -218,8 +234,9 @@ const onEditRuleSubmit = async () => {
                 <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-600">
                   <code class="text-xs font-mono bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 px-2 py-0.5 rounded-md">{{ getRuleValue(rule) }}</code>
                 </div>
-                <div class="px-4 py-2.5 border-b border-slate-200 dark:border-slate-600 flex items-center">
+                <div class="px-4 py-2.5 border-b border-slate-200 dark:border-slate-600 flex items-center gap-2">
                   <KeylineButton @click="onEditRule(rule)" text="Edit" variant="secondary" size="sm"/>
+                  <KeylineButton @click="onDeleteRule(rule)" text="Delete" variant="danger" size="sm"/>
                 </div>
               </template>
             </div>

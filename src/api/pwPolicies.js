@@ -43,3 +43,23 @@ const updatePwPolicyRuleFn = async (vsName, ruleType, details) => {
         }
     )
 }
+
+export const useDeletePwPolicyRuleMutation = (vsName) => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (ruleType) => deletePwPolicyRuleFn(vsName, ruleType),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['password-rules', vsName])
+        }
+    })
+}
+
+const deletePwPolicyRuleFn = async (vsName, ruleType) => {
+    return await apiFetch(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/password-policies/rules/${ruleType}`,
+        {
+            method: 'DELETE',
+            vsName: vsName,
+        }
+    )
+}
