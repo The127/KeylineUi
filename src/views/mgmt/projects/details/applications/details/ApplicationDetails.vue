@@ -171,68 +171,93 @@ const onClearScript = async () => {
       </TabPage>
 
       <TabPage title="Claims Mapping" name="claimsMapping">
+        <!-- Script editor section -->
         <BoxContainer>
-          <p class="text-sm text-gray-500">
-            Configure a custom JavaScript script that runs every time an access token is generated for this application.
-            The script must return a JSON object containing the desired claims.
-          </p>
-        </BoxContainer>
+          <div class="flex items-start justify-between gap-4 mb-4">
+            <div>
+              <h3 class="text-base font-semibold text-slate-800 dark:text-slate-200">Script</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                A JavaScript function executed on every token grant. Must return a JSON object of custom claims.
+              </p>
+            </div>
+            <div class="flex flex-row gap-2 shrink-0">
+              <template v-if="editingScript">
+                <KeylineButton text="Save" size="sm" @click="onSaveScript"/>
+                <KeylineButton variant="secondary" text="Cancel" size="sm" @click="onCancelEdit"/>
+              </template>
+              <template v-else>
+                <KeylineButton text="Edit" size="sm" @click="onEditScript"/>
+                <KeylineButton variant="danger" text="Clear" size="sm" @click="onClearScript" v-if="data?.customClaimsMappingScript"/>
+              </template>
+            </div>
+          </div>
 
-        <BoxContainer>
-          <DataLayout title="Script">
-            <template #actions>
-              <div class="flex flex-row gap-2">
-                <template v-if="editingScript">
-                  <KeylineButton text="Save" size="sm" @click="onSaveScript"/>
-                  <KeylineButton variant="secondary" text="Cancel" size="sm" @click="onCancelEdit"/>
-                </template>
-                <template v-else>
-                  <KeylineButton text="Edit" size="sm" @click="onEditScript"/>
-                  <KeylineButton variant="danger" text="Clear" size="sm" @click="onClearScript" v-if="data?.customClaimsMappingScript"/>
-                </template>
-              </div>
-            </template>
-
-            <DataLayoutItem full-row>
-              <LoadingSkeleton :dep="data">
-                <div class="w-full">
-                  <CodeEditor v-if="editingScript" width="100%" min-height="200px" border-radius="0.375rem" :theme="editorTheme" v-model="claimsMappingScript" line-nums/>
-                  <template v-else>
-                    <NoContent :cond="!data.customClaimsMappingScript" message="No claims mapping script configured.">
-                      <CodeEditor v-if="data.customClaimsMappingScript" width="100%" min-height="200px" border-radius="0.375rem" :theme="editorTheme" v-model="data.customClaimsMappingScript" read-only line-nums/>
-                    </NoContent>
+          <LoadingSkeleton :dep="data">
+            <div class="w-full claims-editor" :class="{ 'editing': editingScript }">
+              <CodeEditor
+                  v-if="editingScript"
+                  width="100%"
+                  min-height="280px"
+                  border-radius="0.5rem"
+                  :theme="editorTheme"
+                  v-model="claimsMappingScript"
+                  line-nums
+              />
+              <template v-else>
+                <NoContent :cond="!data.customClaimsMappingScript">
+                  <template #no-content>
+                    <div class="flex flex-col items-center justify-center py-10 text-center">
+                      <div class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center mb-3">
+                        <svg class="w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"/>
+                        </svg>
+                      </div>
+                      <p class="text-sm font-medium text-slate-600 dark:text-slate-300">No script configured</p>
+                      <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">Click Edit to add a custom claims mapping script</p>
+                    </div>
                   </template>
-                </div>
-              </LoadingSkeleton>
-            </DataLayoutItem>
-          </DataLayout>
+                  <CodeEditor
+                      v-if="data.customClaimsMappingScript"
+                      width="100%"
+                      min-height="280px"
+                      border-radius="0.5rem"
+                      :theme="editorTheme"
+                      v-model="data.customClaimsMappingScript"
+                      read-only
+                      line-nums
+                  />
+                </NoContent>
+              </template>
+            </div>
+          </LoadingSkeleton>
         </BoxContainer>
 
+        <!-- Reference section -->
         <BoxContainer>
-          <DataLayout title="Available variables">
-            <DataLayoutItem full-row>
-              <div class="w-full overflow-x-auto">
-                <table class="text-sm w-full">
-                  <thead>
-                    <tr class="text-left text-gray-500 border-b">
-                      <th class="pb-2 pr-4 font-medium">Variable</th>
-                      <th class="pb-2 font-medium">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="border-b last:border-0">
-                      <td class="py-2 pr-4"><code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">roles</code></td>
-                      <td class="py-2">An array of strings containing the global roles of the user</td>
-                    </tr>
-                    <tr class="border-b last:border-0">
-                      <td class="py-2 pr-4"><code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">applicationRoles</code></td>
-                      <td class="py-2">An array of strings containing the application roles of the user</td>
-                    </tr>
-                  </tbody>
-                </table>
+          <h3 class="text-base font-semibold text-slate-800 dark:text-slate-200 mb-3">Reference</h3>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">
+            The following variables are injected into the script context at execution time.
+          </p>
+          <div class="rounded-lg border border-slate-200 dark:border-slate-600 overflow-hidden">
+            <div class="grid grid-cols-[auto_1fr] text-sm">
+              <div class="px-4 py-2.5 bg-slate-100 dark:bg-slate-700 border-b border-r border-slate-200 dark:border-slate-600 font-medium text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wide">Variable</div>
+              <div class="px-4 py-2.5 bg-slate-100 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600 font-medium text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wide">Description</div>
+
+              <div class="px-4 py-3 border-b border-r border-slate-200 dark:border-slate-600 flex items-center">
+                <code class="text-xs font-mono bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 px-2 py-0.5 rounded-md">roles</code>
               </div>
-            </DataLayoutItem>
-          </DataLayout>
+              <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300">
+                Array of strings — the global roles assigned to the user
+              </div>
+
+              <div class="px-4 py-3 border-r border-slate-200 dark:border-slate-600 flex items-center">
+                <code class="text-xs font-mono bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 px-2 py-0.5 rounded-md">applicationRoles</code>
+              </div>
+              <div class="px-4 py-3 text-slate-600 dark:text-slate-300">
+                Array of strings — the roles scoped to this application
+              </div>
+            </div>
+          </div>
         </BoxContainer>
       </TabPage>
     </TabLayout>
@@ -246,5 +271,24 @@ const onClearScript = async () => {
 </template>
 
 <style scoped>
+.claims-editor {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
 
+.claims-editor.editing {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+:deep(.dark) .claims-editor {
+  border-color: #475569;
+}
+
+:deep(.dark) .claims-editor.editing {
+  border-color: #059669;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+}
 </style>
