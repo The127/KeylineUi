@@ -53,3 +53,41 @@ export const getRoleQueryFn = async (vsName, projectSlug, roleId) => {
         }
     )
 }
+
+export const usePatchRoleMutation = (vsName, projectSlug, roleId) => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (data) => patchRoleFn(vsName, projectSlug, roleId, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['roles', vsName, projectSlug, roleId])
+            queryClient.invalidateQueries(['roles', vsName, projectSlug])
+        }
+    })
+}
+
+export const patchRoleFn = async (vsName, projectSlug, roleId, data) => {
+    return await apiFetch(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/projects/${projectSlug}/roles/${roleId}`,
+        {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            vsName: vsName,
+        }
+    )
+}
+
+export const useDeleteRoleMutation = (vsName, projectSlug) => {
+    return useMutation({
+        mutationFn: (roleId) => deleteRoleFn(vsName, projectSlug, roleId),
+    })
+}
+
+export const deleteRoleFn = async (vsName, projectSlug, roleId) => {
+    return await apiFetch(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/projects/${projectSlug}/roles/${roleId}`,
+        {
+            method: 'DELETE',
+            vsName: vsName,
+        }
+    )
+}

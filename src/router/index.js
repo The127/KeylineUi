@@ -222,6 +222,14 @@ const routes = [
                         path: '',
                         name: 'mgmt-groups',
                         component: () => import('../views/mgmt/groups/GroupsOverview.vue'),
+                    },
+                    {
+                        path: ':groupId',
+                        name: 'mgmt-group-details',
+                        component: () => import('../views/mgmt/groups/GroupDetails.vue'),
+                        meta: {
+                            breadcrumbFn: async () => "Details",
+                        },
                     }
                 ]
             },

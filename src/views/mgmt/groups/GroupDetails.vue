@@ -1,22 +1,22 @@
 <script setup>
 
 import {useRoute, useRouter} from "vue-router";
-import {useGetRoleQuery, usePatchRoleMutation, useDeleteRoleMutation} from "../../../../../../api/roles.js";
-import PageLayout from "../../../../../../components/PageLayout.vue";
-import PageHeader from "../../../../../../components/PageHeader.vue";
-import BoxContainer from "../../../../../../components/BoxContainer.vue";
-import DataLayout from "../../../../../../components/dataLayout/DataLayout.vue";
-import DataLayoutItem from "../../../../../../components/dataLayout/DataLayoutItem.vue";
-import LoadingSkeleton from "../../../../../../components/LoadingSkeleton.vue";
-import ModelMetadata from "../../../../../../components/ModelMetadata.vue";
-import KeylineButton from "../../../../../../components/KeylineButton.vue";
-import ModalPopup from "../../../../../../components/ModalPopup.vue";
-import KeylineForm from "../../../../../../components/KeylineForm.vue";
-import KeylineInput from "../../../../../../components/KeylineInput.vue";
-import DotMenu from "../../../../../../components/DotMenu.vue";
-import MenuItem from "../../../../../../components/menu/MenuItem.vue";
-import {useToast} from "../../../../../../composables/toast.js";
-import {usePopup} from "../../../../../../composables/popup.js";
+import {useGetGroupQuery, usePatchGroupMutation, useDeleteGroupMutation} from "../../../api/groups.js";
+import PageLayout from "../../../components/PageLayout.vue";
+import PageHeader from "../../../components/PageHeader.vue";
+import BoxContainer from "../../../components/BoxContainer.vue";
+import DataLayout from "../../../components/dataLayout/DataLayout.vue";
+import DataLayoutItem from "../../../components/dataLayout/DataLayoutItem.vue";
+import LoadingSkeleton from "../../../components/LoadingSkeleton.vue";
+import ModelMetadata from "../../../components/ModelMetadata.vue";
+import KeylineButton from "../../../components/KeylineButton.vue";
+import ModalPopup from "../../../components/ModalPopup.vue";
+import KeylineForm from "../../../components/KeylineForm.vue";
+import KeylineInput from "../../../components/KeylineInput.vue";
+import DotMenu from "../../../components/DotMenu.vue";
+import MenuItem from "../../../components/menu/MenuItem.vue";
+import {useToast} from "../../../composables/toast.js";
+import {usePopup} from "../../../composables/popup.js";
 import {reactive, ref, watch} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
@@ -26,10 +26,9 @@ const router = useRouter()
 const toast = useToast()
 const popupService = usePopup()
 
-const {data} = useGetRoleQuery(
+const {data} = useGetGroupQuery(
     route.params.vsName,
-    route.params.projectSlug,
-    route.params.roleId,
+    route.params.groupId,
 )
 
 const editModal = ref(null)
@@ -44,8 +43,8 @@ watch(data, (newData) => {
   }
 })
 
-const patchRole = usePatchRoleMutation(route.params.vsName, route.params.projectSlug, route.params.roleId)
-const deleteRole = useDeleteRoleMutation(route.params.vsName, route.params.projectSlug)
+const patchGroup = usePatchGroupMutation(route.params.vsName, route.params.groupId)
+const deleteGroup = useDeleteGroupMutation(route.params.vsName)
 
 const onEdit = () => {
   editV$.value.$reset()
@@ -54,28 +53,28 @@ const onEdit = () => {
 
 const onEditSubmit = async () => {
   try {
-    await patchRole.mutateAsync({
+    await patchGroup.mutateAsync({
       name: editForm.name,
       description: editForm.description,
     })
-    toast.success('Role updated')
+    toast.success('Group updated')
     editModal.value.close()
   } catch (e) {
-    toast.error('Failed to update role')
+    toast.error('Failed to update group')
   }
 }
 
 const onDelete = () => {
   popupService.confirm({
-    title: 'Delete role',
-    message: 'Are you sure you want to delete this role? This action cannot be undone.',
+    title: 'Delete group',
+    message: 'Are you sure you want to delete this group? This action cannot be undone.',
     onConfirm: async () => {
       try {
-        await deleteRole.mutateAsync(route.params.roleId)
-        await router.push({name: 'mgmt-roles-overview', params: {vsName: route.params.vsName, projectSlug: route.params.projectSlug}})
-        toast.success('Role deleted')
+        await deleteGroup.mutateAsync(route.params.groupId)
+        await router.push({name: 'mgmt-groups', params: {vsName: route.params.vsName}})
+        toast.success('Group deleted')
       } catch (e) {
-        toast.error('Failed to delete role')
+        toast.error('Failed to delete group')
       }
     }
   })
@@ -85,7 +84,7 @@ const onDelete = () => {
 
 <template>
   <ModalPopup ref="editModal">
-    <KeylineForm title="Edit role"
+    <KeylineForm title="Edit group"
                  @submit="onEditSubmit"
                  :vuelidate="editV$"
     >
@@ -104,7 +103,7 @@ const onDelete = () => {
     <template #header>
       <PageHeader
           :title="data?.name"
-          subtitle="Manage role configuration and settings"
+          subtitle="Manage group configuration and settings"
       >
         <template #actions>
           <DotMenu>

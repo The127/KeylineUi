@@ -64,8 +64,28 @@ const onEditPersonalInfo = () => {
   userInfoModal.value.open()
 }
 
+const emailModal = ref(null)
+const emailForm = reactive({email: ''})
+const emailRules = {email: {required}}
+const emailV$ = useVuelidate(emailRules, emailForm)
+
 const onEditEmail = () => {
-  alert('Edit email')
+  if (data.value) {
+    emailForm.email = data.value.primaryEmail || ''
+  }
+  emailV$.value.$reset()
+  emailModal.value.open()
+}
+
+const onEmailSubmit = async () => {
+  try {
+    await updateProfile.mutateAsync({primaryEmail: emailForm.email})
+    toast.success(t('profileUpdated'))
+    emailModal.value.close()
+  } catch (e) {
+    console.error(e)
+    toast.error(t('failedToUpdateProfile'))
+  }
 }
 
 const formModel = reactive({
@@ -105,6 +125,20 @@ const onFormSubmit = async () => {
 </script>
 
 <template>
+  <ModalPopup ref="emailModal">
+    <KeylineForm title="Edit email"
+                 @submit="onEmailSubmit"
+                 :vuelidate="emailV$"
+    >
+      <KeylineInput label="Email"
+                    type="email"
+                    v-model="emailV$.email.$model"
+                    :vuelidate="emailV$.email"
+                    required
+      />
+    </KeylineForm>
+  </ModalPopup>
+
   <ModalPopup ref="userInfoModal">
     <KeylineForm :title="t('editPersonalInfo')"
           v-if="!isPending && !isError && data"

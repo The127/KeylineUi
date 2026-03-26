@@ -53,3 +53,41 @@ export const getResourceServerQueryFn = async (vsName, projectSlug, resourceServ
         }
     )
 }
+
+export const usePatchResourceServerMutation = (vsName, projectSlug, resourceServerId) => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (data) => patchResourceServerFn(vsName, projectSlug, resourceServerId, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['resource-servers', vsName, projectSlug, resourceServerId])
+            queryClient.invalidateQueries(['resource-servers', vsName, projectSlug])
+        }
+    })
+}
+
+export const patchResourceServerFn = async (vsName, projectSlug, resourceServerId, data) => {
+    return await apiFetch(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/projects/${projectSlug}/resource-servers/${resourceServerId}`,
+        {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            vsName: vsName,
+        }
+    )
+}
+
+export const useDeleteResourceServerMutation = (vsName, projectSlug) => {
+    return useMutation({
+        mutationFn: (resourceServerId) => deleteResourceServerFn(vsName, projectSlug, resourceServerId),
+    })
+}
+
+export const deleteResourceServerFn = async (vsName, projectSlug, resourceServerId) => {
+    return await apiFetch(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/projects/${projectSlug}/resource-servers/${resourceServerId}`,
+        {
+            method: 'DELETE',
+            vsName: vsName,
+        }
+    )
+}

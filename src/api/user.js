@@ -36,6 +36,40 @@ export const userMutationFn = async (vsName, userId, data) => {
     )
 }
 
+export const useChangeOwnPasswordMutation = (vsName, userId) => {
+    return useMutation({
+        mutationFn: (data) => changeOwnPasswordFn(vsName, userId, data),
+    })
+}
+
+export const changeOwnPasswordFn = async (vsName, userId, data) => {
+    return await apiFetch(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/users/${userId}/change-password`,
+        {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            vsName: vsName,
+        }
+    )
+}
+
+export const useAdminResetPasswordMutation = (vsName) => {
+    return useMutation({
+        mutationFn: ({userId, password, temporary}) => adminResetPasswordFn(vsName, userId, password, temporary),
+    })
+}
+
+export const adminResetPasswordFn = async (vsName, userId, password, temporary) => {
+    return await apiFetch(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/users/${userId}`,
+        {
+            method: 'PATCH',
+            body: JSON.stringify({password: {plain: password, temporary: temporary || false}}),
+            vsName: vsName,
+        }
+    )
+}
+
 export const useListUsersQuery = (vsName, queryOps) => useQuery({
     queryKey: ['users', vsName, queryOps],
     queryFn: () => listUsersQueryFn(vsName, queryOps),
