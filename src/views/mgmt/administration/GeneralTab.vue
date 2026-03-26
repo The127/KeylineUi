@@ -40,6 +40,7 @@ const edit = useFormModal({
   onSubmit: (form) => patchVS.mutateAsync({displayName: form.displayName}),
   toastMessages: {success: 'Virtual server updated', error: 'Failed to update virtual server'},
 })
+const editModalRef = edit.modalRef
 edit.syncFrom(toRef(props, 'data'))
 
 // Password policy rule types with human-readable labels
@@ -124,7 +125,7 @@ const onEditRuleSubmit = async () => {
 </script>
 
 <template>
-  <EditFormModal :ref="(el) => edit.modalRef.value = el" title="Edit virtual server" :vuelidate="edit.validation" @submit="edit.submit">
+  <EditFormModal ref="editModalRef" title="Edit virtual server" :vuelidate="edit.validation" @submit="edit.submit">
     <KeylineInput label="Display name" v-model="edit.validation.displayName.$model" :vuelidate="edit.validation.displayName" required/>
   </EditFormModal>
 

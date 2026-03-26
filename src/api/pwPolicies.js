@@ -17,7 +17,7 @@ const createPwPolicyRuleFn = async (vsName, ruleType, details) => {
         ConfigApiUrl() + `/api/virtual-servers/${vsName}/password-policies/rules/${ruleType}`,
         {
             method: 'POST',
-            body: JSON.stringify(details),
+            body: JSON.stringify({type: ruleType, details}),
             vsName: vsName,
         }
     )

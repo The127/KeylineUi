@@ -32,6 +32,7 @@ const edit = useFormModal({
   onSubmit: (form) => patchRole.mutateAsync({name: form.name, description: form.description}),
   toastMessages: {success: 'Role updated', error: 'Failed to update role'},
 })
+const editModalRef = edit.modalRef
 edit.syncFrom(data)
 
 const onDelete = () => {
@@ -49,7 +50,7 @@ const onDelete = () => {
 </script>
 
 <template>
-  <EditFormModal :ref="(el) => edit.modalRef.value = el" title="Edit role" :vuelidate="edit.validation" @submit="edit.submit">
+  <EditFormModal ref="editModalRef" title="Edit role" :vuelidate="edit.validation" @submit="edit.submit">
     <KeylineInput label="Name" v-model="edit.validation.name.$model" :vuelidate="edit.validation.name" required/>
     <KeylineInput label="Description" v-model="edit.form.description"/>
   </EditFormModal>

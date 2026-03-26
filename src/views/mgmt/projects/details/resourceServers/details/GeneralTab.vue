@@ -34,12 +34,13 @@ const edit = useFormModal({
   onSubmit: (form) => patchResourceServer.mutateAsync({name: form.name, description: form.description}),
   toastMessages: {success: 'Resource server updated', error: 'Failed to update resource server'},
 })
+const editModalRef = edit.modalRef
 edit.syncFrom(toRef(props, 'data'))
 
 </script>
 
 <template>
-  <EditFormModal :ref="(el) => edit.modalRef.value = el" title="Edit resource server" :vuelidate="edit.validation" @submit="edit.submit">
+  <EditFormModal ref="editModalRef" title="Edit resource server" :vuelidate="edit.validation" @submit="edit.submit">
     <KeylineInput label="Name" v-model="edit.validation.name.$model" :vuelidate="edit.validation.name" required/>
     <KeylineInput label="Description" v-model="edit.form.description"/>
   </EditFormModal>

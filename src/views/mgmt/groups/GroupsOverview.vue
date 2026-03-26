@@ -24,6 +24,7 @@ const create = useFormModal({
   onSubmit: (form) => createGroup.mutateAsync({name: form.name, description: form.description}),
   toastMessages: {success: 'Group created', error: 'Failed to create group'},
 })
+const createModalRef = create.modalRef
 
 const onRowClick = (group) => {
   router.push({name: 'mgmt-group-details', params: {vsName: route.params.vsName, groupId: group.id}})
@@ -32,7 +33,7 @@ const onRowClick = (group) => {
 </script>
 
 <template>
-  <EditFormModal :ref="(el) => create.modalRef.value = el" title="Create group" :vuelidate="create.validation" @submit="create.submit">
+  <EditFormModal ref="createModalRef" title="Create group" :vuelidate="create.validation" @submit="create.submit">
     <KeylineInput label="Name" v-model="create.validation.name.$model" :vuelidate="create.validation.name" required/>
     <KeylineInput label="Description" v-model="create.form.description"/>
   </EditFormModal>
