@@ -1,9 +1,9 @@
 <script setup>
 import ModalPopup from "./ModalPopup.vue";
 import KeylineForm from "./KeylineForm.vue";
-import {ref} from "vue";
+import {ref, computed, isRef} from "vue";
 
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     required: true,
@@ -15,6 +15,11 @@ defineProps({
 
 defineEmits(['submit'])
 
+const unwrappedVuelidate = computed(() => {
+  if (!props.vuelidate) return undefined
+  return isRef(props.vuelidate) ? props.vuelidate.value : props.vuelidate
+})
+
 const popup = ref(null)
 
 const open = () => popup.value?.open()
@@ -25,7 +30,7 @@ defineExpose({open, close})
 
 <template>
   <ModalPopup ref="popup">
-    <KeylineForm :title="title" @submit="$emit('submit')" :vuelidate="vuelidate">
+    <KeylineForm :title="title" @submit="$emit('submit')" :vuelidate="unwrappedVuelidate">
       <slot/>
     </KeylineForm>
   </ModalPopup>

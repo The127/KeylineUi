@@ -7,7 +7,15 @@ export function useFormModal({fields, rules, onSubmit, toastMessages}) {
     const toast = useToast()
 
     const form = reactive({...fields})
-    const v$ = useVuelidate(rules, form)
+    const vuelidateRef = useVuelidate(rules, form)
+
+    // Expose vuelidate as a reactive proxy so template access like
+    // `modal.validation.name.$model` works without `.value`
+    const validation = new Proxy({}, {
+        get(_, prop) {
+            return vuelidateRef.value[prop]
+        }
+    })
 
     const open = (initialValues) => {
         if (initialValues) {
@@ -19,7 +27,7 @@ export function useFormModal({fields, rules, onSubmit, toastMessages}) {
                 form[key] = fields[key]
             }
         }
-        v$.value.$reset()
+        vuelidateRef.value.$reset()
         modalRef.value?.open()
     }
 
@@ -49,5 +57,5 @@ export function useFormModal({fields, rules, onSubmit, toastMessages}) {
         })
     }
 
-    return {modalRef, form, v$, open, submit, syncFrom}
+    return {modalRef, form, validation, vuelidateRef, open, submit, syncFrom}
 }

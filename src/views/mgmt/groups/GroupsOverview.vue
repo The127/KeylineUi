@@ -32,8 +32,8 @@ const onRowClick = (group) => {
 </script>
 
 <template>
-  <EditFormModal :ref="(el) => create.modalRef.value = el" title="Create group" :vuelidate="create.v$" @submit="create.submit">
-    <KeylineInput label="Name" v-model="create.v$.name.$model" :vuelidate="create.v$.name" required/>
+  <EditFormModal :ref="(el) => create.modalRef.value = el" title="Create group" :vuelidate="create.validation" @submit="create.submit">
+    <KeylineInput label="Name" v-model="create.validation.name.$model" :vuelidate="create.validation.name" required/>
     <KeylineInput label="Description" v-model="create.form.description"/>
   </EditFormModal>
 

@@ -38,8 +38,8 @@ edit.syncFrom(toRef(props, 'data'))
 </script>
 
 <template>
-  <EditFormModal :ref="(el) => edit.modalRef.value = el" title="Edit virtual server" :vuelidate="edit.v$" @submit="edit.submit">
-    <KeylineInput label="Display name" v-model="edit.v$.displayName.$model" :vuelidate="edit.v$.displayName" required/>
+  <EditFormModal :ref="(el) => edit.modalRef.value = el" title="Edit virtual server" :vuelidate="edit.validation" @submit="edit.submit">
+    <KeylineInput label="Display name" v-model="edit.validation.displayName.$model" :vuelidate="edit.validation.displayName" required/>
   </EditFormModal>
 
   <BoxContainer>
