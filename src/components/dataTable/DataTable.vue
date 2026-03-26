@@ -189,15 +189,19 @@ watch([page, pageSize, orderBy, orderDirection, search], () => {
 
       <tbody>
         <template v-if="!!data">
-          <tr
+          <template
               v-for="item in data.items"
               :key="props.idSelector(item)"
-              class="hover:text-emerald-700 odd:bg-slate-50 even:bg-slate-100 hover:bg-emerald-100"
-              :class="{'cursor-pointer': !!onClick}"
-              @click="!!onClick && onClick(item)"
           >
-            <slot name="row" :item="item" :search="search"/>
-          </tr>
+            <tr
+                class="hover:text-emerald-700 odd:bg-slate-50 even:bg-slate-100 hover:bg-emerald-100"
+                :class="{'cursor-pointer': !!onClick}"
+                @click="!!onClick && onClick(item)"
+            >
+              <slot name="row" :item="item" :search="search"/>
+            </tr>
+            <slot name="row-detail" :item="item"/>
+          </template>
         </template>
         <tr v-if="!data || data?.items === null || data?.items?.length === 0">
           <td :colspan="columns.length" class="px-5 py-3 text-center">
