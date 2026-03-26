@@ -2,8 +2,7 @@
 
 import KeylineInput from "./KeylineInput.vue";
 import {ref} from "vue";
-import { Plus, Minus } from "lucide-vue-next"
-import KeylineButton from "./KeylineButton.vue";
+import {X} from "lucide-vue-next"
 
 const model = defineModel()
 
@@ -41,46 +40,31 @@ const onInputKeydown = (e) => {
     <div
         v-for="item in model"
         :key="item"
-        class="flex items-center gap-2 flex-wrap justify-between"
+        class="flex items-center justify-between gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm"
     >
-      <span>{{ item }}</span>
-      <div class="flex items-center gap-2">
-        <KeylineButton
-            variant="danger"
-            text="remove"
-            size="sm"
-            hide-text
-            @click="model.splice(model.indexOf(item), 1)"
-        >
-          <template #adornment>
-            <Minus class="w-4 h-4"/>
-          </template>
-        </KeylineButton>
-      </div>
-    </div>
-    <div class="flex items-center gap-2 justify-between">
-      <KeylineInput
-          container-class="flex-1"
-          hide-label
-          :label="label" v-model="currentValue"
-          @keydown="onInputKeydown"
-          :helper-text="helperText"
-      />
-      <KeylineButton
-          text="add"
-          hide-text
-          variant="secondary"
-          @click="addCurrentValue"
-          :disabled="currentValue === ''"
+      <span class="text-slate-700">{{ item }}</span>
+      <button
+          type="button"
+          class="text-slate-400 hover:text-red-600 cursor-pointer transition-colors"
+          @click="model.splice(model.indexOf(item), 1)"
       >
-        <template #adornment>
-          <Plus class="w-4 h-4"/>
-        </template>
-      </KeylineButton>
+        <X class="w-4 h-4"/>
+      </button>
     </div>
+    <KeylineInput
+        hide-label
+        :label="label" v-model="currentValue"
+        @keydown="onInputKeydown"
+        :helper-text="helperText"
+    />
+    <button
+        v-if="currentValue"
+        type="button"
+        @click="addCurrentValue"
+        class="self-start text-sm text-emerald-600 hover:text-emerald-700 cursor-pointer font-medium"
+    >
+      + Add "{{ currentValue }}"
+    </button>
+    <span v-else class="text-xs text-slate-400">Press Enter to add</span>
   </div>
 </template>
-
-<style scoped>
-
-</style>

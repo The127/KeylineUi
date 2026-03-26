@@ -24,26 +24,21 @@ provide('radioManager', {
 <template>
   <slot/>
 
-  <div
-      v-for="option in options"
-      :key="option.id"
-  >
-    <div class="flex items-center gap-2">
-      <input
-          type="radio"
-          :id="option.id"
-          :value="option.value"
-          :name="name"
-          v-model="model"
-      />
-      <label :for="option.id">{{ option?.label ?? option.value }}</label>
-    </div>
-    <span class="text-slate-500 text-xs" v-if="option.helperText">
-      {{ option.helperText }}
-    </span>
+  <div class="flex gap-3">
+    <button
+        v-for="option in options"
+        :key="option.id"
+        type="button"
+        @click="model = option.value"
+        class="flex-1 flex flex-col gap-1 rounded-lg border-2 px-4 py-3 text-left cursor-pointer transition-colors"
+        :class="model === option.value
+          ? 'border-emerald-600 bg-emerald-50 text-emerald-800'
+          : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'"
+    >
+      <span class="font-medium text-sm">{{ option?.label ?? option.value }}</span>
+      <span class="text-xs text-slate-500" v-if="option.helperText">
+        {{ option.helperText }}
+      </span>
+    </button>
   </div>
 </template>
-
-<style scoped>
-
-</style>
