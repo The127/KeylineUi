@@ -5,12 +5,33 @@ import PageLayout from "../../../components/PageLayout.vue";
 import PageHeader from "../../../components/PageHeader.vue";
 import DataTable from "../../../components/dataTable/DataTable.vue";
 import DataTableColumn from "../../../components/dataTable/DataTableColumn.vue";
-import {useListUsersQuery} from "../../../api/user.js";
+import KeylineButton from "../../../components/KeylineButton.vue";
+import KeylineInput from "../../../components/KeylineInput.vue";
+import EditFormModal from "../../../components/EditFormModal.vue";
+import {useListUsersQuery, useCreateUserMutation} from "../../../api/user.js";
 import {useRoute, useRouter} from "vue-router";
-import {User, Bot} from "lucide-vue-next"
+import {useFormModal} from "../../../composables/formModal.js";
+import {required, email} from "@vuelidate/validators";
+import {User, Bot, Plus} from "lucide-vue-next"
 
 const route = useRoute()
 const router = useRouter()
+
+const createUser = useCreateUserMutation(route.params.vsName)
+
+const create = useFormModal({
+  fields: {username: '', displayName: '', email: '', password: ''},
+  rules: {username: {required}, displayName: {required}, email: {required, email}},
+  onSubmit: (form) => createUser.mutateAsync({
+    username: form.username,
+    displayName: form.displayName,
+    email: form.email,
+    emailVerified: false,
+    password: form.password ? {plain: form.password, temporary: true} : undefined,
+  }),
+  toastMessages: {success: 'User created', error: 'Failed to create user'},
+})
+const createModalRef = create.modalRef
 
 const onNavigateToUserDetails = async (user) => {
   await router.push({
@@ -25,12 +46,24 @@ const onNavigateToUserDetails = async (user) => {
 </script>
 
 <template>
+  <EditFormModal ref="createModalRef" title="Create user" :vuelidate="create.validation" @submit="create.submit">
+    <KeylineInput label="Username" v-model="create.validation.username.$model" :vuelidate="create.validation.username" required/>
+    <KeylineInput label="Display name" v-model="create.validation.displayName.$model" :vuelidate="create.validation.displayName" required/>
+    <KeylineInput label="Email" type="email" v-model="create.validation.email.$model" :vuelidate="create.validation.email" required/>
+    <KeylineInput label="Temporary password" type="password" v-model="create.form.password"/>
+  </EditFormModal>
+
   <PageLayout>
     <template #header>
       <PageHeader
           title="Users"
           subtitle="Manage users"
       >
+        <KeylineButton text="Add" @click="create.open()">
+          <template #adornment>
+            <Plus/>
+          </template>
+        </KeylineButton>
       </PageHeader>
     </template>
 
@@ -71,7 +104,3 @@ const onNavigateToUserDetails = async (user) => {
     </DataTable>
   </PageLayout>
 </template>
-
-<style scoped>
-
-</style>

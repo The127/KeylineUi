@@ -58,11 +58,9 @@ const onDelete = () => {
   <PageLayout>
     <template #header>
       <PageHeader :title="data?.name" subtitle="Manage role configuration and settings">
-        <template #actions>
-          <DotMenu>
-            <MenuItem variant="danger" text="Delete" @click="onDelete"/>
-          </DotMenu>
-        </template>
+        <DotMenu>
+          <MenuItem variant="danger" text="Delete" @click="onDelete"/>
+        </DotMenu>
       </PageHeader>
     </template>
 

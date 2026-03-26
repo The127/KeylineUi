@@ -41,9 +41,7 @@ const onRowClick = (group) => {
   <PageLayout>
     <template #header>
       <PageHeader title="Groups" subtitle="Manage groups">
-        <template #actions>
-          <KeylineButton @click="create.open()" text="Add" variant="primary" size="sm"/>
-        </template>
+        <KeylineButton @click="create.open()" text="Add" variant="primary" size="sm"/>
       </PageHeader>
     </template>
 

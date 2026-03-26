@@ -70,6 +70,27 @@ export const adminResetPasswordFn = async (vsName, userId, password, temporary) 
     )
 }
 
+export const useCreateUserMutation = (vsName) => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (data) => createUserFn(vsName, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['users', vsName])
+        }
+    })
+}
+
+const createUserFn = async (vsName, data) => {
+    return await apiFetch(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/users`,
+        {
+            method: 'POST',
+            body: JSON.stringify(data),
+            vsName: vsName,
+        }
+    )
+}
+
 export const useListUsersQuery = (vsName, queryOps) => useQuery({
     queryKey: ['users', vsName, queryOps],
     queryFn: () => listUsersQueryFn(vsName, queryOps),
