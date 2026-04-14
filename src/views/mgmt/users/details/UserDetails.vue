@@ -25,16 +25,21 @@ const route = useRoute()
 const toast = useToast()
 
 const {data} = useGetUserQuery(
-    route.params.vsName,
-    route.params.userId,
+  route.params.vsName,
+  route.params.userId,
 )
 
 const editModal = ref(null)
+const emailModal = ref(null)
 const passwordModal = ref(null)
 
 const editForm = reactive({displayName: ''})
 const editRules = {displayName: {required}}
 const editV$ = useVuelidate(editRules, editForm)
+
+const emailForm = reactive({emailVerified: false})
+const emailRules = {}
+const emailV$ = useVuelidate(emailRules, emailForm)
 
 const passwordForm = reactive({password: '', temporary: false})
 const passwordRules = {password: {required}}
@@ -43,6 +48,7 @@ const passwordV$ = useVuelidate(passwordRules, passwordForm)
 watch(data, (newData) => {
   if (newData) {
     editForm.displayName = newData.displayName || ''
+    emailForm.emailVerified = !!newData.emailVerified
   }
 })
 
@@ -54,6 +60,11 @@ const onEdit = () => {
   editModal.value.open()
 }
 
+const onEmailEdit = () => {
+  emailV$.value.$reset()
+  emailModal.value.open()
+}
+
 const onEditSubmit = async () => {
   try {
     await updateUser.mutateAsync({displayName: editForm.displayName})
@@ -61,6 +72,16 @@ const onEditSubmit = async () => {
     editModal.value.close()
   } catch (e) {
     toast.error('Failed to update user')
+  }
+}
+
+const onEmailSubmit = async () => {
+  try {
+    await updateUser.mutateAsync({emailVerified: emailForm.emailVerified})
+    toast.success('Email verification updated')
+    emailModal.value.close()
+  } catch (e) {
+    toast.error('Failed to update email verification')
   }
 }
 
@@ -98,6 +119,23 @@ const onPasswordSubmit = async () => {
                     :vuelidate="editV$.displayName"
                     required
       />
+    </KeylineForm>
+  </ModalPopup>
+
+  <ModalPopup ref="emailModal">
+    <KeylineForm title="Edit email verification"
+                 @submit="onEmailSubmit"
+                 :vuelidate="emailV$"
+    >
+      <div class="flex items-center gap-2">
+        <input
+          id="emailVerified"
+          type="checkbox"
+          v-model="emailForm.emailVerified"
+          class="rounded border-gray-300"
+        />
+        <label for="emailVerified" class="text-sm">Email verified</label>
+      </div>
     </KeylineForm>
   </ModalPopup>
 
@@ -155,13 +193,17 @@ const onPasswordSubmit = async () => {
 
         <BoxContainer>
           <DataLayout title="Email">
+            <template #actions>
+              <KeylineButton @click="onEmailEdit" text="Edit" variant="secondary" size="sm"/>
+            </template>
+
             <DataLayoutItem title="Primary email">
               <LoadingSkeleton :dep="data" class="w-32 h-4">
                 <span class="text-sm">{{ data.primaryEmail }}</span>
                 <VerifiedBadge
-                    tooltip="Email verified"
-                    anti-tooltip="Email not verified"
-                    :verified="data.emailVerified"
+                  tooltip="Email verified"
+                  anti-tooltip="Email not verified"
+                  :verified="data.emailVerified"
                 />
               </LoadingSkeleton>
             </DataLayoutItem>
@@ -211,7 +253,3 @@ const onPasswordSubmit = async () => {
     </template>
   </PageLayout>
 </template>
-
-<style scoped>
-
-</style>
