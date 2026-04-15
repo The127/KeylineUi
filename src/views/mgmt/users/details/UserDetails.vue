@@ -12,11 +12,12 @@ import KeylineButton from "../../../../components/KeylineButton.vue";
 import ModalPopup from "../../../../components/ModalPopup.vue";
 import KeylineForm from "../../../../components/KeylineForm.vue";
 import KeylineInput from "../../../../components/KeylineInput.vue";
+import CheckBox from "../../../../components/CheckBox.vue";
 import {useRoute} from "vue-router";
 import {useGetUserQuery, useUserMutation, useAdminResetPasswordMutation} from "../../../../api/user.js";
 import {useToast} from "../../../../composables/toast.js";
 import {reactive, ref, watch} from "vue";
-import {required} from "@vuelidate/validators";
+import {email, required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import TabLayout from "../../../../components/tabs/TabLayout.vue";
 import TabPage from "../../../../components/tabs/TabPage.vue";
@@ -37,8 +38,8 @@ const editForm = reactive({displayName: ''})
 const editRules = {displayName: {required}}
 const editV$ = useVuelidate(editRules, editForm)
 
-const emailForm = reactive({emailVerified: false})
-const emailRules = {}
+const emailForm = reactive({email: '', emailVerified: false})
+const emailRules = {email: {required, email}}
 const emailV$ = useVuelidate(emailRules, emailForm)
 
 const passwordForm = reactive({password: '', temporary: false})
@@ -48,6 +49,7 @@ const passwordV$ = useVuelidate(passwordRules, passwordForm)
 watch(data, (newData) => {
   if (newData) {
     editForm.displayName = newData.displayName || ''
+    emailForm.email = newData.primaryEmail || ''
     emailForm.emailVerified = !!newData.emailVerified
   }
 })
@@ -77,11 +79,11 @@ const onEditSubmit = async () => {
 
 const onEmailSubmit = async () => {
   try {
-    await updateUser.mutateAsync({emailVerified: emailForm.emailVerified})
-    toast.success('Email verification updated')
+    await updateUser.mutateAsync({email: emailForm.email, emailVerified: emailForm.emailVerified})
+    toast.success('Email updated')
     emailModal.value.close()
   } catch (e) {
-    toast.error('Failed to update email verification')
+    toast.error('Failed to update email')
   }
 }
 
@@ -123,19 +125,22 @@ const onPasswordSubmit = async () => {
   </ModalPopup>
 
   <ModalPopup ref="emailModal">
-    <KeylineForm title="Edit email verification"
+    <KeylineForm title="Edit email"
                  @submit="onEmailSubmit"
                  :vuelidate="emailV$"
     >
-      <div class="flex items-center gap-2">
-        <input
-          id="emailVerified"
-          type="checkbox"
-          v-model="emailForm.emailVerified"
-          class="rounded border-gray-300"
-        />
-        <label for="emailVerified" class="text-sm">Email verified</label>
-      </div>
+      <KeylineInput
+        label="Email"
+        type="email"
+        v-model="emailV$.email.$model"
+        :vuelidate="emailV$.email"
+        required
+      />
+      <CheckBox
+        class="mt-3"
+        label="Email verified"
+        v-model="emailForm.emailVerified"
+      />
     </KeylineForm>
   </ModalPopup>
 
