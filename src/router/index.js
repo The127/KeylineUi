@@ -3,6 +3,14 @@ import {useUserManager} from "../composables/userManager.js";
 
 const routes = [
     {
+        path: '/',
+        name: 'home',
+        component: () => import('../views/HomeView.vue'),
+        meta: {
+            layout: 'login-layout',
+        },
+    },
+    {
         path: '/debug',
         name: 'debug',
         component: () => import('../views/DebugView.vue'),
