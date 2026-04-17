@@ -17,6 +17,9 @@ import DataLayoutItem from "../../../../../../components/dataLayout/DataLayoutIt
 import LoadingSkeleton from "../../../../../../components/LoadingSkeleton.vue";
 import NoContent from "../../../../../../components/NoContent.vue";
 import ModelMetadata from "../../../../../../components/ModelMetadata.vue";
+import VerifiedBadge from "../../../../../../components/VerifiedBadge.vue";
+import EditFormModal from "../../../../../../components/EditFormModal.vue";
+import CheckBox from "../../../../../../components/CheckBox.vue";
 import {computed, ref, toValue} from "vue";
 import {
   useDeleteApplicationMutation,
@@ -26,6 +29,7 @@ import {
 import {useToast} from "../../../../../../composables/toast.js";
 import {useRoute} from "vue-router";
 import {useDeleteConfirm} from "../../../../../../composables/deleteConfirm.js";
+import {useFormModal} from "../../../../../../composables/formModal.js";
 
 
 const route = useRoute()
@@ -64,6 +68,15 @@ const onEditInfo = () => {
 
 const patchApp = usePatchApplicationMutation(route.params.vsName, route.params.projectSlug, route.params.appId)
 
+const grantTypesEdit = useFormModal({
+  fields: {deviceFlowEnabled: false},
+  rules: {},
+  onSubmit: (form) => patchApp.mutateAsync({deviceFlowEnabled: form.deviceFlowEnabled}),
+  toastMessages: {success: 'Grant types updated', error: 'Failed to update grant types'},
+})
+const grantTypesEditModalRef = grantTypesEdit.modalRef
+grantTypesEdit.syncFrom(data)
+
 const editingScript = ref(false)
 const claimsMappingScript = ref("")
 
@@ -93,6 +106,14 @@ const onClearScript = async () => {
 
 <template>
   <InfoEditModal v-if="data" ref="infoEditModalEl" :data="data"/>
+
+  <EditFormModal ref="grantTypesEditModalRef" title="Edit grant types" @submit="grantTypesEdit.submit">
+    <CheckBox
+        label="Device Flow"
+        helper-text="Allows CLIs and smart-TV clients to use the OAuth 2.0 Device Authorization Grant (RFC 8628)."
+        v-model="grantTypesEdit.validation.deviceFlowEnabled.$model"
+    />
+  </EditFormModal>
 
   <PageLayout>
     <template #header>
@@ -159,6 +180,25 @@ const onClearScript = async () => {
                     {{ uri }}
                   </span>
                 </NoContent>
+              </LoadingSkeleton>
+            </DataLayoutItem>
+          </DataLayout>
+        </BoxContainer>
+
+        <BoxContainer>
+          <DataLayout title="Grant types">
+            <template #actions>
+              <KeylineButton
+                  @click="grantTypesEdit.open(data)"
+                  text="Edit"
+                  variant="secondary"
+                  size="sm"
+              />
+            </template>
+            <DataLayoutItem title="Device Flow">
+              <LoadingSkeleton :dep="data" class="w-32 h-4">
+                {{ data.deviceFlowEnabled ? 'Enabled' : 'Disabled' }}
+                <VerifiedBadge anti-tooltip="disabled" tooltip="enabled" :verified="data.deviceFlowEnabled"/>
               </LoadingSkeleton>
             </DataLayoutItem>
           </DataLayout>
