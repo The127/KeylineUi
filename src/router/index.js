@@ -273,6 +273,14 @@ const routes = [
             },
         ]
     },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'not-found',
+        component: () => import('../views/NotFound.vue'),
+        meta: {
+            layout: 'login-layout',
+        },
+    },
 ]
 
 async function handleLoginCallback(route) {
