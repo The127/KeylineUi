@@ -111,7 +111,7 @@ const onClearScript = async () => {
     <CheckBox
         label="Device Flow"
         helper-text="Allows CLIs and smart-TV clients to use the OAuth 2.0 Device Authorization Grant (RFC 8628)."
-        v-model="grantTypesEdit.validation.deviceFlowEnabled.$model"
+        v-model="grantTypesEdit.form.deviceFlowEnabled"
     />
   </EditFormModal>
 

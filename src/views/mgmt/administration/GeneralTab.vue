@@ -160,9 +160,9 @@ const onEditRuleSubmit = async () => {
   </EditFormModal>
 
   <EditFormModal ref="loginRegEditModalRef" title="Edit login and registration" @submit="loginRegEdit.submit">
-    <CheckBox label="Self Registration" v-model="loginRegEdit.validation.registrationEnabled.$model"/>
-    <CheckBox label="Require 2FA" v-model="loginRegEdit.validation.require2fa.$model"/>
-    <CheckBox label="Require Email Verification" v-model="loginRegEdit.validation.requireEmailVerification.$model"/>
+    <CheckBox label="Self Registration" v-model="loginRegEdit.form.registrationEnabled"/>
+    <CheckBox label="Require 2FA" v-model="loginRegEdit.form.require2fa"/>
+    <CheckBox label="Require Email Verification" v-model="loginRegEdit.form.requireEmailVerification"/>
   </EditFormModal>
 
   <ModalPopup ref="addRuleModal">
