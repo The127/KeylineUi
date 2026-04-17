@@ -10,6 +10,7 @@ import KeylineInput from "../../../components/KeylineInput.vue";
 import EditFormModal from "../../../components/EditFormModal.vue";
 import ModalPopup from "../../../components/ModalPopup.vue";
 import KeylineForm from "../../../components/KeylineForm.vue";
+import CheckBox from "../../../components/CheckBox.vue";
 import {useRoute} from "vue-router";
 import {useListPasswordRulesQuery} from "../../../api/passwordRules.js";
 import {useCreatePwPolicyRuleMutation, useUpdatePwPolicyRuleMutation, useDeletePwPolicyRuleMutation} from "../../../api/pwPolicies.js";
@@ -45,6 +46,19 @@ const edit = useFormModal({
 })
 const editModalRef = edit.modalRef
 edit.syncFrom(toRef(props, 'data'))
+
+const loginRegEdit = useFormModal({
+  fields: {registrationEnabled: false, require2fa: false, requireEmailVerification: false},
+  rules: {},
+  onSubmit: (form) => patchVS.mutateAsync({
+    enableRegistration: form.registrationEnabled,
+    require2fa: form.require2fa,
+    requireEmailVerification: form.requireEmailVerification,
+  }),
+  toastMessages: {success: 'Login and registration settings updated', error: 'Failed to update settings'},
+})
+const loginRegEditModalRef = loginRegEdit.modalRef
+loginRegEdit.syncFrom(toRef(props, 'data'))
 
 // Password policy rule types with human-readable labels
 const ruleTypes = [
@@ -145,6 +159,12 @@ const onEditRuleSubmit = async () => {
     <KeylineInput label="Display name" v-model="edit.validation.displayName.$model" :vuelidate="edit.validation.displayName" required/>
   </EditFormModal>
 
+  <EditFormModal ref="loginRegEditModalRef" title="Edit login and registration" @submit="loginRegEdit.submit">
+    <CheckBox label="Self Registration" v-model="loginRegEdit.validation.registrationEnabled.$model"/>
+    <CheckBox label="Require 2FA" v-model="loginRegEdit.validation.require2fa.$model"/>
+    <CheckBox label="Require Email Verification" v-model="loginRegEdit.validation.requireEmailVerification.$model"/>
+  </EditFormModal>
+
   <ModalPopup ref="addRuleModal">
     <KeylineForm title="Add password rule" @submit="onAddRuleSubmit">
       <div class="flex flex-col gap-1">
@@ -186,6 +206,9 @@ const onEditRuleSubmit = async () => {
 
   <BoxContainer>
     <DataLayout title="Login and Registration">
+      <template #actions>
+        <KeylineButton @click="loginRegEdit.open(data)" text="Edit" variant="secondary" size="sm"/>
+      </template>
       <DataLayoutItem title="Self Registration">
         <LoadingSkeleton :dep="data" class="w-32 h-4">
           {{ data.registrationEnabled ? 'Enabled' : 'Disabled' }}
