@@ -11,6 +11,10 @@ import KeylineInput from "../components/KeylineInput.vue";
 import {ConfigApiUrl} from "../config.js";
 import {useRoute} from "vue-router";
 
+const props = defineProps({
+  virtualServer: {type: String, default: null},
+})
+
 const {t} = useI18n({
   messages: {
     en: {
@@ -57,7 +61,7 @@ const v$ = useVuelidate(formRules, formModel)
 const onFormSubmit = async () => {
   const form = document.createElement('form')
   form.method = 'POST'
-  form.action = `${ConfigApiUrl()}/oidc/${route.params.virtualServer}/activate`
+  form.action = `${ConfigApiUrl()}/oidc/${props.virtualServer ?? route.params.virtualServer}/activate`
   form.style = 'display: none'
 
   const input = document.createElement('input')

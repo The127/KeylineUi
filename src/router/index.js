@@ -69,6 +69,23 @@ const routes = [
         },
     },
     {
+        path: '/mgmt/activate',
+        name: 'mgmt-vs-activate',
+        component: () => import('../views/ActivateView.vue'),
+        props: {virtualServer: 'mgmt'},
+        meta: {
+            layout: "login-layout",
+        },
+    },
+    {
+        path: '/mgmt/activate/success',
+        name: 'mgmt-vs-activate-success',
+        component: () => import('../views/ActivateSuccessView.vue'),
+        meta: {
+            layout: "login-layout",
+        },
+    },
+    {
         path: "/mgmt/:vsName",
         name: 'mgmt',
         component: () => import('../views/mgmt/ManagementBaseView.vue'),
