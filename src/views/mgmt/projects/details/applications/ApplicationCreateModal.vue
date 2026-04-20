@@ -6,10 +6,11 @@ import ListInput from "../../../../../components/ListInput.vue";
 import FormGroup from "../../../../../components/FormGroup.vue";
 import RadioButtonGroup from "../../../../../components/radio/RadioButtonGroup.vue";
 import KeylineInput from "../../../../../components/KeylineInput.vue";
-import {defineExpose, reactive, ref} from "vue";
+import {computed, defineExpose, reactive, ref} from "vue";
 import {required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import {useCreateApplicationMutation} from "../../../../../api/applications.js";
+import {useGetVirtualServerQuery} from "../../../../../api/virtualServers.js";
 import {useRoute} from "vue-router";
 import {useToast} from "../../../../../composables/toast.js";
 import SpecialText from "../../../../../components/SpecialText.vue";
@@ -24,11 +25,19 @@ const addAppModal = ref(null)
 
 const secret = ref('')
 
+const {data: vsData} = useGetVirtualServerQuery(route.params.vsName)
+
+const availableSigningAlgorithms = computed(() => {
+  if (!vsData.value) return []
+  return [vsData.value.primarySigningAlgorithm, ...(vsData.value.additionalSigningAlgorithms ?? [])]
+})
+
 const formModel = reactive({
   name: '',
   displayName: '',
   redirectUris: [],
   type: 'public',
+  signingAlgorithm: null,
 })
 
 const formRules = {
@@ -45,6 +54,7 @@ const open = () => {
   formModel.displayName = ''
   formModel.redirectUris = []
   formModel.type = 'public'
+  formModel.signingAlgorithm = null
 
   v$.value.$reset()
 
@@ -63,6 +73,7 @@ const createApplication = async () => {
       displayName: formModel.displayName,
       type: formModel.type,
       redirectUris: formModel.redirectUris,
+      ...(formModel.signingAlgorithm ? {signingAlgorithm: formModel.signingAlgorithm} : {}),
     })
 
     if (formModel.type === 'confidential') {
@@ -129,6 +140,18 @@ defineExpose({
             v-model="v$.redirectUris.$model"
             helper-text="The redirect URIs of the application. Must be unique."
         />
+      </FormGroup>
+      <FormGroup title="Signing Algorithm" v-if="availableSigningAlgorithms.length > 1">
+        <div class="flex flex-col gap-1">
+          <select
+              v-model="formModel.signingAlgorithm"
+              class="border border-gray-300 dark:border-slate-600 rounded-md px-3 py-2 text-sm bg-white dark:bg-slate-800"
+          >
+            <option :value="null">Default (VS primary)</option>
+            <option v-for="alg in availableSigningAlgorithms" :key="alg" :value="alg">{{ alg }}</option>
+          </select>
+          <p class="text-xs text-slate-500">Override the VS primary algorithm for tokens issued to this application.</p>
+        </div>
       </FormGroup>
     </KeylineForm>
     <div v-else class="flex flex-col gap-5">

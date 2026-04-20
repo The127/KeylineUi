@@ -26,6 +26,7 @@ import {
   useGetApplicationQuery,
   usePatchApplicationMutation
 } from "../../../../../../api/applications.js";
+import {useGetVirtualServerQuery} from "../../../../../../api/virtualServers.js";
 import {useToast} from "../../../../../../composables/toast.js";
 import {useRoute} from "vue-router";
 import {useDeleteConfirm} from "../../../../../../composables/deleteConfirm.js";
@@ -68,6 +69,22 @@ const onEditInfo = () => {
 
 const patchApp = usePatchApplicationMutation(route.params.vsName, route.params.projectSlug, route.params.appId)
 
+const {data: vsData} = useGetVirtualServerQuery(route.params.vsName)
+
+const availableSigningAlgorithms = computed(() => {
+  if (!vsData.value) return []
+  return [vsData.value.primarySigningAlgorithm, ...(vsData.value.additionalSigningAlgorithms ?? [])]
+})
+
+const signingAlgEdit = useFormModal({
+  fields: {signingAlgorithm: null},
+  rules: {},
+  onSubmit: (form) => patchApp.mutateAsync({signingAlgorithm: form.signingAlgorithm || null}),
+  toastMessages: {success: 'Signing algorithm updated', error: 'Failed to update signing algorithm'},
+})
+const signingAlgEditModalRef = signingAlgEdit.modalRef
+signingAlgEdit.syncFrom(data)
+
 const grantTypesEdit = useFormModal({
   fields: {deviceFlowEnabled: false},
   rules: {},
@@ -106,6 +123,20 @@ const onClearScript = async () => {
 
 <template>
   <InfoEditModal v-if="data" ref="infoEditModalEl" :data="data"/>
+
+  <EditFormModal ref="signingAlgEditModalRef" title="Edit signing algorithm" @submit="signingAlgEdit.submit">
+    <div class="flex flex-col gap-1">
+      <label class="text-sm font-medium">Signing Algorithm</label>
+      <select
+          v-model="signingAlgEdit.form.signingAlgorithm"
+          class="border border-gray-300 dark:border-slate-600 rounded-md px-3 py-2 text-sm bg-white dark:bg-slate-800"
+      >
+        <option :value="null">Default (VS primary)</option>
+        <option v-for="alg in availableSigningAlgorithms" :key="alg" :value="alg">{{ alg }}</option>
+      </select>
+      <p class="text-xs text-slate-500">Override the VS primary algorithm for tokens issued to this application.</p>
+    </div>
+  </EditFormModal>
 
   <EditFormModal ref="grantTypesEditModalRef" title="Edit grant types" @submit="grantTypesEdit.submit">
     <CheckBox
@@ -199,6 +230,23 @@ const onClearScript = async () => {
               <LoadingSkeleton :dep="data" class="w-32 h-4">
                 {{ data.deviceFlowEnabled ? 'Enabled' : 'Disabled' }}
                 <VerifiedBadge anti-tooltip="disabled" tooltip="enabled" :verified="data.deviceFlowEnabled"/>
+              </LoadingSkeleton>
+            </DataLayoutItem>
+          </DataLayout>
+        </BoxContainer>
+        <BoxContainer v-if="availableSigningAlgorithms.length > 1">
+          <DataLayout title="Signing">
+            <template #actions>
+              <KeylineButton
+                  @click="signingAlgEdit.open(data)"
+                  text="Edit"
+                  variant="secondary"
+                  size="sm"
+              />
+            </template>
+            <DataLayoutItem title="Signing Algorithm">
+              <LoadingSkeleton :dep="data" class="w-32 h-4">
+                {{ data.signingAlgorithm ?? 'Default (VS primary)' }}
               </LoadingSkeleton>
             </DataLayoutItem>
           </DataLayout>
