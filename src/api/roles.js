@@ -91,3 +91,37 @@ export const deleteRoleFn = async (vsName, projectSlug, roleId) => {
         }
     )
 }
+
+export const useListUsersInRoleQuery = (vsName, projectSlug, roleId, queryOps) => useQuery({
+    queryKey: ['roles', vsName, projectSlug, roleId, 'users', queryOps],
+    queryFn: () => listUsersInRoleFn(vsName, projectSlug, roleId, queryOps),
+})
+
+export const listUsersInRoleFn = async (vsName, projectSlug, roleId, queryOps) => {
+    const url = new URL(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/projects/${projectSlug}/roles/${roleId}/users`
+    )
+    applyQueryOps(url, queryOps)
+    return await apiFetch(url.toString(), {vsName})
+}
+
+export const useAssignRoleMutation = (vsName, projectSlug, roleId) => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (data) => assignRoleFn(vsName, projectSlug, roleId, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['roles', vsName, projectSlug, roleId, 'users'])
+        }
+    })
+}
+
+export const assignRoleFn = async (vsName, projectSlug, roleId, data) => {
+    return await apiFetch(
+        ConfigApiUrl() + `/api/virtual-servers/${vsName}/projects/${projectSlug}/roles/${roleId}/assign`,
+        {
+            method: 'POST',
+            body: JSON.stringify(data),
+            vsName,
+        }
+    )
+}

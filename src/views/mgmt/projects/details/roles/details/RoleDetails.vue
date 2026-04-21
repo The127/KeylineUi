@@ -14,6 +14,9 @@ import KeylineInput from "../../../../../../components/KeylineInput.vue";
 import EditFormModal from "../../../../../../components/EditFormModal.vue";
 import DotMenu from "../../../../../../components/DotMenu.vue";
 import MenuItem from "../../../../../../components/menu/MenuItem.vue";
+import TabLayout from "../../../../../../components/tabs/TabLayout.vue";
+import TabPage from "../../../../../../components/tabs/TabPage.vue";
+import UsersTab from "./UsersTab.vue";
 import {useFormModal} from "../../../../../../composables/formModal.js";
 import {useDeleteConfirm} from "../../../../../../composables/deleteConfirm.js";
 import {required} from "@vuelidate/validators";
@@ -64,24 +67,32 @@ const onDelete = () => {
       </PageHeader>
     </template>
 
-    <BoxContainer>
-      <DataLayout title="Information">
-        <template #actions>
-          <KeylineButton @click="edit.open(data)" text="Edit" variant="secondary" size="sm"/>
-        </template>
+    <TabLayout>
+      <TabPage title="Information" name="information">
+        <BoxContainer>
+          <DataLayout title="Information">
+            <template #actions>
+              <KeylineButton @click="edit.open(data)" text="Edit" variant="secondary" size="sm"/>
+            </template>
 
-        <DataLayoutItem title="Name">
-          <LoadingSkeleton :dep="data" class="w-32 h-4">
-            {{ data.name }}
-          </LoadingSkeleton>
-        </DataLayoutItem>
-        <DataLayoutItem title="Description" full-row>
-          <LoadingSkeleton :dep="data" class="w-32 h-4">
-            {{ data.description }}
-          </LoadingSkeleton>
-        </DataLayoutItem>
-      </DataLayout>
-    </BoxContainer>
+            <DataLayoutItem title="Name">
+              <LoadingSkeleton :dep="data" class="w-32 h-4">
+                {{ data.name }}
+              </LoadingSkeleton>
+            </DataLayoutItem>
+            <DataLayoutItem title="Description" full-row>
+              <LoadingSkeleton :dep="data" class="w-32 h-4">
+                {{ data.description }}
+              </LoadingSkeleton>
+            </DataLayoutItem>
+          </DataLayout>
+        </BoxContainer>
+      </TabPage>
+
+      <TabPage title="Users" name="users">
+        <UsersTab/>
+      </TabPage>
+    </TabLayout>
 
     <template #footer>
       <ModelMetadata :model="data"/>
