@@ -58,7 +58,7 @@ const onPasswordSubmit = async () => {
     })
     toast.success('Password changed')
     passwordModal.value.close()
-  } catch (e) {
+  } catch {
     toast.error('Failed to change password. Please check your current password.')
   }
 }

@@ -38,7 +38,7 @@ export function useFormModal({fields, rules, onSubmit, toastMessages}) {
                 toast.success(toastMessages.success)
             }
             modalRef.value?.close()
-        } catch (e) {
+        } catch {
             if (toastMessages?.error) {
                 toast.error(toastMessages.error)
             }

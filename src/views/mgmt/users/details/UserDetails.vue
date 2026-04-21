@@ -72,7 +72,7 @@ const onEditSubmit = async () => {
     await updateUser.mutateAsync({displayName: editForm.displayName})
     toast.success('User updated')
     editModal.value.close()
-  } catch (e) {
+  } catch {
     toast.error('Failed to update user')
   }
 }
@@ -82,7 +82,7 @@ const onEmailSubmit = async () => {
     await updateUser.mutateAsync({email: emailForm.email, emailVerified: emailForm.emailVerified})
     toast.success('Email updated')
     emailModal.value.close()
-  } catch (e) {
+  } catch {
     toast.error('Failed to update email')
   }
 }
@@ -103,7 +103,7 @@ const onPasswordSubmit = async () => {
     })
     toast.success('Password reset')
     passwordModal.value.close()
-  } catch (e) {
+  } catch {
     toast.error('Failed to reset password')
   }
 }

@@ -18,7 +18,7 @@ export function useDeleteConfirm() {
                         await router.push(navigateTo)
                     }
                     toast.success(successMessage || `${title} successful`)
-                } catch (e) {
+                } catch {
                     toast.error(errorMessage || `Failed to delete`)
                 }
             },

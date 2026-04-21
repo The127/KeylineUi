@@ -95,8 +95,6 @@ const availableRuleTypes = computed(() => {
 // Add rule modal
 const addRuleModal = ref(null)
 const addRuleForm = reactive({type: '', value: ''})
-const addRuleRules = {value: {required}}
-const addRuleV$ = ref(null)
 
 const onAddRule = () => {
   if (availableRuleTypes.value.length === 0) return
@@ -113,7 +111,7 @@ const onAddRuleSubmit = async () => {
     })
     toast.success('Rule added')
     addRuleModal.value?.close()
-  } catch (e) {
+  } catch {
     toast.error('Failed to add rule')
   }
 }
@@ -147,7 +145,7 @@ const onEditRuleSubmit = async () => {
     })
     toast.success('Rule updated')
     editRuleModal.value?.close()
-  } catch (e) {
+  } catch {
     toast.error('Failed to update rule')
   }
 }

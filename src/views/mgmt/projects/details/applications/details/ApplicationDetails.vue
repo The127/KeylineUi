@@ -27,7 +27,6 @@ import {
   usePatchApplicationMutation
 } from "../../../../../../api/applications.js";
 import {useGetVirtualServerQuery} from "../../../../../../api/virtualServers.js";
-import {useToast} from "../../../../../../composables/toast.js";
 import {useRoute} from "vue-router";
 import {useDeleteConfirm} from "../../../../../../composables/deleteConfirm.js";
 import {useFormModal} from "../../../../../../composables/formModal.js";
@@ -35,7 +34,6 @@ import {useFormModal} from "../../../../../../composables/formModal.js";
 
 const route = useRoute()
 const deleteConfirm = useDeleteConfirm()
-const toast = useToast()
 const isDark = useDark()
 
 const infoEditModalEl = ref(null)

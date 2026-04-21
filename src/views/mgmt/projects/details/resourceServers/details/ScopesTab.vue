@@ -7,11 +7,9 @@ import DataTableColumn from "../../../../../../components/dataTable/DataTableCol
 import DataTableCell from "../../../../../../components/dataTable/DataTableCell.vue";
 import KeylineButton from "../../../../../../components/KeylineButton.vue";
 import {useDeleteConfirm} from "../../../../../../composables/deleteConfirm.js";
-import {useQueryClient} from "@tanstack/vue-query";
 
 const route = useRoute()
 const deleteConfirm = useDeleteConfirm()
-const queryClient = useQueryClient()
 
 const deleteScope = useDeleteScopeMutation(
     route.params.vsName,
