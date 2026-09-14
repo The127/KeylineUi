@@ -1,0 +1,8 @@
+services:
+  keyline:
+    image: ghcr.io/the127/keyline:v0.6.4
+    command: ["/app/api", "--config", "/app/config.yaml"]
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./keyline.yaml:/app/config.yaml:ro,z

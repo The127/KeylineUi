@@ -1,0 +1,25 @@
+server:
+  host: "0.0.0.0"
+  port: 8081
+  externalUrl: "http://localhost:8081"
+  allowedOrigins:
+    - "http://localhost:5173"
+frontend:
+  externalUrl: "http://localhost:5173"
+database:
+  mode: "memory"
+keyStore:
+  mode: "memory"
+cache:
+  mode: "memory"
+leaderElection:
+  mode: "none"
+initialVirtualServer:
+  name: "keyline"
+  displayName: "Keyline"
+  createAdmin: true
+  admin:
+    username: "admin"
+    displayName: "Admin"
+    primaryEmail: "admin@e2e.local"
+    passwordHash: "$argon2id$v=19$m=65536,t=3,p=4$zfZw2XCm+6ZQxuVv5+turQ$YQIgGFjgnDATfuNfTutWcFCYEevxn1xXD/Mf4nJ0DcE"
