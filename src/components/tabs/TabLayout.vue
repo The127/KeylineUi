@@ -50,9 +50,12 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex flex-row">
-    <div v-for="tab in tabs"
+  <div class="flex flex-row" role="tablist">
+    <button v-for="tab in tabs"
          :key="tab.title"
+         type="button"
+         role="tab"
+         :aria-selected="tab.active ? 'true' : 'false'"
          @click="select(tab)"
         :data-active="tab.active ? true : null"
          class="font-semibold ease-linear px-2 py-1 border-b-2
@@ -61,7 +64,7 @@ onMounted(async () => {
             border-b-slate-200"
     >
       {{ tab.title }}
-    </div>
+    </button>
   </div>
   <slot/>
 </template>
