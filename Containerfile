@@ -4,7 +4,7 @@ workdir /app
 
 run corepack enable
 
-copy pnpm-lock.yaml package.json ./
+copy pnpm-lock.yaml package.json pnpm-workspace.yaml ./
 run pnpm install --frozen-lockfile
 
 copy . .
