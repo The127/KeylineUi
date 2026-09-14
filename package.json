@@ -11,7 +11,7 @@
     "lint": "eslint src --ext .js,.vue"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.7.4",
+    "@floating-ui/dom": "^1.8.0",
     "@tailwindcss/vite": "^4.1.12",
     "@tanstack/vue-query": "^5.85.5",
     "@vuelidate/core": "^2.0.3",
