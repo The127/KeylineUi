@@ -61,6 +61,14 @@ const routes = [
         },
     },
     {
+        path: '/:virtualServer/logout/success',
+        name: 'logout-success',
+        component: () => import('../views/LogoutSuccessView.vue'),
+        meta: {
+            layout: "login-layout",
+        },
+    },
+    {
         path: "/:virtualServer/forgot-password",
         name: 'forgot-password',
         component: () => import('../views/ForgotPassword.vue'),
@@ -81,6 +89,14 @@ const routes = [
         path: '/mgmt/activate/success',
         name: 'mgmt-vs-activate-success',
         component: () => import('../views/ActivateSuccessView.vue'),
+        meta: {
+            layout: "login-layout",
+        },
+    },
+    {
+        path: '/mgmt/logout/success',
+        name: 'mgmt-vs-logout-success',
+        component: () => import('../views/LogoutSuccessView.vue'),
         meta: {
             layout: "login-layout",
         },
