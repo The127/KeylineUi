@@ -21,3 +21,12 @@ export function collectErrors(page) {
 
     return errors
 }
+
+export function trackRequests(page) {
+    let pending = 0
+    page.on('request', () => pending++)
+    page.on('requestfinished', () => pending--)
+    page.on('requestfailed', () => pending--)
+
+    return () => expect.poll(() => pending).toBe(0)
+}
